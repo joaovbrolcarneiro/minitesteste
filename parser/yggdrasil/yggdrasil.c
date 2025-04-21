@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/21 21:09:08 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/21 22:40:16 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,10 +321,9 @@ t_node_tree *make_yggdrasil(t_token *t, t_token *f, t_token *e, t_node_tree *par
     right_child_token = find_right_token(t, e);
 
     // --- Recursive Calls ---
-    // Pass 'y' (the current node) as the parent for the children.
+
     y->left = make_yggdrasil(left_child_token, f, t, y);
     if (g_exit_code != 0 && y->left == NULL && left_child_token && !left_child_token->used) {
-         // If left recursion failed, cleanup current node 'y'
          if(y->args) ft_free_strarray(y->args);
          if(y->file) free(y->file);
          free(y);
@@ -333,15 +332,11 @@ t_node_tree *make_yggdrasil(t_token *t, t_token *f, t_token *e, t_node_tree *par
 
     y->right = make_yggdrasil(right_child_token, t, e, y);
     if (g_exit_code != 0 && y->right == NULL && right_child_token && !right_child_token->used) {
-         // If right recursion failed, cleanup current node 'y' and its left child
-         // Need a proper free_ast function here ideally
-         if (y->left) { /* free_ast(y->left); */ } // Placeholder
+         if (y->left) { /* free_ast(y->left); free?*/ }
          if(y->args) ft_free_strarray(y->args);
          if(y->file) free(y->file);
          free(y);
          return NULL;
     }
-
-    // Return the constructed node (or subtree root)
     return y;
 }
