@@ -9,17 +9,16 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "minishell_part2.h" // For get_env_value if not in minishell.h
-#include <dirent.h>          // For opendir, readdir, closedir
+#include "minishell_part2.h"
+#include <dirent.h>
 
-/* Helper: Counts command names in PATH directories */
 static long long	count_dir_entries(DIR *dir)
 {
 	long long		count;
 	struct dirent	*entry;
 
 	count = 0;
-	while (1) // Use infinite loop + break
+	while (1)
 	{
 		entry = readdir(dir);
 		if (!entry)
@@ -57,14 +56,13 @@ long long	count_commands_in_path(char **env)
 	return (count);
 }
 
-/* Helper: Populates list with entries from a single directory */
-/* Returns 0 on success, 1 on failure */
+
 static int	populate_list_from_dir(char **list, DIR *dir, \
 									long long *current_index)
 {
 	struct dirent	*d;
 
-	while (1) // Use infinite loop + break
+	while (1)
 	{
 		d = readdir(dir);
 		if (!d)
@@ -73,18 +71,16 @@ static int	populate_list_from_dir(char **list, DIR *dir, \
 		if (!list[*current_index])
 		{
 			perror("minishell: strdup command list");
-			closedir(dir); // Close dir before returning error
+			closedir(dir);
 			return (1);
 		}
 		(*current_index)++;
 	}
-	closedir(dir); // Close dir on success too
+	closedir(dir);
 	return (0);
 }
 
-/* Populates pre-allocated list with command names from PATH */
-/* Returns 0 on success, 1 on failure */
-/* Assumes get_path_list, ft_free_strarray are defined */
+
 int	populate_command_list(char **list, char **env)
 {
 	char		**path_list;

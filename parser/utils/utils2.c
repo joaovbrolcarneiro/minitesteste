@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 21:51:16 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/17 21:35:49 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/21 22:46:46 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	is_minishell_exit(char *input)
 	free(res); // free?
 }
 
-/* Helper function to check for parser errors in token list */
 bool	has_parser_error(t_token *token)
 {
 	while (token)

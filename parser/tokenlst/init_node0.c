@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:52:43 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/21 21:27:02 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/21 22:46:15 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_token *remove_node_after(t_token *prev_node) {
         return NULL;
     }
     node_to_remove = prev_node->next;
-    prev_node->next = node_to_remove->next; // Bypass the node
-    node_to_remove->next = NULL; // Isolate the removed node
+    prev_node->next = node_to_remove->next;
+    node_to_remove->next = NULL;
     return node_to_remove;
 }
 
@@ -35,12 +35,9 @@ t_token *remove_node_after(t_token *prev_node) {
 void free_single_token(t_token *token) {
     if (!token) return;
     if (token->value) {
-        free(token->value);
+        free(token->value); //free?
     }
-    // Free args/file if they were ever allocated for this token type
-    // if (token->args) ft_free_strarray(token->args);
-    // if (token->file) free(token->file);
-    free(token);
+    free(token); // free?
 }
 
 
@@ -49,47 +46,34 @@ void perform_quote_concatenation(t_token *token_list) {
     t_token *current = token_list;
     t_token *node_to_remove;
     char *joined_value;
-    char *temp_value_ptr; // To hold old pointer during join
+    char *temp_value_ptr;
 
     while (current) {
-        // Check if current node should be joined with the next one
+        
         if (current->join_next && current->next) {
-            // Attempt to join current->value and current->next->value
-            temp_value_ptr = current->value; // Store old pointer
+          
+            temp_value_ptr = current->value;
             joined_value = ft_strjoin(current->value, current->next->value);
 
             if (!joined_value) {
                 perror("konosubash: perform_quote_concatenation: ft_strjoin failed");
-                // Decide how to handle join failure. Maybe set an error flag?
-                // For now, we'll stop trying to join this token.
-                current->join_next = false; // Prevent further attempts on this token
-                current = current->next; // Move to next token
+                current->join_next = false;
+                current = current->next;
                 continue;
             }
 
-            // Free the old value of the current token BEFORE assigning the new one
             free(temp_value_ptr);
-            current->value = joined_value; // Update current token's value
-
-            // The current token should inherit the join_next status of the removed token
+            current->value = joined_value; 
             current->join_next = current->next->join_next;
 
-            // Remove the next node from the list
-            node_to_remove = remove_node_after(current); // Removes current->next
+            node_to_remove = remove_node_after(current);
 
             if (node_to_remove) {
-                // Free the removed token structure and its original value
                 free_single_token(node_to_remove);
             }
 
-            // --- IMPORTANT ---
-            // Stay on the *current* node. Do not advance `current = current->next;` here.
-            // This allows for multiple concatenations like "a""b""c".
-            // The loop condition will eventually advance `current` when `current->join_next` is false
-            // or when `current->next` is NULL.
-
         } else {
-            // No join needed for this token, move to the next one
+            
             current = current->next;
         }
     }
