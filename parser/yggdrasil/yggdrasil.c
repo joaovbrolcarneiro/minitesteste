@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/21 22:43:32 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/22 22:13:54 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,76 +108,155 @@ t_node_tree *new_yggnode(t_token *token)
     return (new_node);
 }
 
-static int count_following_words(t_token *start_node, t_token *end_token)
+static int count_following_words(t_token *cmd_token /*, t_token *segment_end_token - No longer needed */)
 {
     t_token *current;
     int count = 0;
 
-    if (!start_node) return 0;
+    if (!cmd_token) return 0;
 
-    current = start_node->next;
-    while (current && current != end_token && !current->used)
+    current = cmd_token->next; // Start scanning after the command token
+
+    // Scan until the true end (pipe or end of all tokens)
+    while (current)
     {
-       
-        if (current->type == TOKEN_PIPE || current->coretype == REDIR)
+        // Stop definitively if a pipe is encountered
+        if (current->type == TOKEN_PIPE) {
             break;
+        }
 
+        // If it's a redirection operator...
+        if (current->coretype == REDIR) {
+            t_token *filename = current->next;
+            // Check if a valid filename follows (must exist and be WORD)
+            if (filename && filename->type == TOKEN_WORD) {
+                current = filename->next; // Position current AFTER the filename
+                continue; // Continue scan from the token after the filename
+            } else {
+                // Malformed redirection (missing/invalid filename)
+                // Stop counting here as the command structure is likely invalid
+                break;
+            }
+        }
+
+        // If it's a word, increment count
+        // We count *potential* args; gather_arguments will check 'used' flag.
         if (current->type == TOKEN_WORD) {
             count++;
         }
+        // If it's not PIPE, REDIR, or WORD, just skip it
 
         current = current->next;
-    }
+    } // End while loop
+
     return count;
 }
 
 
-static char **gather_arguments(t_token *cmd_token, t_token *end_token)
+// --- Modified gather_arguments ---
+// Scans for arguments until the next pipe or end of list, skipping over
+// redirections and their filenames. Respects the 'used' flag set by gather_filename.
+static char **gather_arguments(t_token *cmd_token, t_token *segment_end_token)
 {
+    // Note: segment_end_token passed from make_yggdrasil might still be useful
+    //       to know the original recursive boundary, but the scan logic now
+    //       primarily stops at pipes or NULL. Let's ignore it for now.
+     (void)segment_end_token; // Mark as unused for this logic
+
     char    **args = NULL;
     t_token *current;
-    int     arg_count;
-    int     i = 0;
+    int     arg_count_total;
+    int     arg_capacity;
+    int     i = 0; // Index for filling args array
+    char    **temp_realloc = NULL;
 
     if (!cmd_token || !cmd_token->value) return NULL;
-    arg_count = count_following_words(cmd_token, end_token);
-    args = hb_malloc(sizeof(char *) * (arg_count + 2));
+
+    // 1. Count ALL potential arguments until the next pipe or end of list
+    arg_count_total = count_following_words(cmd_token /*, NULL */); // Use modified counter
+
+    // 2. Allocate args array (command + counted args + NULL terminator)
+    arg_capacity = arg_count_total + 1;
+    args = hb_malloc(sizeof(char *) * (arg_capacity + 1));
     if (!args) {
         perror("konosubash: gather_arguments: malloc failed");
+        g_exit_code = 1; // Signal error
         return NULL;
     }
 
+    // 3. Add command name as args[0]
+    // Important: We point to the original token value. Executor must not free args[0].
     args[0] = cmd_token->value;
     i = 1;
+    args[i] = NULL; // Keep NULL terminated
 
+    // 4. Iterate through tokens after command, collecting unused WORDs
     current = cmd_token->next;
-    while (current && current != end_token && !current->used && i <= arg_count)
+    while (current) // Scan until end of list
     {
-        if (current->type == TOKEN_PIPE || current->coretype == REDIR)
+        // Stop definitively at a pipe
+        if (current->type == TOKEN_PIPE) {
             break;
+        }
 
-        if (current->type == TOKEN_WORD)
-        {
+        // If it's a redirection operator... skip it and its filename
+        if (current->coretype == REDIR) {
+            t_token *filename_token = current->next;
+            // Check for valid filename token (must exist and be WORD)
+            // gather_filename called by make_yggdrasil would have already marked
+            // the filename used and potentially errored if missing/invalid.
+            if (filename_token && filename_token->type == TOKEN_WORD) {
+                 current = filename_token->next; // Continue scan AFTER filename
+                 continue;
+            } else {
+                 // Malformed redirection encountered during arg scan. Stop.
+                 // (Parser should ideally catch this earlier via gather_filename failing)
+                 break;
+            }
+        }
 
+        // If it's a WORD token AND it hasn't been used (e.g., as a filename by gather_filename)
+        if (current->type == TOKEN_WORD && !current->used) {
+            // Ensure capacity (safer in case count was off)
+            if (i >= arg_capacity) {
+                arg_capacity = i + 5; // Increase capacity
+                // Use standard realloc (or your hb_realloc equivalent)
+                temp_realloc = realloc(args, sizeof(char *) * (arg_capacity + 1));
+                if (!temp_realloc) {
+                    perror("konosubash: gather_arguments: realloc failed");
+                    while (--i >= 1) free(args[i]); // Free strdup'd strings
+                    free(args); // Free the array itself
+                    g_exit_code = 1;
+                    return NULL;
+                }
+                args = temp_realloc;
+            }
+
+            // Duplicate the argument value
             args[i] = ft_strdup(current->value);
             if (!args[i]) {
-                 perror("konosubash: gather_arguments: strdup failed");
-                 while (--i >= 1) free(args[i]);
-                 free(args);
-                 return NULL;
+                perror("konosubash: gather_arguments: strdup failed");
+                while (--i >= 1) free(args[i]);
+                free(args);
+                g_exit_code = 1;
+                return NULL;
             }
-            current->used = true;
+            current->used = true; // Mark this token as used (as an argument)
             i++;
+            args[i] = NULL; // Keep NULL terminated
         }
-        current = current->next;
-    }
+        // If token is not PIPE, REDIR, or usable WORD, just skip it
 
-    args[i] = NULL;
+        current = current->next; // Move to next token
+    } // End while loop
 
+    // 5. Final args array is ready
     return args;
 }
 
-
+// --- gather_filename remains unchanged ---
+// It correctly finds the next unused WORD token after the redirection operator
+// and marks it used. The modified gather_arguments respects this.
 static char *gather_filename(t_token *redir_token, t_token *end_token)
 {
     t_token *file_token;
@@ -187,19 +266,28 @@ static char *gather_filename(t_token *redir_token, t_token *end_token)
 
     file_token = redir_token->next;
 
+    // Skip already used tokens to find filename
     while (file_token && file_token != end_token && file_token->used) {
         file_token = file_token->next;
     }
 
 
+    // Check if we found a valid, unused word token
     if (file_token && file_token != end_token && file_token->type == TOKEN_WORD && !file_token->used)
     {
+        // Duplicate the filename for safety
         filename = ft_strdup(file_token->value);
         if (!filename) {
-             perror("konosubash: gather_filename: strdup failed");
-             return NULL;
+            perror("konosubash: gather_filename: strdup failed");
+            g_exit_code = 1; // Signal error
+            return NULL;
         }
-        file_token->used = true;
+        file_token->used = true; // Mark the filename token as used
+    }
+    else
+    {
+        // Filename missing or invalid, filename remains NULL
+        // make_yggdrasil should check for NULL and report syntax error
     }
 
     return filename;
