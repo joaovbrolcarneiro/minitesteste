@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:28:02 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/23 21:15:21 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/23 21:42:47 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_node_tree *init_yggdrasil(t_token *token_lst)
         current->used = false;
         current = current->next;
     }
-    set_current_exit_status(0); // Reset status before parsing attempt? (Careful with $?)
+    //set_current_exit_status(0); // Reset status before parsing attempt? (Careful with $?)
 
     // --- Step 3: Build Tree using the chosen root_token ---
     ast_root = make_yggdrasil(root_token, token_lst, NULL, NULL);
