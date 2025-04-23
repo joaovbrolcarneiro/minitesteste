@@ -1,7 +1,4 @@
 file22.txt
-file555.txt
-file556.txt
-file.txt
 infile.txt
 Makefile
 my file with spaces.txt

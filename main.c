@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include "minishell_part2.h"
 
-int	g_exit_code = 0;
+int g_shell_exit_status = 0; 
 
 /*
 ** konopwd:
@@ -34,10 +34,8 @@ void	typealize_call_loop(t_token *token, char **env)
 
 void merg_tok_excep_cll_revloop(t_token *token)
 {
-    // Function disabled to prevent non-standard token merging.
-    (void)token; // Mark token as unused if function body is empty
+    (void)token;
 }
-
 void	quote_handler_call_loop(t_token *token, char **env)
 {
 	int	is_unclosed;
@@ -86,4 +84,14 @@ bool	is_builtin(const char *cmd)
 		return (true);
 	}
 	return (false);
+}
+
+void set_current_exit_status(int status)
+{
+    g_shell_exit_status = status;
+}
+
+int get_current_exit_status(void)
+{
+    return (g_shell_exit_status);
 }

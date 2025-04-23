@@ -79,26 +79,28 @@ bool search_list(char *search, char **env)
     {
         return (false);
     }
-    if (is_valid_exc(search))
-        return (true);
-
-    list = init_command_list(env);
-    if (!list)
-        return (false);
-    current = list;
-    found = false;
-    while (*current)
+    if (ft_strchr(search, '/') != NULL)
     {
-        if (ft_strcmp(search, *current) == 0)
-        {
-            found = true;
-            break;
-        }
-        current++;
+        return (is_valid_exc(search));
     }
-    ft_free_strarray(list);
-    return (found);
+    else
+    {
+        list = init_command_list(env);
+        if (!list) return (false);
+        current = list;
+        found = false;
+        while (*current) {
+            if (ft_strcmp(search, *current) == 0) {
+                found = true;
+                break;
+            }
+            current++;
+        }
+        ft_free_strarray(list);
+        return (found);
+    }
 }
+
 
 t_token	*finalize_list(t_token *first, t_token *last)
 {

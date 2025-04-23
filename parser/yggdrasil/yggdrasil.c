@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/23 18:19:28 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:50:33 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,34 +41,44 @@ t_token *find_right_token(t_token *token, t_token *eof)
 	return (token);
 }
 
-t_token *find_left_token(t_token *token, t_token *first)
+t_token	*find_left_token(t_token *target_node, t_token *first_in_segment)
 {
-	t_token *eof;
-	int i;
+	t_token		*current_token;
+	t_token		*last_highest_found;
+	t_ranking	max_rank_found;
 
-	i = 0;
-	if (token == first || !token || !first)
-		return(NULL);
-	eof = token;
-	token = get_prev_node(token, first);
-	while (1)
+	if (target_node == first_in_segment || !target_node || !first_in_segment)
+		return (NULL);
+	last_highest_found = NULL;
+	max_rank_found = RANK_F;
+	current_token = get_prev_node(target_node, first_in_segment);
+	while (current_token != NULL)
 	{
-		if(eof->rank - i == token->rank)
-			return (token);
-		//?????????
-		/*if(eof->rank - i < token->rank )
-			return (NULL);*/
-		//?????????
-		if (eof->rank - i == RANK_F)
-			return (NULL);
-		token = get_prev_node(token, first);
-		if(token == NULL)
+		if (!current_token->used)
 		{
-			i++;
-			token = get_prev_node(eof, first);
+			if (current_token->rank >= max_rank_found)
+			{
+				max_rank_found = current_token->rank;
+				last_highest_found = current_token;
+			}
+		}
+		if (current_token == first_in_segment)
+			break ;
+		current_token = get_prev_node(current_token, first_in_segment);
+	}
+	if (!last_highest_found)
+		return (NULL);
+	if (last_highest_found->rank == RANK_B)
+	{
+		current_token = first_in_segment;
+		while (current_token && current_token != target_node)
+		{
+			if (current_token->type == TOKEN_CMD && !current_token->used)
+				return (current_token);
+			current_token = current_token->next;
 		}
 	}
-	return (token);
+	return (last_highest_found);
 }
 
 t_node_tree *new_yggnode(t_token *token)
@@ -116,16 +126,17 @@ static int count_following_words(t_token *cmd_token)
     if (!cmd_token) return 0;
     current = cmd_token->next;
     while (current) {
-        if (current->type == TOKEN_PIPE) // Stop at pipe
+        if (current->type == TOKEN_PIPE)
             break;
-        if (current->coretype == REDIR) { // Skip redir+file
+        if (current->coretype == REDIR) 
+        {
             t_token *filename = current->next;
-            if (filename && filename->type == TOKEN_WORD) { // Check filename validity minimally
+            if (filename && filename->type == TOKEN_WORD) 
+            {
                 current = filename->next;
                 continue;
-            } else { break; } // Malformed redir
+            } else { break; }
         }
-        // --- Count ANY non-pipe, non-redir token ---
         count++;
         current = current->next;
     }
@@ -138,7 +149,7 @@ static int count_following_words(t_token *cmd_token)
 // redirections and their filenames. Respects the 'used' flag set by gather_filename.
 static char **gather_arguments(t_token *cmd_token, t_token *segment_end_token)
 {
-     (void)segment_end_token; // Ignore segment end, scan till pipe/NULL
+     (void)segment_end_token; 
     char    **args = NULL;
     t_token *current;
     int     arg_count_total;
@@ -148,7 +159,7 @@ static char **gather_arguments(t_token *cmd_token, t_token *segment_end_token)
 
     if (!cmd_token || !cmd_token->value) return NULL;
 
-    arg_count_total = count_following_words(cmd_token); // Use modified counter
+    arg_count_total = count_following_words(cmd_token);
 
     arg_capacity = arg_count_total + 1;
     args = hb_malloc(sizeof(char *) * (arg_capacity + 1));
@@ -164,15 +175,19 @@ static char **gather_arguments(t_token *cmd_token, t_token *segment_end_token)
 
         if (current->coretype == REDIR) {
             t_token *filename_token = current->next;
-            if (filename_token && filename_token->type == TOKEN_WORD) {
+            if (filename_token && filename_token->type == TOKEN_WORD) 
+            {
                  current = filename_token->next;
                  continue;
-            } else { break; } // Malformed
+            } else 
+            { 
+                break; 
+            }
         }
 
-        // --- Collect if NOT used (don't check type == WORD anymore) ---
         if (!current->used) {
-            if (i >= arg_capacity) { // Realloc if needed
+            if (i >= arg_capacity) 
+            { 
                  arg_capacity = i + 5;
                  temp_realloc = realloc(args, sizeof(char *) * (arg_capacity + 1));
                  if (!temp_realloc) { perror("realloc"); while (--i >= 1) free(args[i]); free(args); g_exit_code = 1; return NULL; }
@@ -180,11 +195,10 @@ static char **gather_arguments(t_token *cmd_token, t_token *segment_end_token)
             }
             args[i] = ft_strdup(current->value); // Add the token's value
             if (!args[i]) { perror("strdup"); while (--i >= 1) free(args[i]); free(args); g_exit_code = 1; return NULL; }
-            current->used = true; // Mark this token used (as arg)
+            current->used = true;
             i++;
             args[i] = NULL;
         }
-        // Else (if used): just skip it
         current = current->next;
     }
     return args;

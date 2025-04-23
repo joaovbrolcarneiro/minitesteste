@@ -282,5 +282,7 @@ int execute_redirection_chain(t_shell *shell, t_node_tree *node);
 long long get_new_token_id(void);
 t_token	*create_and_init_token(char *input, int start, int token_len);
 void perform_quote_concatenation(t_token *token_list);
+void set_current_exit_status(int status);
+int get_current_exit_status(void);
 
  #endif
