@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/22 22:13:54 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/23 18:19:28 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,47 +108,27 @@ t_node_tree *new_yggnode(t_token *token)
     return (new_node);
 }
 
-static int count_following_words(t_token *cmd_token /*, t_token *segment_end_token - No longer needed */)
+static int count_following_words(t_token *cmd_token)
 {
     t_token *current;
     int count = 0;
 
     if (!cmd_token) return 0;
-
-    current = cmd_token->next; // Start scanning after the command token
-
-    // Scan until the true end (pipe or end of all tokens)
-    while (current)
-    {
-        // Stop definitively if a pipe is encountered
-        if (current->type == TOKEN_PIPE) {
+    current = cmd_token->next;
+    while (current) {
+        if (current->type == TOKEN_PIPE) // Stop at pipe
             break;
-        }
-
-        // If it's a redirection operator...
-        if (current->coretype == REDIR) {
+        if (current->coretype == REDIR) { // Skip redir+file
             t_token *filename = current->next;
-            // Check if a valid filename follows (must exist and be WORD)
-            if (filename && filename->type == TOKEN_WORD) {
-                current = filename->next; // Position current AFTER the filename
-                continue; // Continue scan from the token after the filename
-            } else {
-                // Malformed redirection (missing/invalid filename)
-                // Stop counting here as the command structure is likely invalid
-                break;
-            }
+            if (filename && filename->type == TOKEN_WORD) { // Check filename validity minimally
+                current = filename->next;
+                continue;
+            } else { break; } // Malformed redir
         }
-
-        // If it's a word, increment count
-        // We count *potential* args; gather_arguments will check 'used' flag.
-        if (current->type == TOKEN_WORD) {
-            count++;
-        }
-        // If it's not PIPE, REDIR, or WORD, just skip it
-
+        // --- Count ANY non-pipe, non-redir token ---
+        count++;
         current = current->next;
-    } // End while loop
-
+    }
     return count;
 }
 
@@ -158,99 +138,55 @@ static int count_following_words(t_token *cmd_token /*, t_token *segment_end_tok
 // redirections and their filenames. Respects the 'used' flag set by gather_filename.
 static char **gather_arguments(t_token *cmd_token, t_token *segment_end_token)
 {
-    // Note: segment_end_token passed from make_yggdrasil might still be useful
-    //       to know the original recursive boundary, but the scan logic now
-    //       primarily stops at pipes or NULL. Let's ignore it for now.
-     (void)segment_end_token; // Mark as unused for this logic
-
+     (void)segment_end_token; // Ignore segment end, scan till pipe/NULL
     char    **args = NULL;
     t_token *current;
     int     arg_count_total;
     int     arg_capacity;
-    int     i = 0; // Index for filling args array
+    int     i = 0;
     char    **temp_realloc = NULL;
 
     if (!cmd_token || !cmd_token->value) return NULL;
 
-    // 1. Count ALL potential arguments until the next pipe or end of list
-    arg_count_total = count_following_words(cmd_token /*, NULL */); // Use modified counter
+    arg_count_total = count_following_words(cmd_token); // Use modified counter
 
-    // 2. Allocate args array (command + counted args + NULL terminator)
     arg_capacity = arg_count_total + 1;
     args = hb_malloc(sizeof(char *) * (arg_capacity + 1));
-    if (!args) {
-        perror("konosubash: gather_arguments: malloc failed");
-        g_exit_code = 1; // Signal error
-        return NULL;
-    }
+    if (!args) { perror("malloc"); g_exit_code = 1; return NULL; }
 
-    // 3. Add command name as args[0]
-    // Important: We point to the original token value. Executor must not free args[0].
     args[0] = cmd_token->value;
     i = 1;
-    args[i] = NULL; // Keep NULL terminated
+    args[i] = NULL;
 
-    // 4. Iterate through tokens after command, collecting unused WORDs
     current = cmd_token->next;
-    while (current) // Scan until end of list
-    {
-        // Stop definitively at a pipe
-        if (current->type == TOKEN_PIPE) {
-            break;
-        }
+    while (current) {
+        if (current->type == TOKEN_PIPE) { break; }
 
-        // If it's a redirection operator... skip it and its filename
         if (current->coretype == REDIR) {
             t_token *filename_token = current->next;
-            // Check for valid filename token (must exist and be WORD)
-            // gather_filename called by make_yggdrasil would have already marked
-            // the filename used and potentially errored if missing/invalid.
             if (filename_token && filename_token->type == TOKEN_WORD) {
-                 current = filename_token->next; // Continue scan AFTER filename
+                 current = filename_token->next;
                  continue;
-            } else {
-                 // Malformed redirection encountered during arg scan. Stop.
-                 // (Parser should ideally catch this earlier via gather_filename failing)
-                 break;
-            }
+            } else { break; } // Malformed
         }
 
-        // If it's a WORD token AND it hasn't been used (e.g., as a filename by gather_filename)
-        if (current->type == TOKEN_WORD && !current->used) {
-            // Ensure capacity (safer in case count was off)
-            if (i >= arg_capacity) {
-                arg_capacity = i + 5; // Increase capacity
-                // Use standard realloc (or your hb_realloc equivalent)
-                temp_realloc = realloc(args, sizeof(char *) * (arg_capacity + 1));
-                if (!temp_realloc) {
-                    perror("konosubash: gather_arguments: realloc failed");
-                    while (--i >= 1) free(args[i]); // Free strdup'd strings
-                    free(args); // Free the array itself
-                    g_exit_code = 1;
-                    return NULL;
-                }
-                args = temp_realloc;
+        // --- Collect if NOT used (don't check type == WORD anymore) ---
+        if (!current->used) {
+            if (i >= arg_capacity) { // Realloc if needed
+                 arg_capacity = i + 5;
+                 temp_realloc = realloc(args, sizeof(char *) * (arg_capacity + 1));
+                 if (!temp_realloc) { perror("realloc"); while (--i >= 1) free(args[i]); free(args); g_exit_code = 1; return NULL; }
+                 args = temp_realloc;
             }
-
-            // Duplicate the argument value
-            args[i] = ft_strdup(current->value);
-            if (!args[i]) {
-                perror("konosubash: gather_arguments: strdup failed");
-                while (--i >= 1) free(args[i]);
-                free(args);
-                g_exit_code = 1;
-                return NULL;
-            }
-            current->used = true; // Mark this token as used (as an argument)
+            args[i] = ft_strdup(current->value); // Add the token's value
+            if (!args[i]) { perror("strdup"); while (--i >= 1) free(args[i]); free(args); g_exit_code = 1; return NULL; }
+            current->used = true; // Mark this token used (as arg)
             i++;
-            args[i] = NULL; // Keep NULL terminated
+            args[i] = NULL;
         }
-        // If token is not PIPE, REDIR, or usable WORD, just skip it
-
-        current = current->next; // Move to next token
-    } // End while loop
-
-    // 5. Final args array is ready
+        // Else (if used): just skip it
+        current = current->next;
+    }
     return args;
 }
 
