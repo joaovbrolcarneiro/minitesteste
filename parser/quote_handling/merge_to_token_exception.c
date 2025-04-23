@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:17:54 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/21 21:21:21 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/22 23:01:08 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 
 bool merge_to_token_exception(t_token *token)
 {
-    // Function disabled to prevent non-standard token merging.
-    (void)token; // Mark token as unused
+    (void)token;
     return (false);
 }
 

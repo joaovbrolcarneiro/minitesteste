@@ -102,15 +102,13 @@ int	populate_command_list(char **list, char **env)
 			status = populate_list_from_dir(list, dir, &current_index);
 		path_idx++;
 	}
-	list[current_index] = NULL; // Null-terminate list
+	list[current_index] = NULL;
 	ft_free_strarray(path_list);
-	if (status != 0) // Check status after loop
+	if (status != 0)
 		return (1);
 	return (0);
 }
 
-/* Creates a list of potential command names from PATH directories */
-/* Assumes command_list_malloc, populate_command_list, ft_free_strarray defined */
 char	**init_command_list(char **env)
 {
 	char	**list;

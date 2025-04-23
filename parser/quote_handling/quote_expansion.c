@@ -14,7 +14,6 @@
 #include "minishell_part2.h"
 
 
-/* Helper for counter: processes one '$' expansion */
 static void	count_expansion_part(char *input, char **env, int *i, int *count)
 {
 	int		start;
@@ -33,7 +32,6 @@ static void	count_expansion_part(char *input, char **env, int *i, int *count)
 	// free(substr); // free?
 }
 
-/* Counts length of string after potential $VAR expansion (double quotes) */
 int	quote_handler_counter(char *input, char **env)
 {
 	int	i;
@@ -56,8 +54,6 @@ int	quote_handler_counter(char *input, char **env)
 	return (counter);
 }
 
-/* Helper for cpy: processes one '$' expansion */
-/* Returns true on success, false on failure */
 static bool	copy_expansion_part(t_exp_cpy_vars *v, char *input, char **env)
 {
 	char	*substr;
@@ -79,7 +75,6 @@ static bool	copy_expansion_part(t_exp_cpy_vars *v, char *input, char **env)
 	return (true);
 }
 
-/* Copies input to dst, expanding $VAR (for double quotes) */
 char	*quote_handler_cpy(int total_len, char *input, char **env)
 {
 	t_exp_cpy_vars	v;

@@ -37,7 +37,6 @@ char	*is_quote_opened(char *input, int *is_unclosed)
 	return (input);
 }
 
-/* Checks if input exactly matches a quoted operator */
 bool	handler_quote_operator(char *input)
 {
 	int			i;
@@ -58,7 +57,6 @@ bool	handler_quote_operator(char *input)
 	return (false);
 }
 
-/* Helper for quote_handler: Handles single quotes */
 static char	*handle_single_quotes(t_token *token, char *original_value)
 {
 	char	*trimmed_value;
@@ -70,12 +68,11 @@ static char	*handle_single_quotes(t_token *token, char *original_value)
 		perror("ft_strtrim in quote_handler");
 		return (original_value);
 	}
-	// free(original_value); // Freeing original value commented out
+	// free(original_value); // free?
 	token->value = trimmed_value;
 	return (token->value);
 }
 
-/* Helper for quote_handler: Handles double quotes */
 static char	*handle_double_quotes(t_token *token, char **env, \
 									char *original_value, bool is_operator_literal)
 {
@@ -85,7 +82,7 @@ static char	*handle_double_quotes(t_token *token, char **env, \
 
 	token->literal = is_operator_literal;
 	trimmed_value = ft_strtrim(original_value, "\"");
-	// free(original_value); // Freeing original value commented out
+	// free(original_value); // free?
 	if (!trimmed_value)
 	{
 		perror("ft_strtrim in quote_handler");
@@ -97,7 +94,7 @@ static char	*handle_double_quotes(t_token *token, char **env, \
 	{
 		cmd_len = quote_handler_counter(trimmed_value, env);
 		expanded_value = quote_handler_cpy(cmd_len, trimmed_value, env);
-		// free(trimmed_value); // Freeing intermediate result commented out
+		// free(trimmed_value); free?
 		if (!expanded_value)
 		{
 			perror("quote_handler_cpy failed");

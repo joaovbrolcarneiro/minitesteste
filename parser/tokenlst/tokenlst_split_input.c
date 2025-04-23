@@ -81,13 +81,14 @@ t_token *create_and_init_token(char *input, int start, int token_len)
     int     index_after_token = start + token_len;
 
     new_token = hb_malloc(sizeof(t_token));
-    if (!new_token) { /* handle error */ return (NULL); }
+    if (!new_token)
+		return (NULL);
     ft_memset(new_token, 0, sizeof(t_token));
     new_token->value = ft_substr(input, start, token_len);
-    if (!new_token->value) { /* handle error */ free(new_token); return (NULL); }
+    if (!new_token->value)
+		return (NULL);
 
-    // --- Initialize other fields ---
-    new_token->id = get_new_token_id(); // Assuming you have get_new_token_id
+    new_token->id = get_new_token_id();
     new_token->type = TOKEN_WORD;
     new_token->coretype = TOKEN_WORD;
     new_token->rank = RANK_C;
@@ -96,15 +97,10 @@ t_token *create_and_init_token(char *input, int start, int token_len)
     new_token->literal = false;
     new_token->next = NULL;
 
-    // --- Set join_next flag ---
-    // Join if the next character exists and is NOT whitespace or an operator
-    // (Adjust ischarset set as needed for your operators)
     new_token->join_next = (input[index_after_token] != '\0' &&
                            !is_whitespace(input[index_after_token]) &&
                            !ischarset("|<>", input[index_after_token]));
-    // --------------------------
-
-    return (new_token);
+    return (new_token);  
 }
 
 static int	process_single_token_block(char *input, int *start,
@@ -147,7 +143,6 @@ t_token	*split_input(char *input, int unused_i)
 		status = process_single_token_block(input, &start, &first, &lst);
 		if (status == -1)
 		{
-			free_token_list(first);
 			g_exit_code = 1;
 			return (NULL);
 		}

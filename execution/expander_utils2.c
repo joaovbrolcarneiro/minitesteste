@@ -72,18 +72,3 @@ long long	get_new_token_id(void)
 	return (id++);
 }
 
-void	free_token_list(t_token *list)
-{
-	t_token	*current;
-	t_token	*next;
-
-	current = list;
-	while (current)
-	{
-		next = current->next;
-		if (current->value)
-			free(current->value);
-		free(current);
-		current = next;
-	}
-}

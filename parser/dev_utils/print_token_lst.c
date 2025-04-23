@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:04:52 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/17 18:49:41 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/22 23:01:29 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@
 			return ("UNKNOWN_TYPE");
 	}
 	
-	/* Prints token list details to STDOUT (for debugging) */
-	/* Uses allowed printf and write functions */
 	void	print_token_lst(t_token *lst)
 	{
 		char	*type_str;

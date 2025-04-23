@@ -280,7 +280,6 @@ t_token	*finalize_list(t_token *first, t_token *last);
 void st_prsr_err(const char *message, const char *token_value);
 int execute_redirection_chain(t_shell *shell, t_node_tree *node);
 long long get_new_token_id(void);
-void free_token_list(t_token *list);
 t_token	*create_and_init_token(char *input, int start, int token_len);
 void perform_quote_concatenation(t_token *token_list);
 

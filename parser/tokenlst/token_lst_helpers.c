@@ -100,7 +100,6 @@ bool search_list(char *search, char **env)
     return (found);
 }
 
-/* Handles end conditions and returns the final list head */
 t_token	*finalize_list(t_token *first, t_token *last)
 {
 	if (last)

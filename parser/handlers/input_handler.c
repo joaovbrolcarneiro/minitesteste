@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:05:15 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/21 22:48:40 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:36:36 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,19 @@
 #include "minishell_part2.h"
 
 
-t_token *delegated_by_input_handler(char *input, char **env)
+t_token	*delegated_by_input_handler(char *input, char **env)
 {
-    t_token *first;
-    t_token *token;
+	t_token	*first;
 
-    token = split_input(input, 0);
-    first = token;
-    if (!first)
-        return (NULL);
-
-    quote_handler_call_loop(token, env);
-
-    perform_quote_concatenation(first);
-
-    typealize_call_loop(token, env);
-
-    if (has_parser_error(first)) {
-        return (first);
-    }
-
-    return (first);
+	first = split_input(input, 0);
+	if (!first)
+		return (NULL);
+	quote_handler_call_loop(first, env);
+	typealize_call_loop(first, env);
+	perform_quote_concatenation(first);
+	if (has_parser_error(first))
+		return (first);
+	return (first);
 }
 
 
@@ -84,8 +76,9 @@ t_token *input_handler(t_shell *shell, char *input)
             temp->used = false;
             temp = temp->next;
         }
-
+	    print_token_lst(token_list);
         tree = init_yggdrasil(token_list);
+	    print_yggdrasil(tree, 0, "root:");
 
         if (tree)
         {

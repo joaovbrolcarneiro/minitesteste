@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:52:43 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/21 22:46:15 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:35:37 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_token *remove_node_after(t_token *prev_node) {
     return node_to_remove;
 }
 
-// Frees a single token and its allocated value
 void free_single_token(t_token *token) {
     if (!token) return;
     if (token->value) {
@@ -41,42 +40,41 @@ void free_single_token(t_token *token) {
 }
 
 
-// New function to perform concatenation after quote handling
-void perform_quote_concatenation(t_token *token_list) {
-    t_token *current = token_list;
-    t_token *node_to_remove;
-    char *joined_value;
-    char *temp_value_ptr;
+void	perform_quote_concatenation(t_token *token_list)
+{
+	t_token	*current;
+	t_token	*node_to_remove;
+	char	*joined_value;
+	char	*temp_value_ptr;
 
-    while (current) {
-        
-        if (current->join_next && current->next) {
-          
-            temp_value_ptr = current->value;
-            joined_value = ft_strjoin(current->value, current->next->value);
-
-            if (!joined_value) {
-                perror("konosubash: perform_quote_concatenation: ft_strjoin failed");
-                current->join_next = false;
-                current = current->next;
-                continue;
-            }
-
-            free(temp_value_ptr);
-            current->value = joined_value; 
-            current->join_next = current->next->join_next;
-
-            node_to_remove = remove_node_after(current);
-
-            if (node_to_remove) {
-                free_single_token(node_to_remove);
-            }
-
-        } else {
-            
-            current = current->next;
-        }
-    }
+	current = token_list;
+	while (current)
+	{
+		if (current->join_next && current->next
+			&& current->coretype != TOKEN_PIPE
+			&& current->coretype != REDIR
+			&& current->next->coretype != TOKEN_PIPE
+			&& current->next->coretype != REDIR)
+		{
+			temp_value_ptr = current->value;
+			joined_value = ft_strjoin(current->value, current->next->value);
+			if (!joined_value)
+			{
+				perror("konosubash: pqc: strjoin failed");
+				current->join_next = false;
+				current = current->next;
+				continue ;
+			}
+			free(temp_value_ptr); // free?
+			current->value = joined_value;
+			current->join_next = current->next->join_next;
+			node_to_remove = remove_node_after(current);
+			if (node_to_remove)
+				free_single_token(node_to_remove);
+		}
+		else
+			current = current->next;
+	}
 }
 
 

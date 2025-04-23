@@ -1,0 +1,3 @@
+|ls
+ls echo
+ctrl-C in a prompt after you wrote some stuff should display a new line with a new prompt.
