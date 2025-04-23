@@ -35,7 +35,7 @@ void	handle_exit_status(t_exp_vars *v)
 {
 	char	*exit_str;
 
-	exit_str = ft_itoa(g_exit_code);
+	exit_str = ft_itoa(get_current_exit_status());
 	if (!exit_str)
 	{
 		perror("minishell: ft_itoa");

@@ -1,5 +1,0 @@
-file22.txt
-infile.txt
-Makefile
-my file with spaces.txt
-outfile.txt

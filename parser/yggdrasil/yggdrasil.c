@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/23 19:50:33 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/23 21:26:02 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ static char **gather_arguments(t_token *cmd_token, t_token *segment_end_token)
 
     arg_capacity = arg_count_total + 1;
     args = hb_malloc(sizeof(char *) * (arg_capacity + 1));
-    if (!args) { perror("malloc"); g_exit_code = 1; return NULL; }
+    if (!args) { perror("malloc"); set_current_exit_status(1); return NULL; }
 
     args[0] = cmd_token->value;
     i = 1;
@@ -190,11 +190,11 @@ static char **gather_arguments(t_token *cmd_token, t_token *segment_end_token)
             { 
                  arg_capacity = i + 5;
                  temp_realloc = realloc(args, sizeof(char *) * (arg_capacity + 1));
-                 if (!temp_realloc) { perror("realloc"); while (--i >= 1) free(args[i]); free(args); g_exit_code = 1; return NULL; }
+                 if (!temp_realloc) { perror("realloc"); while (--i >= 1) free(args[i]); free(args); set_current_exit_status(1); return NULL; }
                  args = temp_realloc;
             }
             args[i] = ft_strdup(current->value); // Add the token's value
-            if (!args[i]) { perror("strdup"); while (--i >= 1) free(args[i]); free(args); g_exit_code = 1; return NULL; }
+            if (!args[i]) { perror("strdup"); while (--i >= 1) free(args[i]); free(args); set_current_exit_status(1); return NULL; }
             current->used = true;
             i++;
             args[i] = NULL;
@@ -229,7 +229,7 @@ static char *gather_filename(t_token *redir_token, t_token *end_token)
         filename = ft_strdup(file_token->value);
         if (!filename) {
             perror("konosubash: gather_filename: strdup failed");
-            g_exit_code = 1; // Signal error
+            set_current_exit_status(1); // Signal error
             return NULL;
         }
         file_token->used = true; // Mark the filename token as used
@@ -269,64 +269,76 @@ t_node_tree *new_yggnode(t_token *token)
     return (new_node);
 }*/
 
-t_node_tree *make_yggdrasil(t_token *t, t_token *f, t_token *e, t_node_tree *parent_y)
+t_node_tree	*make_yggdrasil(t_token *t, t_token *f, t_token *e, \
+								t_node_tree *parent_y)
 {
-    (void)parent_y;
+	t_node_tree	*y;
+	t_token		*left_child_token;
+	t_token		*right_child_token;
 
-    t_node_tree *y = NULL;
-    t_token *left_child_token = NULL;
-    t_token *right_child_token = NULL;
-
-    if (!t || t == e || t->used) {
-        return NULL;
-    }
-
-    y = new_yggnode(t);
-    if (!y) {
-        g_exit_code = 1;
-        return NULL;
-    }
-
-    if (y->type == AST_COMMAND) {
-        y->args = gather_arguments(t, e);
-        if (!y->args && g_exit_code != 0) {
-             free(y); //free?
-             return NULL;
-        }
-    } else if (y->type == AST_REDIR_IN || y->type == AST_REDIR_OUT ||
-               y->type == AST_APPEND || y->type == AST_HEREDOC) {
-        y->file = gather_filename(t, e);
-        if (!y->file) {
-             st_prsr_err("syntax error near unexpected token", t->value);
-             g_exit_code = 2;
-             if (y->args) ft_free_strarray(y->args); // free?
-             if (y->content)
-             free(y); //free?
-             return NULL;
-        }
-    }
-
-    // --- Find Potential Children ---
-    left_child_token = find_left_token(t, f);
-    right_child_token = find_right_token(t, e);
-
-    // --- Recursive Calls ---
-
-    y->left = make_yggdrasil(left_child_token, f, t, y);
-    if (g_exit_code != 0 && y->left == NULL && left_child_token && !left_child_token->used) {
-         if(y->args) ft_free_strarray(y->args);
-         if(y->file) free(y->file);
-         free(y);
-         return NULL;
-    }
-
-    y->right = make_yggdrasil(right_child_token, t, e, y);
-    if (g_exit_code != 0 && y->right == NULL && right_child_token && !right_child_token->used) {
-         if (y->left) { /* free_ast(y->left); free?*/ }
-         if(y->args) ft_free_strarray(y->args);
-         if(y->file) free(y->file);
-         free(y);
-         return NULL;
-    }
-    return y;
+	(void)parent_y;
+	y = NULL;
+	left_child_token = NULL;
+	right_child_token = NULL;
+	if (!t || t == e || t->used)
+		return (NULL);
+	y = new_yggnode(t); // Creates node based on token t, marks t used
+	if (!y)
+	{
+		set_current_exit_status(1); // Use setter
+		return (NULL);
+	}
+	// Check and gather args/file based on initial node type
+	// Note: gather_arguments should be the version that skips redirections
+	if (y->type == AST_COMMAND)
+	{
+		y->args = gather_arguments(t, NULL);
+		if (!y->args && get_current_exit_status() != 0) // Use getter
+		{
+			free(y); // free?
+			return (NULL);
+		}
+	}
+	else if (y->type == AST_REDIR_IN || y->type == AST_REDIR_OUT
+		|| y->type == AST_APPEND || y->type == AST_HEREDOC)
+	{
+		y->file = gather_filename(t, e);
+		if (!y->file) // Check if filename missing or gather_filename failed
+		{
+			// If gather_filename failed malloc, it should set status code
+			if (get_current_exit_status() == 0) // Use getter
+			{
+				st_prsr_err("syntax error near unexpected token", t->value);
+				set_current_exit_status(2); // Use setter
+			}
+			// If y->args was somehow allocated for a redir node, free it
+			if (y->args)
+				ft_free_strarray(y->args); // free?
+			free(y); // free?
+			return (NULL);
+		}
+	}
+	// --- Always find potential children and recurse ---
+	left_child_token = find_left_token(t, f);
+	right_child_token = find_right_token(t, e);
+	y->left = make_yggdrasil(left_child_token, f, t, y);
+	if (get_current_exit_status() != 0 && y->left == NULL \
+		&& left_child_token && !left_child_token->used) // Use getter
+	{
+		if (y->args) ft_free_strarray(y->args); // Cleanup args if present
+		if (y->file) free(y->file);             // Cleanup file if present
+		free(y);
+		return (NULL);
+	}
+	y->right = make_yggdrasil(right_child_token, t, e, y);
+	if (get_current_exit_status() != 0 && y->right == NULL \
+		&& right_child_token && !right_child_token->used) // Use getter
+	{
+		if (y->left) //free_ast(y->left);            // free? Assuming free_ast exists
+		if (y->args) ft_free_strarray(y->args);
+		if (y->file) free(y->file);
+		free(y);
+		return (NULL);
+	}
+	return (y);
 }

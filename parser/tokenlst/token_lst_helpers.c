@@ -134,5 +134,5 @@ void st_prsr_err(const char *message, const char *token_value)
 
     ft_putstr_fd((char *)"\n", 2);
 
-    g_exit_code = 2;
+    set_current_exit_status(2);
 }

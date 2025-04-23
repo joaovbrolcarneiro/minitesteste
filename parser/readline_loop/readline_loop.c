@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:31:39 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/17 17:02:22 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/23 21:12:53 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	readline_loop(t_shell *shell) // ALTEREI - JOAO
 		{
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			cleanup_shell(shell);
-			exit(g_exit_code);
+			exit(get_current_exit_status());
 		}
 		if (*input)
 			add_history(input);

@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:05:15 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/23 17:36:36 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/23 21:12:21 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_token *input_handler(t_shell *shell, char *input)
     }
     else
     {
-        g_exit_code = 2;
+        set_current_exit_status(2);
     }
     return (token_list);
 }

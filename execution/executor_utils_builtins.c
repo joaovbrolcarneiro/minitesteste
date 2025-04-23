@@ -89,7 +89,7 @@ static int	handle_exit_no_arg(t_shell *shell)
 {
 	int	exit_val_to_use;
 
-	exit_val_to_use = g_exit_code;
+	exit_val_to_use = get_current_exit_status();
 	cleanup_shell(shell);
 	exit(exit_val_to_use);
 	return (0);
@@ -104,7 +104,7 @@ int	ft_exit(char **args, t_shell *shell)
 	if (args[1] && args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-		g_exit_code = 1;
+		set_current_exit_status(1);
 		return (1);
 	}
 	else if (args[1])

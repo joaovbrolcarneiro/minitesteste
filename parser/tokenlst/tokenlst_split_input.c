@@ -143,7 +143,7 @@ t_token	*split_input(char *input, int unused_i)
 		status = process_single_token_block(input, &start, &first, &lst);
 		if (status == -1)
 		{
-			g_exit_code = 1;
+			set_current_exit_status(1);
 			return (NULL);
 		}
 		if (status == 1)

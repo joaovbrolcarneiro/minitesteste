@@ -92,11 +92,11 @@ int	execute_ast(t_shell *shell, t_node_tree *node)
 	status = 0;
 	if (!node)
 	{
-		g_exit_code = 0;
+		set_current_exit_status(0);
 		return (0);
 	}
 	status = dispatch_ast_node(shell, node);
-	g_exit_code = status;
+	set_current_exit_status(status);
 	return (status);
 }
 
