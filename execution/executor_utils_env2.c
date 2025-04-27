@@ -66,20 +66,30 @@ static int	print_sorted_env(char ***env)
 {
 	char	**sorted;
 	int		i;
+	char	*equal_sign;
 
 	sorted = sort_env(*env);
 	if (!sorted)
-		return (perror("minishell: export"), 1);
+		return (perror("minishell: export"),1);
 	i = 0;
 	while (sorted[i])
 	{
-		ft_putstr_fd(sorted[i], 1);
-		ft_putstr_fd("\n", 1);
+		equal_sign = ft_strchr(sorted[i], '=');
+		write(STDOUT_FILENO, "declare -x ", 11);
+		if (equal_sign)
+		{
+			write(STDOUT_FILENO, sorted[i], equal_sign - sorted[i]);
+			write(STDOUT_FILENO, "=\"", 2);
+			ft_putstr_fd(equal_sign + 1, STDOUT_FILENO);
+			write(STDOUT_FILENO, "\"", 1);
+		}
+		else
+			ft_putstr_fd(sorted[i], STDOUT_FILENO);
+		write(STDOUT_FILENO, "\n", 1);
 		free(sorted[i]);
 		i++;
 	}
-	free(sorted);
-	return (0);
+	return (free(sorted), 0);
 }
 
 /* Builtin export command */

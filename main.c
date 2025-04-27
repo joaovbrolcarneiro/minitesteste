@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include "minishell_part2.h"
 
-static int g_shell_exit_status = 0; 
+static int g_shell_exit_status; 
 
 /*
 ** konopwd:
