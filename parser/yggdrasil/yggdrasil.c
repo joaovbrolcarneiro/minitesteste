@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/23 21:26:02 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/04/27 03:31:58 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ t_node_tree *new_yggnode(t_token *token)
     new_node->err = token->err;
     new_node->coretype = token->coretype;
     new_node->literal = token->literal;
-    // new_node->merge_next = token->merge_next; // Unlikely needed in AST
+    // new_node->merge_next = token->merge_next; // acho que inutil
 
     return (new_node);
 }
@@ -282,20 +282,18 @@ t_node_tree	*make_yggdrasil(t_token *t, t_token *f, t_token *e, \
 	right_child_token = NULL;
 	if (!t || t == e || t->used)
 		return (NULL);
-	y = new_yggnode(t); // Creates node based on token t, marks t used
+	y = new_yggnode(t);
 	if (!y)
 	{
-		set_current_exit_status(1); // Use setter
+		set_current_exit_status(1);
 		return (NULL);
 	}
-	// Check and gather args/file based on initial node type
-	// Note: gather_arguments should be the version that skips redirections
 	if (y->type == AST_COMMAND)
 	{
 		y->args = gather_arguments(t, NULL);
-		if (!y->args && get_current_exit_status() != 0) // Use getter
+		if (!y->args && get_current_exit_status() != 0)
 		{
-			free(y); // free?
+			free(y); // free
 			return (NULL);
 		}
 	}
@@ -303,41 +301,40 @@ t_node_tree	*make_yggdrasil(t_token *t, t_token *f, t_token *e, \
 		|| y->type == AST_APPEND || y->type == AST_HEREDOC)
 	{
 		y->file = gather_filename(t, e);
-		if (!y->file) // Check if filename missing or gather_filename failed
+		if (!y->file)
 		{
-			// If gather_filename failed malloc, it should set status code
-			if (get_current_exit_status() == 0) // Use getter
-			{
-				st_prsr_err("syntax error near unexpected token", t->value);
-				set_current_exit_status(2); // Use setter
-			}
-			// If y->args was somehow allocated for a redir node, free it
+			st_prsr_err("syntax error near unexpected token", t->value);
+			set_current_exit_status(2);
 			if (y->args)
-				ft_free_strarray(y->args); // free?
-			free(y); // free?
+				ft_free_strarray(y->args); // free
+			free(y); // free
 			return (NULL);
 		}
 	}
-	// --- Always find potential children and recurse ---
 	left_child_token = find_left_token(t, f);
 	right_child_token = find_right_token(t, e);
 	y->left = make_yggdrasil(left_child_token, f, t, y);
 	if (get_current_exit_status() != 0 && y->left == NULL \
-		&& left_child_token && !left_child_token->used) // Use getter
+		&& left_child_token && !left_child_token->used)
 	{
-		if (y->args) ft_free_strarray(y->args); // Cleanup args if present
-		if (y->file) free(y->file);             // Cleanup file if present
-		free(y);
+		if (y->args)
+			ft_free_strarray(y->args); // free
+		if (y->file)
+			free(y->file); // free
+		free(y); // free
 		return (NULL);
 	}
 	y->right = make_yggdrasil(right_child_token, t, e, y);
 	if (get_current_exit_status() != 0 && y->right == NULL \
-		&& right_child_token && !right_child_token->used) // Use getter
+		&& right_child_token && !right_child_token->used)
 	{
-		if (y->left) //free_ast(y->left);            // free? Assuming free_ast exists
-		if (y->args) ft_free_strarray(y->args);
-		if (y->file) free(y->file);
-		free(y);
+		if (y->left)
+			//free_ast(y->left); // free
+		if (y->args)
+			ft_free_strarray(y->args); // free
+		if (y->file)
+			free(y->file); // free
+		free(y); // free
 		return (NULL);
 	}
 	return (y);
