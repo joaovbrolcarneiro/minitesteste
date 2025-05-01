@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   yggdrasil.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/27 03:31:58 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:53:33 by hde-barr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,44 +41,58 @@ t_token *find_right_token(t_token *token, t_token *eof)
 	return (token);
 }
 
-t_token	*find_left_token(t_token *target_node, t_token *first_in_segment)
+typedef struct s_flt_vrs
 {
-	t_token		*current_token;
+	t_token		*cu_tken;
 	t_token		*last_highest_found;
 	t_ranking	max_rank_found;
+} t_flt_vrs;
 
+bool flt_nrm(t_token *target_node, t_token *first_in_segment, t_flt_vrs *vrs)
+{
+	
 	if (target_node == first_in_segment || !target_node || !first_in_segment)
+		return (true);
+	vrs->last_highest_found = NULL;
+	vrs->max_rank_found = RANK_F;
+	vrs->cu_tken = get_prev_node(target_node, first_in_segment);
+	return(false);
+}
+
+void flt_nrm2(t_flt_vrs *vrs)
+{
+	vrs->max_rank_found = vrs->cu_tken->rank;
+	vrs->last_highest_found = vrs->cu_tken;
+}
+
+
+t_token	*find_left_token(t_token *target_node, t_token *first_in_segment)
+{
+	t_flt_vrs vars;
+
+	if (flt_nrm(target_node, first_in_segment, &vars))
 		return (NULL);
-	last_highest_found = NULL;
-	max_rank_found = RANK_F;
-	current_token = get_prev_node(target_node, first_in_segment);
-	while (current_token != NULL)
+	while (vars.cu_tken != NULL)
 	{
-		if (!current_token->used)
-		{
-			if (current_token->rank >= max_rank_found)
-			{
-				max_rank_found = current_token->rank;
-				last_highest_found = current_token;
-			}
-		}
-		if (current_token == first_in_segment)
+		if (!vars.cu_tken->used && vars.cu_tken->rank >= vars.max_rank_found)
+			flt_nrm2(&vars);
+		if (vars.cu_tken == first_in_segment)
 			break ;
-		current_token = get_prev_node(current_token, first_in_segment);
+		vars.cu_tken = get_prev_node(vars.cu_tken, first_in_segment);
 	}
-	if (!last_highest_found)
+	if (!vars.last_highest_found)
 		return (NULL);
-	if (last_highest_found->rank == RANK_B)
+	if (vars.last_highest_found->rank == RANK_B)
 	{
-		current_token = first_in_segment;
-		while (current_token && current_token != target_node)
+		vars.cu_tken = first_in_segment;
+		while (vars.cu_tken && vars.cu_tken != target_node)
 		{
-			if (current_token->type == TOKEN_CMD && !current_token->used)
-				return (current_token);
-			current_token = current_token->next;
+			if (vars.cu_tken->type == TOKEN_CMD && !vars.cu_tken->used)
+				return (vars.cu_tken);
+			vars.cu_tken = vars.cu_tken->next;
 		}
 	}
-	return (last_highest_found);
+	return (vars.last_highest_found);
 }
 
 t_node_tree *new_yggnode(t_token *token)
@@ -143,10 +157,115 @@ static int count_following_words(t_token *cmd_token)
     return count;
 }
 
+typedef struct s_gthr_arg_vrs
+{
+	char    **args;
+    t_token *current;
+    int     arg_count_total;
+    int     arg_capacity;
+    int     i;
+    char    **temp_realloc;
+}	t_gthr_arg_vrs;
 
+
+t_gthr_arg_vrs gthr_arg_vrs_init(t_gthr_arg_vrs *cu)
+{
+	cu->args = NULL;
+	cu->temp_realloc = NULL;
+	cu->i = 0;
+	return (*cu);
+}
+
+static bool gather_arg_helper(t_token *cmd_token, t_gthr_arg_vrs *cu)
+{
+	if (!cmd_token || !cmd_token->value) 
+		return true;
+    cu->arg_count_total = count_following_words(cmd_token);
+    cu->arg_capacity = cu->arg_count_total + 1;
+    cu->args = hb_malloc(sizeof(char *) * (cu->arg_capacity + 1));
+	return (false);
+}
+
+static bool gather_arg_helper2(t_token *cmd_token, t_gthr_arg_vrs *cu)
+{
+	if (!cu->args) 
+		return (set_current_exit_status(1), true);
+    cu->args[0] = cmd_token->value;
+    cu->i = 1;
+    cu->args[cu->i] = NULL;
+	return (false);
+}
+
+static bool gather_arg_helper3_part2(t_gthr_arg_vrs *cu)
+{
+	if (cu->i >= cu->arg_capacity) 
+    { 
+        cu->arg_capacity = cu->i + 5;
+    	cu->temp_realloc = realloc(cu->args, sizeof(char *) * (cu->arg_capacity + 1));
+        if (!cu->temp_realloc)  
+			return (set_current_exit_status(1), true);
+        cu->args = cu->temp_realloc;
+    }
+	return (false);
+}
+
+static bool gather_arg_helper3_part3(t_gthr_arg_vrs *cu)
+{
+    if (!cu->args[cu->i]) 
+		return (set_current_exit_status(1), true);
+	cu->current->used = true;
+	cu->i++;
+	cu->args[cu->i] = NULL;
+	return (false);
+}
+
+static char **gather_arg_helper3(t_gthr_arg_vrs *cu)
+{
+	while (cu->current) 
+	{
+        if (cu->current->type == TOKEN_PIPE) 
+			break;
+        if (cu->current->coretype == REDIR) 
+		{
+            t_token *filename_token = cu->current->next;
+            if (filename_token && filename_token->type == TOKEN_WORD) 
+            {
+                 cu->current = filename_token->next;
+                 continue;
+            }
+            break; 
+        }
+        if (!cu->current->used) 
+		{
+			if(gather_arg_helper3_part2(cu))
+				return (NULL);
+            cu->args[cu->i] = ft_strdup(cu->current->value); // Add the token's value
+			if(gather_arg_helper3_part3(cu))
+				return (NULL);
+        }
+        cu->current = cu->current->next;
+    }
+	return (cu->args);
+}
 // --- Modified gather_arguments ---
 // Scans for arguments until the next pipe or end of list, skipping over
 // redirections and their filenames. Respects the 'used' flag set by gather_filename.
+static char **gather_arguments(t_token *cmd_token, t_token *segment_end_token)
+{
+    (void)segment_end_token;
+	t_gthr_arg_vrs cu;
+	
+	cu = gthr_arg_vrs_init(&cu);
+	if(gather_arg_helper(cmd_token, &cu))
+		return (NULL);
+	if(gather_arg_helper2(cmd_token, &cu))
+		return (NULL);
+    cu.current = cmd_token->next;
+    cu.args = gather_arg_helper3(&cu);
+    return (cu.args);
+}
+
+/* // gather_arguments original !!!!!!!
 static char **gather_arguments(t_token *cmd_token, t_token *segment_end_token)
 {
      (void)segment_end_token; 
@@ -170,31 +289,48 @@ static char **gather_arguments(t_token *cmd_token, t_token *segment_end_token)
     args[i] = NULL;
 
     current = cmd_token->next;
-    while (current) {
-        if (current->type == TOKEN_PIPE) { break; }
-
-        if (current->coretype == REDIR) {
+    while (current) 
+	{
+        if (current->type == TOKEN_PIPE) 
+			break; 
+        if (current->coretype == REDIR) 
+		{
             t_token *filename_token = current->next;
             if (filename_token && filename_token->type == TOKEN_WORD) 
             {
                  current = filename_token->next;
                  continue;
-            } else 
-            { 
+            } 
+			else 
                 break; 
-            }
         }
-
-        if (!current->used) {
+        if (!current->used) 
+		{
             if (i >= arg_capacity) 
             { 
                  arg_capacity = i + 5;
                  temp_realloc = realloc(args, sizeof(char *) * (arg_capacity + 1));
-                 if (!temp_realloc) { perror("realloc"); while (--i >= 1) free(args[i]); free(args); set_current_exit_status(1); return NULL; }
+                if (!temp_realloc) 
+				{ 
+					perror("realloc"); 
+					while (--i >= 1) 
+						free(args[i]); 
+					free(args); 
+					set_current_exit_status(1); 
+					return NULL; 
+				}
                  args = temp_realloc;
             }
             args[i] = ft_strdup(current->value); // Add the token's value
-            if (!args[i]) { perror("strdup"); while (--i >= 1) free(args[i]); free(args); set_current_exit_status(1); return NULL; }
+            if (!args[i]) 
+			{ 
+				perror("strdup"); 
+				while (--i >= 1) 
+					free(args[i]); 
+				free(args); 
+				set_current_exit_status(1); 
+				return NULL; 
+			}
             current->used = true;
             i++;
             args[i] = NULL;
@@ -203,6 +339,7 @@ static char **gather_arguments(t_token *cmd_token, t_token *segment_end_token)
     }
     return args;
 }
+ */
 
 // --- gather_filename remains unchanged ---
 // It correctly finds the next unused WORD token after the redirection operator
@@ -212,22 +349,19 @@ static char *gather_filename(t_token *redir_token, t_token *end_token)
     t_token *file_token;
     char *filename = NULL;
 
-    if (!redir_token) return NULL;
-
+    if (!redir_token) 
+		return NULL;
     file_token = redir_token->next;
-
     // Skip already used tokens to find filename
-    while (file_token && file_token != end_token && file_token->used) {
+    while (file_token && file_token != end_token && file_token->used) 
         file_token = file_token->next;
-    }
-
-
     // Check if we found a valid, unused word token
     if (file_token && file_token != end_token && file_token->type == TOKEN_WORD && !file_token->used)
     {
         // Duplicate the filename for safety
         filename = ft_strdup(file_token->value);
-        if (!filename) {
+        if (!filename) 
+		{
             perror("konosubash: gather_filename: strdup failed");
             set_current_exit_status(1); // Signal error
             return NULL;
@@ -269,6 +403,230 @@ t_node_tree *new_yggnode(t_token *token)
     return (new_node);
 }*/
 
+
+
+
+/*static t_node_tree	*make_yggdrasil_helper(t_token *t, t_token *f, \
+t_token *e, t_node_tree *parent_y)
+{
+	t_node_tree	*y;
+	t_token		*left_child_token;
+	t_token		*right_child_token;
+	
+	(void)parent_y;
+	y = NULL;
+	
+}*/
+
+typedef struct s_obj_ygg
+{
+	t_node_tree	*y;
+	t_token		*left_child_token;
+	t_token		*right_child_token;
+}	t_obj_ygg;
+
+
+static t_obj_ygg	make_yggdrasil_init(void)
+{
+	t_node_tree	*y;
+	t_token		*left_child_token;
+	t_token		*right_child_token;
+
+	y = NULL;
+	left_child_token = NULL;
+	right_child_token = NULL;
+	
+	return ((t_obj_ygg){y, left_child_token, right_child_token});
+	
+}
+
+static bool r(t_obj_ygg obj_ygg)
+{
+	if (obj_ygg.right_child_token && !obj_ygg.right_child_token->used)
+		return (true);
+	return (false);
+}
+
+static bool l(t_obj_ygg obj_ygg)
+{
+	if (obj_ygg.left_child_token && !obj_ygg.left_child_token->used)
+		return (true);
+	return (false);
+}
+
+static void by_pass_st_prsr_err(t_token *t)
+{
+	st_prsr_err("syntax error near unexpected token", t->value), \
+	set_current_exit_status(2);
+}
+
+static bool by_pass_redir(t_obj_ygg ob_yg)
+{
+	if (ob_yg.y->type == AST_REDIR_IN || ob_yg.y->type == AST_REDIR_OUT
+		|| ob_yg.y->type == AST_APPEND || ob_yg.y->type == AST_HEREDOC)
+		return (true);
+	return (false);
+}
+
+//function default proprety
+static bool fdp(t_obj_ygg ob_yg, t_token *t, t_token *f, t_token *e)
+{
+	ob_yg.left_child_token = find_left_token(t, f);
+	ob_yg.right_child_token = find_right_token(t, e);
+	ob_yg.y->left = make_yggdrasil(ob_yg.left_child_token, f, t, ob_yg.y);
+	if (get_current_exit_status() != 0 && ob_yg.y->left == NULL && l(ob_yg))
+		return (true);
+	ob_yg.y->right = make_yggdrasil(ob_yg.right_child_token, t, e, ob_yg.y);
+	if (get_current_exit_status() != 0 && ob_yg.y->right == NULL && r(ob_yg))
+		return (true);
+	return (false);
+}
+
+
+t_node_tree	*make_yggdrasil(t_token *t, t_token *f, t_token *e, \
+t_node_tree *parent_y)
+{
+	t_obj_ygg	ob_yg;
+
+	(void)parent_y;
+	ob_yg = make_yggdrasil_init();
+
+	if (!t || t == e || t->used)
+		return (NULL);
+	ob_yg.y = new_yggnode(t);
+	if (!ob_yg.y)
+		return (set_current_exit_status(1) ,NULL);
+	if (ob_yg.y->type == AST_COMMAND)
+	{
+		ob_yg.y->args = gather_arguments(t, NULL);
+		if (!ob_yg.y->args && get_current_exit_status() != 0)
+			return (NULL);
+	}
+	else if (by_pass_redir(ob_yg))
+	{
+		ob_yg.y->file = gather_filename(t, e);
+		if (!ob_yg.y->file)
+			return (by_pass_st_prsr_err(t), NULL);
+	}
+	if(fdp(ob_yg, t, f, e))
+		return (NULL);
+	return (ob_yg.y);
+}
+
+
+
+/* Versao 2!!!!
+typedef struct s_obj_ygg
+{
+	t_node_tree	*y;
+	t_token		*left_child_token;
+	t_token		*right_child_token;
+}	t_obj_ygg;
+
+
+static t_obj_ygg	make_yggdrasil_init(void)
+{
+	t_node_tree	*y;
+	t_token		*left_child_token;
+	t_token		*right_child_token;
+
+	y = NULL;
+	left_child_token = NULL;
+	right_child_token = NULL;
+	
+	return ((t_obj_ygg){y, left_child_token, right_child_token});
+	
+}
+
+
+
+t_node_tree	*make_yggdrasil(t_token *t, t_token *f, t_token *e, \
+t_node_tree *parent_y)
+{
+	t_obj_ygg obj_ygg;
+
+	(void)parent_y;
+	obj_ygg = make_yggdrasil_init();
+
+	if (!t || t == e || t->used)
+		return (NULL);
+	obj_ygg.y = new_yggnode(t);
+	if (!obj_ygg.y)
+		return (set_current_exit_status(1) ,NULL);
+	if (obj_ygg.y->type == AST_COMMAND)
+	{
+		obj_ygg.y->args = gather_arguments(t, NULL);
+		if (!obj_ygg.y->args && get_current_exit_status() != 0)
+			return (NULL);
+	}
+	else if (obj_ygg.y->type == AST_REDIR_IN || obj_ygg.y->type == AST_REDIR_OUT
+		|| obj_ygg.y->type == AST_APPEND || obj_ygg.y->type == AST_HEREDOC)
+	{
+		obj_ygg.y->file = gather_filename(t, e);
+		if (!obj_ygg.y->file)
+			return (st_prsr_err("syntax error near unexpected token", t->value), \
+			set_current_exit_status(2), NULL);
+	}
+	obj_ygg.left_child_token = find_left_token(t, f);
+	obj_ygg.right_child_token = find_right_token(t, e);
+	obj_ygg.y->left = make_yggdrasil(obj_ygg.left_child_token, f, t, obj_ygg.y);
+	if (get_current_exit_status() != 0 && obj_ygg.y->left == NULL \
+		&& obj_ygg.left_child_token && !obj_ygg.left_child_token->used)
+		return (NULL);
+	obj_ygg.y->right = make_yggdrasil(obj_ygg.right_child_token, t, e, obj_ygg.y);
+	if (get_current_exit_status() != 0 && obj_ygg.y->right == NULL \
+		&& obj_ygg.right_child_token && !obj_ygg.right_child_token->used)
+		return (NULL);
+	return (obj_ygg.y);
+}
+*/
+
+/* Versao 1!!!!
+t_node_tree	*make_yggdrasil(t_token *t, t_token *f, t_token *e, \
+								t_node_tree *parent_y)
+{
+	t_node_tree	*y;
+	t_token		*left_child_token;
+	t_token		*right_child_token;
+
+	(void)parent_y;
+	y = NULL;
+	left_child_token = NULL;
+	right_child_token = NULL;
+	if (!t || t == e || t->used)
+		return (NULL);
+	y = new_yggnode(t);
+	if (!y)
+		return (set_current_exit_status(1) ,NULL);
+	if (y->type == AST_COMMAND)
+	{
+		y->args = gather_arguments(t, NULL);
+		if (!y->args && get_current_exit_status() != 0)
+			return (NULL);
+	}
+	else if (y->type == AST_REDIR_IN || y->type == AST_REDIR_OUT
+		|| y->type == AST_APPEND || y->type == AST_HEREDOC)
+	{
+		y->file = gather_filename(t, e);
+		if (!y->file)
+			return (st_prsr_err("syntax error near unexpected token", t->value), \
+			set_current_exit_status(2), NULL);
+	}
+	left_child_token = find_left_token(t, f);
+	right_child_token = find_right_token(t, e);
+	y->left = make_yggdrasil(left_child_token, f, t, y);
+	if (get_current_exit_status() != 0 && y->left == NULL \
+		&& left_child_token && !left_child_token->used)
+		return (NULL);
+	y->right = make_yggdrasil(right_child_token, t, e, y);
+	if (get_current_exit_status() != 0 && y->right == NULL \
+		&& right_child_token && !right_child_token->used)
+		return (NULL);
+	return (y);
+}
+*/
+
+/* original!!!!!
 t_node_tree	*make_yggdrasil(t_token *t, t_token *f, t_token *e, \
 								t_node_tree *parent_y)
 {
@@ -339,3 +697,4 @@ t_node_tree	*make_yggdrasil(t_token *t, t_token *f, t_token *e, \
 	}
 	return (y);
 }
+ */
