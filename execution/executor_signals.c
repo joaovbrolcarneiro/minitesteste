@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:51:46 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 19:37:57 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	read_heredoc_lines(int pipe_write_fd, const char *delimiter)
 		line = get_next_line(STDIN_FILENO);
 		if (line == NULL)
 		{
-			ft_putstr_fd("minishell: warning: here-document delimited EOF", 2);
+			ft_putstr_fd("konosubash: warning: here-document delimited EOF", 2);
 			ft_putstr_fd(" (wanted `", 2);
 			ft_putstr_fd((char *)delimiter, 2);
 			ft_putstr_fd("')\n", 2);
@@ -58,7 +58,7 @@ static int	read_heredoc_lines(int pipe_write_fd, const char *delimiter)
 			return (0);
 		}
 		if (write(pipe_write_fd, line, ft_strlen(line)) == -1)
-			return (perror("minishell: write heredoc pipe"), free(line), -1);
+			return (perror("konosubash: write heredoc pipe"), free(line), -1);
 		free(line);
 	}
 }
