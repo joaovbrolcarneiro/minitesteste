@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 20:06:50 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 23:58:09 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,21 @@ static int	collect_redir_and_command_nodes(t_node_tree *redir_nodes[], \
 
 /* Assuming apply_redirection_nodes uses handle_redirections correctly */
 static int	apply_redirection_nodes(t_node_tree *redir_nodes[], \
-									int redir_count, t_shell *shell) // Added shell param
+									int redir_count, t_shell *shell)
 {
 	int	i;
 	int	status;
 
-	// Applying redirections left-to-right (0 to N-1) matches Bash behavior better
-	// than the previous reverse loop (N-1 down to 0) in case of overwrites.
-	i = 0;
+	i = redir_count - 1;
 	status = 0;
-	while (i < redir_count) // Loop 0 to N-1
+	while (i >= 0)
 	{
-		status = handle_redirections(redir_nodes[i], shell); // Pass shell
+		status = handle_redirections(redir_nodes[i], shell);
 		if (status != 0)
-			return (status); // Return immediately on failure
-		i++;
+			return (status);
+		i--;
 	}
-	return (0); // Success
+	return (0);
 }
 
 /* Modified execute_redir_chain_core */

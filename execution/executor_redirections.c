@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 19:58:18 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:01:51 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,20 @@ int	handle_redir_in(t_node_tree *node)
 		return (0);
 	fd = open(node->file, O_RDONLY);
 	if (fd < 0)
-		return (perror("minishell: open redir in"), -1);
+	{
+		perror("minishell: open redir in");
+		return (1);
+	}
 	if (dup2(fd, STDIN_FILENO) == -1)
 	{
 		perror("minishell: dup2 redir in");
 		close(fd);
-		return (-1);
+		return (1);
 	}
 	close(fd);
 	return (0);
 }
 
-/* Handles output redirection (>) */
 int	handle_redir_out(t_node_tree *node)
 {
 	int	fd;
@@ -41,18 +43,20 @@ int	handle_redir_out(t_node_tree *node)
 		return (0);
 	fd = open(node->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		return (perror("minishell: open redir out"), -1);
+	{
+		perror("minishell: open redir out");
+		return (1);
+	}
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
 		perror("minishell: dup2 redir out");
 		close(fd);
-		return (-1);
+		return (1);
 	}
 	close(fd);
 	return (0);
 }
 
-/* Handles output append redirection (>>) */
 int	handle_append(t_node_tree *node)
 {
 	int	fd;
@@ -61,41 +65,41 @@ int	handle_append(t_node_tree *node)
 		return (0);
 	fd = open(node->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
-		return (perror("minishell: open append"), -1);
+	{
+		perror("minishell: open append");
+		return (1);
+	}
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
 		perror("minishell: dup2 append");
 		close(fd);
-		return (-1);
+		return (1);
 	}
 	close(fd);
 	return (0);
 }
 
-/* Reads input, duplicates read end, closes pipe ends */
 static int	process_heredoc_pipe(int pipefd[2], const char *delimiter, \
-	char **env)
+								char **env)
 {
-int	read_status;
+	int	read_status;
 
-read_status = read_heredoc_input(pipefd[1], delimiter, env);
-close(pipefd[1]);
-if (read_status != 0)
-{
-close(pipefd[0]);
-return (1);
+	read_status = read_heredoc_input(pipefd[1], delimiter, env);
+	close(pipefd[1]);
+	if (read_status != 0)
+	{
+		close(pipefd[0]);
+		return (1);
+	}
+	if (dup2(pipefd[0], STDIN_FILENO) == -1)
+	{
+		perror("minishell: dup2 heredoc");
+		close(pipefd[0]);
+		return (1);
+	}
+	close(pipefd[0]);
+	return (0);
 }
-if (dup2(pipefd[0], STDIN_FILENO) == -1)
-{
-perror("minishell: dup2 heredoc");
-close(pipefd[0]);
-return (1);
-}
-close(pipefd[0]);
-return (0);
-}
-
-/* Handles heredoc redirection (<<) */
 
 int	handle_heredoc(t_node_tree *node, t_shell *shell)
 {

@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 19:58:37 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:02:58 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,9 @@ static int	read_heredoc_lines(int pipe_write_fd, const char *delimiter, \
 			return (0);
 		}
 		if (is_heredoc_delim(line, delimiter))
-		{
-			free(line); // free?
-			return (0);
-		}
+			return (free(line), 0);
 		status = process_heredoc_line(line, pipe_write_fd, env, expand);
-		free(line); // free?
+		free(line);
 		if (status != 0)
 			return (1);
 	}
@@ -87,28 +84,4 @@ int	handle_redirections(t_node_tree *node, t_shell *shell)
 	else if (node->type == AST_HEREDOC)
 		return (handle_heredoc(node, shell));
 	return (1);
-}
-
-int	process_heredoc_line(char *line, int pipe_write_fd, \
-								char **env, bool expand)
-{
-	char	*line_to_write;
-	int		write_status;
-
-	line_to_write = line;
-	if (expand)
-	{
-		line_to_write = expand_variables(line, env);
-		if (!line_to_write)
-			return (1);
-	}
-	write_status = write(pipe_write_fd, line_to_write, ft_strlen(line_to_write));
-	if (line_to_write != line)
-		free(line_to_write); // free?
-	if (write_status == -1)
-	{
-		perror("minishell: write heredoc pipe");
-		return (1);
-	}
-	return (0);
 }

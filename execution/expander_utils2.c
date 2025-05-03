@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:52:41 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:03:16 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ static int	realloc_exp_buffer(char **buf, size_t len, size_t *cap)
 	return (1);
 }
 
-/* Appends char to dynamically sized buffer used by expander */
-/* Returns 1 on success, 0 on failure (malloc) */
 int	append_char(char **buf, size_t *len, size_t *cap, char c)
 {
 	if (!buf || !len || !cap)
@@ -70,4 +68,29 @@ long long	get_new_token_id(void)
 	static long long	id = 0;
 
 	return (id++);
+}
+
+int	process_heredoc_line(char *line, int pipe_write_fd, \
+						char **env, bool expand)
+{
+	char	*line_to_write;
+	int		write_status;
+
+	line_to_write = line;
+	if (expand)
+	{
+		line_to_write = expand_variables(line, env);
+		if (!line_to_write)
+			return (1);
+	}
+	write_status = write(pipe_write_fd, line_to_write, \
+							ft_strlen(line_to_write));
+	if (line_to_write != line)
+		free(line_to_write);
+	if (write_status == -1)
+	{
+		perror("minishell: write heredoc pipe");
+		return (1);
+	}
+	return (0);
 }

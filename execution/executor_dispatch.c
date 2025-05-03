@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 20:05:21 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 23:55:19 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	execute_redir_after_save(t_shell *shell, t_node_tree *node)
 	int	internal_status;
 
 	status = 0;
-	internal_status = handle_redirections(node, shell); // Pass shell
+	internal_status = handle_redirections(node, shell);
 	if (internal_status != 0)
-		status = internal_status; // Use actual status from redirection
+		status = internal_status;
 	else
 		status = execute_redir_cmd_node(shell, node);
 	return (status);
