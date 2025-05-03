@@ -57,32 +57,32 @@ int	execute_redir_cmd_node(t_shell *shell, t_node_tree *redir_node)
 
 /* Static helper to dispatch execution based on node type */
 /* Called only by execute_ast within this file */
-static int dispatch_ast_node(t_shell *shell, t_node_tree *node)
+static int	dispatch_ast_node(t_shell *shell, t_node_tree *node)
 {
-    int status = 1;
+	int	status;
 
-    if (!node)
-        return (0);
-    if (node->type == AST_PIPE)
-        status = handle_pipe_execution(shell, node);
-    else if (node->type >= AST_REDIR_IN && node->type <= AST_HEREDOC)
-        status = execute_redirection_chain(shell, node);
-    else if (node->type == AST_COMMAND)
-        status = handle_command_execution(shell, node);
-    else if (node->type == (t_ast_type)TOKEN_ASSIGNMENT)
-         status = handle_assignment_execution(node);
-    else if (node->type == (t_ast_type)TOKEN_WORD)
-         status = handle_word_token_execution(node);
-    else
-    {
-        ft_putstr_fd("konosubash: execute_ast: Unknown node type ", 2);
-        ft_putnbr_fd(node->type, 2);
-        ft_putstr_fd("\n", 2);
-        status = 1;
-    }
-    return (status);
+	status = 1;
+	if (!node)
+		return (0);
+	if (node->type == AST_PIPE)
+		status = handle_pipe_execution(shell, node);
+	else if (node->type >= AST_REDIR_IN && node->type <= AST_HEREDOC)
+		status = execute_redirection_chain(shell, node);
+	else if (node->type == AST_COMMAND)
+		status = handle_command_execution(shell, node);
+	else if (node->type == (t_ast_type)TOKEN_ASSIGNMENT)
+		status = handle_assignment_execution(node);
+	else if (node->type == (t_ast_type)TOKEN_WORD)
+		status = handle_word_token_execution(node);
+	else
+	{
+		ft_putstr_fd("konosubash: execute_ast: Unknown node type ", 2);
+		ft_putnbr_fd(node->type, 2);
+		ft_putstr_fd("\n", 2);
+		status = 1;
+	}
+	return (status);
 }
-
 
 /* Main execution entry point (lives here as requested by user) */
 int	execute_ast(t_shell *shell, t_node_tree *node)

@@ -71,4 +71,3 @@ long long	get_new_token_id(void)
 
 	return (id++);
 }
-

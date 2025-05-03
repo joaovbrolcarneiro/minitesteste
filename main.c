@@ -61,13 +61,13 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	set_current_exit_status(0); // Use setter instead of g_exit_code = 0;
+	set_current_exit_status(0);
 	init_shell(&shell, envp);
 	signal(SIGINT, handle_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 	readline_loop(&shell);
 	cleanup_shell(&shell);
-	return (get_current_exit_status()); // Use getter instead of return (g_exit_code);
+	return (get_current_exit_status());
 }
 
 bool	is_builtin(const char *cmd)

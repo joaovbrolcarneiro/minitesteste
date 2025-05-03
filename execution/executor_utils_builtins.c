@@ -15,9 +15,6 @@
 /*
 ** Builtin echo command
 */
-
-
-
 static bool	is_str_numeric(char *arg_str)
 {
 	int	i;

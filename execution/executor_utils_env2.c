@@ -70,7 +70,7 @@ static int	print_sorted_env(char ***env)
 
 	sorted = sort_env(*env);
 	if (!sorted)
-		return (perror("minishell: export"),1);
+		return (perror("minishell: export"), 1);
 	i = 0;
 	while (sorted[i])
 	{
@@ -86,8 +86,7 @@ static int	print_sorted_env(char ***env)
 		else
 			ft_putstr_fd(sorted[i], STDOUT_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
-		free(sorted[i]);
-		i++;
+		free(sorted[i++]);
 	}
 	return (free(sorted), 0);
 }
