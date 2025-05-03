@@ -6,15 +6,14 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:50:41 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/17 18:24:12 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 15:12:48 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_part2.h"
 
-t_token *last_token(t_token *token);
-
+t_token	*last_token(t_token *token);
 
 /*t_token	*last_token(t_token *token)
 {
@@ -55,4 +54,3 @@ void	handler_pipes(t_token_vec *token_vec) // - alterei - JOAO
 
 }
 */
-
