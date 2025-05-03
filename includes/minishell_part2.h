@@ -23,7 +23,7 @@
 # define STAR "\001⭐\002"
 # define YEN "\001¥\002"
 # define BWN "\001\e[38;2;105;50;0m\002"
-// # define TITLE BWN"``"PNK"K"YLW"o"PNK"N"YLW"o"PNK"S"YLW"u"PNK"B"YLW"a"PNK"sh!"BWN"\""GRN"$-> "RST // Norminette Error: PREPROC_CONSTANT
+# define TITLE BWN"``"PNK"K"YLW"o"PNK"N"YLW"o"PNK"S"YLW"u"PNK"B"YLW"a"PNK"sh!"BWN"\""GRN"$-> "RST // Norminette Error: PREPROC_CONSTANT
 # define UPPER_PROMPT "╭─ \001\e[4;36m\002"
 # define LP_L "╰─ \001\e[1;35m\002KONOSUBASH"
 # define LP_R "\001\e[1;33m\002 $-> \001\e[0m\b\002"
