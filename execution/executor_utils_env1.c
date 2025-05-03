@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:52:04 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 23:34:17 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	update_env(char ***env, char *var, char *value)
 	len = ft_strlen(var) + ft_strlen(value) + 2;
 	new_var = malloc(len);
 	if (!new_var)
-		return (perror("minishell: update_env malloc"), 1);
+		return (perror("konosubash: update_env malloc"), 1);
 	ft_strcpy(new_var, var);
 	ft_strcat(new_var, "=");
 	ft_strcat(new_var, value);
