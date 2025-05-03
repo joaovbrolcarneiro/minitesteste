@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_node1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:49:49 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/23 19:11:27 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 17:11:01 by hde-barr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_token	*new_redir(t_token *token)
 	return (token);
 }
 
-t_token *new_cmd(t_token *token)
+t_token	*new_cmd(t_token *token)
 {
 	token->used = false;
 	token->rank = RANK_B;
@@ -72,7 +72,7 @@ t_token *new_cmd(t_token *token)
 	return (token);
 }
 
-t_token *new_word(t_token *token)
+t_token	*new_word(t_token *token)
 {
 	token->used = false;
 	token->rank = RANK_C;
@@ -86,7 +86,7 @@ t_token *new_word(t_token *token)
 	return (token);
 }
 
-t_token *new_eof(t_token *token)
+t_token	*new_eof(t_token *token)
 {
 	token->id = get_token_id();
 	token->next = NULL;

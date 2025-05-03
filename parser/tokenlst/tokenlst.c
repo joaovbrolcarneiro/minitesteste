@@ -1,11 +1,13 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* tokenlst_path.c                                    :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
-/* */ /* Updated: 2025/04/17 20:30:00 by hde-barr         ###   ########.fr       */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenlst.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 18:10:25 by hde-barr          #+#    #+#             */
+/*   Updated: 2025/05/03 18:11:45 by hde-barr         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -56,7 +58,6 @@ long long	count_commands_in_path(char **env)
 	return (count);
 }
 
-
 static int	populate_list_from_dir(char **list, DIR *dir, \
 									long long *current_index)
 {
@@ -79,7 +80,6 @@ static int	populate_list_from_dir(char **list, DIR *dir, \
 	closedir(dir);
 	return (0);
 }
-
 
 int	populate_command_list(char **list, char **env)
 {
@@ -126,8 +126,6 @@ char	**init_command_list(char **env)
 	return (list);
 }
 
-
-
 /*t_token	*last_node(t_token *lst)
 {
 	if (!lst)
@@ -154,9 +152,6 @@ t_token *token_lst(t_token *token)
 	lst[i] = NULL;*/
 //	return(lst);
 //}
-
-
-
 
 /* ************************************************************************** */
 /*                                                                            */
@@ -253,7 +248,7 @@ bool search_list(char *search, char **env)
 }
 */
 
-	/* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   envar2.c                                           :+:      :+:    :+:   */
@@ -265,8 +260,8 @@ bool search_list(char *search, char **env)
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-#include "minishell_part2.h"
+//#include "../../includes/minishell.h"
+//#include "minishell_part2.h"
 
 /*void print_env(char **env)
 {
@@ -293,8 +288,6 @@ bool search_list(char *search, char **env)
 //		return (get_envar(env, input));
 //	return ("");
 //}
-
-
 
 /* ************************************************************************** */
 /*                                                                            */

@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* tokenlst_split_input.c                             :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
-/* GPLv3+   +#+           */
-/* Created: 2025/04/16 23:55:00 by hde-barr          #+#    #+#             */
-/* Updated: 2025/04/20 20:30:00 by hde-barr         ###   ########.fr       */ // (Update date)
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenlst_split_input.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 17:54:43 by hde-barr          #+#    #+#             */
+/*   Updated: 2025/05/03 18:01:01 by hde-barr         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -71,36 +71,37 @@ static void	add_token_to_list(t_token **first, t_token **lst,
 	}
 }
 
-static bool is_whitespace(char c) {
-    return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r');
+static bool	is_whitespace(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n' \
+	|| c == '\v' || c == '\f' || c == '\r');
 }
 
-t_token *create_and_init_token(char *input, int start, int token_len)
+t_token	*create_and_init_token(char *input, int start, int token_len)
 {
-    t_token *new_token;
-    int     index_after_token = start + token_len;
+	t_token	*new_token;
+	int		index_after_token;
 
-    new_token = hb_malloc(sizeof(t_token));
-    if (!new_token)
+	index_after_token = start + token_len;
+	new_token = hb_malloc(sizeof(t_token));
+	if (!new_token)
 		return (NULL);
-    ft_memset(new_token, 0, sizeof(t_token));
-    new_token->value = ft_substr(input, start, token_len);
-    if (!new_token->value)
+	ft_memset(new_token, 0, sizeof(t_token));
+	new_token->value = ft_substr(input, start, token_len);
+	if (!new_token->value)
 		return (NULL);
-
-    new_token->id = get_new_token_id();
-    new_token->type = TOKEN_WORD;
-    new_token->coretype = TOKEN_WORD;
-    new_token->rank = RANK_C;
-    new_token->used = false;
-    new_token->err = 0;
-    new_token->literal = false;
-    new_token->next = NULL;
-
-    new_token->join_next = (input[index_after_token] != '\0' &&
-                           !is_whitespace(input[index_after_token]) &&
-                           !ischarset("|<>", input[index_after_token]));
-    return (new_token);  
+	new_token->id = get_new_token_id();
+	new_token->type = TOKEN_WORD;
+	new_token->coretype = TOKEN_WORD;
+	new_token->rank = RANK_C;
+	new_token->used = false;
+	new_token->err = 0;
+	new_token->literal = false;
+	new_token->next = NULL;
+	new_token->join_next = (input[index_after_token] != '\0' \
+	&& !is_whitespace(input[index_after_token]) \
+	&& !ischarset("|<>", input[index_after_token]));
+	return (new_token);
 }
 
 static int	process_single_token_block(char *input, int *start,

@@ -1,11 +1,13 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* tokenlst_helpers.c                                         :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
-/* */ /* Updated: 2025/04/17 20:10:00 by hde-barr         ###   ########.fr       */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_lst_helpers.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 17:14:05 by hde-barr          #+#    #+#             */
+/*   Updated: 2025/05/03 17:51:12 by hde-barr         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -40,8 +42,6 @@ char	**command_list_malloc(char **env)
 	return (allocated_list);
 }
 
-
-
 char	*get_envar(char **env, char *var)
 {
 	int		i;
@@ -67,40 +67,36 @@ char	*get_envar(char **env, char *var)
 	return (NULL);
 }
 
-bool search_list(char *search, char **env)
+bool	search_list(char *search, char **env)
 {
-    char **list;
-    char **current;
-    bool found;
+	char	**list;
+	char	**current;
+	bool	found;
 
-    if (!search || !*search || !env ||
-        ft_strcmp(search, ".") == 0 ||
-        ft_strcmp(search, "..") == 0)
-    {
-        return (false);
-    }
-    if (ft_strchr(search, '/') != NULL)
-    {
-        return (is_valid_exc(search));
-    }
-    else
-    {
-        list = init_command_list(env);
-        if (!list) return (false);
-        current = list;
-        found = false;
-        while (*current) {
-            if (ft_strcmp(search, *current) == 0) {
-                found = true;
-                break;
-            }
-            current++;
-        }
-        ft_free_strarray(list);
-        return (found);
-    }
+	if (!search || !*search || !env || ft_strcmp(search, ".") == 0 || \
+		ft_strcmp(search, "..") == 0)
+		return (false);
+	if (ft_strchr(search, '/') != NULL)
+		return (is_valid_exc(search));
+	else
+	{
+		list = init_command_list(env);
+		if (!list)
+			return (false);
+		current = list;
+		found = false;
+		while (*current)
+		{
+			if (ft_strcmp(search, *current) == 0)
+			{
+				found = true;
+				break ;
+			}
+			current++;
+		}
+		return (ft_free_strarray(list), found);
+	}
 }
-
 
 t_token	*finalize_list(t_token *first, t_token *last)
 {
@@ -115,24 +111,19 @@ t_token	*finalize_list(t_token *first, t_token *last)
 	return (first);
 }
 
-void st_prsr_err(const char *message, const char *token_value)
+void	st_prsr_err(const char *message, const char *token_value)
 {
-    ft_putstr_fd((char *)"konosubash: ", 2);
-
-    if (message) {
-        ft_putstr_fd((char *)message, 2);
-    } else {
-        ft_putstr_fd((char *)"syntax error", 2);
-    }
-
-    if (token_value && *token_value)
-    {
-        ft_putstr_fd((char *)" near unexpected token `", 2);
-        ft_putstr_fd((char *)token_value, 2);
-        ft_putstr_fd((char *)"'", 2);
-    }
-
-    ft_putstr_fd((char *)"\n", 2);
-
-    set_current_exit_status(2);
+	ft_putstr_fd((char *)"konosubash: ", 2);
+	if (message)
+		ft_putstr_fd((char *)message, 2);
+	else
+		ft_putstr_fd((char *)"syntax error", 2);
+	if (token_value && *token_value)
+	{
+		ft_putstr_fd((char *)" near unexpected token `", 2);
+		ft_putstr_fd((char *)token_value, 2);
+		ft_putstr_fd((char *)"'", 2);
+	}
+	ft_putstr_fd((char *)"\n", 2);
+	set_current_exit_status(2);
 }
