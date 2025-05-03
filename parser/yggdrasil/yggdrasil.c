@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 14:41:25 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 17:30:41 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,15 +198,19 @@ static bool gather_arg_helper2(t_token *cmd_token, t_gthr_arg_vrs *cu)
 
 static bool gather_arg_helper3_part2(t_gthr_arg_vrs *cu)
 {
-	if (cu->i >= cu->arg_capacity) 
-    { 
+    if (cu->i >= cu->arg_capacity)
+    {
+        size_t old_byte_size = sizeof(char *) * (cu->arg_capacity + 1);
         cu->arg_capacity = cu->i + 5;
-    	cu->temp_realloc = realloc(cu->args, sizeof(char *) * (cu->arg_capacity + 1));
-        if (!cu->temp_realloc)  
-			return (set_current_exit_status(1), true);
+        size_t new_byte_size = sizeof(char *) * (cu->arg_capacity + 1);
+
+        cu->temp_realloc = ft_realloc(cu->args, old_byte_size, new_byte_size);
+
+        if (!cu->temp_realloc)
+            return (set_current_exit_status(1), true);
         cu->args = cu->temp_realloc;
     }
-	return (false);
+    return (false);
 }
 
 static bool gather_arg_helper3_part3(t_gthr_arg_vrs *cu)
@@ -239,7 +243,7 @@ static char **gather_arg_helper3(t_gthr_arg_vrs *cu)
 		{
 			if(gather_arg_helper3_part2(cu))
 				return (NULL);
-            cu->args[cu->i] = ft_strdup(cu->current->value); // Add the token's value
+            cu->args[cu->i] = ft_strdup(cu->current->value);
 			if(gather_arg_helper3_part3(cu))
 				return (NULL);
         }
