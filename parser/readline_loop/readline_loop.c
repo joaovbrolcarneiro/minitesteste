@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:31:39 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/23 21:12:53 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 17:53:09 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	readline_loop(t_shell *shell) // ALTEREI - JOAO
 
 	while (1)
 	{
+		signal(SIGINT, handle_ctrl_c);
+		signal(SIGQUIT, SIG_IGN);
 		ft_putstr_fd("💥", 1);
 		konopwd(true, "pwd");
 		input = readline(TITLE);
