@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 23:24:20 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:10:21 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ int			execute_pipe_command(t_shell *shell, t_node_tree *node);
 int			execute_simple_command(t_shell *shell, t_node_tree *node);
 int			execute_external_command(t_shell *shell, char **args);
 int			handle_redirections(t_node_tree *node, t_shell *shell);
-int	handle_heredoc(t_node_tree *node, t_shell *shell);
+int			handle_heredoc(t_node_tree *node, t_shell *shell);
 int			setup_pipes(int pipefd[2]);
 void		save_std_fds(t_shell *shell);
 void		restore_std_fds(t_shell *shell);
@@ -202,7 +202,8 @@ int			handle_assignment_execution(t_node_tree *node);
 int			handle_pipe_execution(t_shell *shell, t_node_tree *node);
 int			save_original_fds(int original_fds[2]);
 int			execute_redir_cmd_node(t_shell *shell, t_node_tree *redir_node);
-int			read_heredoc_input(int pipe_write_fd, const char *delimiter, char **env);
+int			read_heredoc_input(int pipe_write_fd, \
+									const char *delimiter, char **env);
 int			execute_redirection_chain(t_shell *shell, t_node_tree *node);
 
 /*
