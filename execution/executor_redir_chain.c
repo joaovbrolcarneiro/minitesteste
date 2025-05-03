@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:51:30 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 20:06:50 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,24 @@ static int	collect_redir_and_command_nodes(t_node_tree *redir_nodes[], \
 }
 
 /* Assuming apply_redirection_nodes uses handle_redirections correctly */
-static int	apply_redirection_nodes(t_node_tree *redir_nodes[], int redir_count)
+static int	apply_redirection_nodes(t_node_tree *redir_nodes[], \
+									int redir_count, t_shell *shell) // Added shell param
 {
 	int	i;
 	int	status;
 
-	i = redir_count - 1;
+	// Applying redirections left-to-right (0 to N-1) matches Bash behavior better
+	// than the previous reverse loop (N-1 down to 0) in case of overwrites.
+	i = 0;
 	status = 0;
-	while (i >= 0)
+	while (i < redir_count) // Loop 0 to N-1
 	{
-		status = handle_redirections(redir_nodes[i]);
+		status = handle_redirections(redir_nodes[i], shell); // Pass shell
 		if (status != 0)
-			return (status);
-		i--;
+			return (status); // Return immediately on failure
+		i++;
 	}
-	return (0);
+	return (0); // Success
 }
 
 /* Modified execute_redir_chain_core */
@@ -93,10 +96,13 @@ static int	execute_redir_chain_core(t_shell *shell, t_node_tree *node)
 	status = collect_redir_and_command_nodes(redir_nodes, &redir_count, \
 											&command_node, node);
 	if (status != 0)
-		return (set_current_exit_status(status), status);
+	{
+		set_current_exit_status(status);
+		return (status);
+	}
 	status = 0;
 	if (redir_count > 0)
-		status = apply_redirection_nodes(redir_nodes, redir_count);
+		status = apply_redirection_nodes(redir_nodes, redir_count, shell);
 	if (status == 0)
 	{
 		if (command_node)
@@ -104,8 +110,7 @@ static int	execute_redir_chain_core(t_shell *shell, t_node_tree *node)
 		else
 			status = 0;
 	}
-	set_current_exit_status(status);
-	return (status);
+	return (set_current_exit_status(status), status);
 }
 
 int	execute_redirection_chain(t_shell *shell, t_node_tree *node)

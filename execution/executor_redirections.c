@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:51:38 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 19:58:18 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,40 +73,47 @@ int	handle_append(t_node_tree *node)
 }
 
 /* Reads input, duplicates read end, closes pipe ends */
-static int	process_heredoc_pipe(int pipefd[2], const char *delimiter)
+static int	process_heredoc_pipe(int pipefd[2], const char *delimiter, \
+	char **env)
 {
-	int	read_status;
+int	read_status;
 
-	read_status = read_heredoc_input(pipefd[1], delimiter);
-	close(pipefd[1]);
-	if (read_status == -1)
-	{
-		close(pipefd[0]);
-		return (-1);
-	}
-	if (dup2(pipefd[0], STDIN_FILENO) == -1)
-	{
-		perror("minishell: dup2 heredoc");
-		close(pipefd[0]);
-		return (-1);
-	}
-	close(pipefd[0]);
-	return (0);
+read_status = read_heredoc_input(pipefd[1], delimiter, env);
+close(pipefd[1]);
+if (read_status != 0)
+{
+close(pipefd[0]);
+return (1);
+}
+if (dup2(pipefd[0], STDIN_FILENO) == -1)
+{
+perror("minishell: dup2 heredoc");
+close(pipefd[0]);
+return (1);
+}
+close(pipefd[0]);
+return (0);
 }
 
 /* Handles heredoc redirection (<<) */
-int	handle_heredoc(t_node_tree *node)
+
+int	handle_heredoc(t_node_tree *node, t_shell *shell)
 {
 	int		pipefd[2];
 	char	*delimiter;
 
+	if (!shell || !shell->env)
+		return (1);
 	if (!node || !node->file)
 	{
 		ft_putstr_fd("minishell: Heredoc node missing delimiter\n", 2);
-		return (-1);
+		return (1);
 	}
 	delimiter = node->file;
 	if (pipe(pipefd) == -1)
-		return (perror("minishell: pipe heredoc"), -1);
-	return (process_heredoc_pipe(pipefd, delimiter));
+	{
+		perror("minishell: pipe heredoc");
+		return (1);
+	}
+	return (process_heredoc_pipe(pipefd, delimiter, shell->env));
 }
