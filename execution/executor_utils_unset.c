@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:52:29 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:17:08 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_unset(char **args, t_shell *shell)
 	{
 		if (!is_valid_identifier(args[i]))
 		{
-			ft_putstr_fd("minishell: unset: `", 2);
+			ft_putstr_fd("konosubash: unset: `", 2);
 			ft_putstr_fd(args[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
 			exit_code = 1;

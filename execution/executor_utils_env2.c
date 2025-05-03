@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:52:12 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:17:04 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	handle_single_export_arg(char *arg, char ***env)
 	{
 		if (equal)
 			*equal = '=';
-		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd("konosubash: export: `", 2);
 		ft_putstr_fd(arg, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		return (1);
