@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 17:08:00 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 17:39:25 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,5 +294,6 @@ char		**init_command_list(char **env);
 */
 bool		has_parser_error(t_token *token);
 void		st_prsr_err(const char *message, const char *token_value);
+void		*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 
 #endif /* MINISHELL_H */
