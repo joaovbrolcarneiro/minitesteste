@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   merge_to_token_exception.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:17:54 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/04/22 23:01:08 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 19:14:33 by hde-barr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_part2.h"
 
-
-bool merge_to_token_exception(t_token *token)
+bool	merge_to_token_exception(t_token *token)
 {
-    (void)token;
-    return (false);
+	(void)token;
+	return (false);
 }
 
 /*bool merge_to_token_exception(t_token *token) - funcao antiga

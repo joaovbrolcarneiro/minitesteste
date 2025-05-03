@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:05:15 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 15:18:15 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/03 20:36:09 by hde-barr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,15 @@ t_token *delegated_by_input_handler(char *input, char **env) -- FUNCAO ANTIGA
 	return (token);
 }*/
 
-t_token	*input_handler(t_shell *shell, char *input)
+typedef struct s_inpt_hndlr
+{
+	t_token		*token_list;
+	t_node_tree	*tree;
+	bool		parse_error_flagged_in_tokens;
+	t_token		*temp;
+}	t_inpt_hndlr;
+
+t_inpt_hndlr	input_handler_part2(t_shell *shell, char *input)
 {
 	t_token		*token_list;
 	t_node_tree	*tree;
@@ -54,36 +62,58 @@ t_token	*input_handler(t_shell *shell, char *input)
 	tree = NULL;
 	token_list = delegated_by_input_handler(input, shell->env);
 	if (!token_list)
-		return (NULL);
+		token_list = NULL;
 	parse_error_flagged_in_tokens = has_parser_error(token_list);
-	if (!parse_error_flagged_in_tokens)
-	{
-		process_variable_assignments(shell, token_list);
-		expand_token_list_no_assignments(token_list, shell->env);
-		parser_cmd_no_found(token_list, shell->env);
-		parse_error_flagged_in_tokens = has_parser_error(token_list);
-	}
-	if (!parse_error_flagged_in_tokens)
-	{
-		temp = token_list;
-		while (temp)
+	temp = NULL;
+	return ((t_inpt_hndlr){token_list, tree, \
+	parse_error_flagged_in_tokens, temp});
+}
+
+void input_handler_part3(t_shell *shell, t_token *token_list)
+{
+	process_variable_assignments(shell, token_list);
+	expand_token_list_no_assignments(token_list, shell->env);
+	parser_cmd_no_found(token_list, shell->env);
+}
+
+void input_handler_part4(t_inpt_hndlr *cu)
+{
+		while (cu->temp)
 		{
-			temp->used = false;
-			temp = temp->next;
+			cu->temp->used = false;
+			cu->temp = cu->temp->next;
 		}
-		print_token_lst(token_list);
-		tree = init_yggdrasil(token_list);
-		print_yggdrasil(tree, 0, "root:");
-		if (tree)
+}
+
+t_token	*input_handler(t_shell *shell, char *input)
+{
+	t_inpt_hndlr cu;
+
+	cu = input_handler_part2(shell, input);
+	if (!cu.token_list)
+		return (NULL);
+	if (!cu.parse_error_flagged_in_tokens)
+	{
+		input_handler_part3(shell, cu.token_list);
+		cu.parse_error_flagged_in_tokens = has_parser_error(cu.token_list);
+	}
+	if (!cu.parse_error_flagged_in_tokens)
+	{
+		cu.temp = cu.token_list;
+		input_handler_part4(&cu);
+		print_token_lst(cu.token_list);
+		cu.tree = init_yggdrasil(cu.token_list);
+		print_yggdrasil(cu.tree, 0, "root:");
+		if (cu.tree)
 		{
-			shell->ast_root = tree;
+			shell->ast_root = cu.tree;
 			execute_ast(shell, shell->ast_root);
 			shell->ast_root = NULL;
 		}
 	}
 	else
 		set_current_exit_status(2);
-	return (token_list);
+	return (cu.token_list);
 }
 /*void input_handler(char **env, char *input) ---- FUNCAO ANTIGA
 {

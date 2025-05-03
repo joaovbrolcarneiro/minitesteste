@@ -1,18 +1,17 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* quote_expansion.c                                  :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
-/*<y_bin_46>+#+#+#+#+#+   +#+           */
-/* Created: 2025/04/16 20:45:00 by hde-barr          #+#    #+#             */
-/* Updated: 2025/04/16 20:55:00 by hde-barr         ###   ########.fr       */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quote_expansion.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 19:14:54 by hde-barr          #+#    #+#             */
+/*   Updated: 2025/05/03 19:18:45 by hde-barr         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_part2.h"
-
 
 static void	count_expansion_part(char *input, char **env, int *i, int *count)
 {
@@ -29,7 +28,6 @@ static void	count_expansion_part(char *input, char **env, int *i, int *count)
 		return ;
 	expanded = domane_expantion(env, substr);
 	*count += ft_strlen(expanded);
-	// free(substr); // free?
 }
 
 int	quote_handler_counter(char *input, char **env)
@@ -71,7 +69,6 @@ static bool	copy_expansion_part(t_exp_cpy_vars *v, char *input, char **env)
 	exp_len = ft_strlen(expanded);
 	ft_strlcat(v->dst, expanded, v->count + exp_len + 1);
 	v->count += exp_len;
-	// free(substr); // free?
 	return (true);
 }
 
@@ -83,12 +80,7 @@ char	*quote_handler_cpy(int total_len, char *input, char **env)
 
 	trimmed_input = ft_strtrim(input, " ");
 	if (trimmed_input && ft_strcmp(trimmed_input, "$") == 0)
-	{
-		// free(trimmed_input); // free?
 		return (ft_strdup("$"));
-	}
-	// free(trimmed_input); // free?
-
 	v.dst = ft_calloc(sizeof(char), total_len + 1);
 	if (!v.dst)
 		return (perror("minishell: calloc quote_handler_cpy"), NULL);
@@ -96,12 +88,14 @@ char	*quote_handler_cpy(int total_len, char *input, char **env)
 	v.count = 0;
 	success = true;
 	while (input && input[v.i] && success)
+	{
 		if (input[v.i] == '$')
 			success = copy_expansion_part(&v, input, env);
 		else
 			v.dst[v.count++] = input[v.i++];
+	}
 	if (!success)
-		return (/*free(v.dst),*/ NULL); // free?
+		return (NULL);
 	v.dst[v.count] = '\0';
 	return (v.dst);
 }

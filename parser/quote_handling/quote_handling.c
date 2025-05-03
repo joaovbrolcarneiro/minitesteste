@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* quote_handling.c                                   :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
-/*<y_bin_46>+#+#+#+#+#+   +#+           */
-/* Created: 2025/02/27 17:59:46 by hde-barr          #+#    #+#             */
-/* Updated: 2025/04/16 20:45:00 by hde-barr         ###   ########.fr       */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quote_handling.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 19:19:01 by hde-barr          #+#    #+#             */
+/*   Updated: 2025/05/03 19:21:27 by hde-barr         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -65,16 +65,14 @@ static char	*handle_single_quotes(t_token *token, char *original_value)
 	trimmed_value = ft_strtrim(original_value, "'");
 	if (!trimmed_value)
 	{
-		perror("ft_strtrim in quote_handler");
 		return (original_value);
 	}
-	// free(original_value); // free?
 	token->value = trimmed_value;
 	return (token->value);
 }
 
 static char	*handle_double_quotes(t_token *token, char **env, \
-									char *original_value, bool is_operator_literal)
+char *original_value, bool is_operator_literal)
 {
 	char	*trimmed_value;
 	char	*expanded_value;
@@ -82,10 +80,8 @@ static char	*handle_double_quotes(t_token *token, char **env, \
 
 	token->literal = is_operator_literal;
 	trimmed_value = ft_strtrim(original_value, "\"");
-	// free(original_value); // free?
 	if (!trimmed_value)
 	{
-		perror("ft_strtrim in quote_handler");
 		token->value = NULL;
 		return (NULL);
 	}
@@ -94,10 +90,8 @@ static char	*handle_double_quotes(t_token *token, char **env, \
 	{
 		cmd_len = quote_handler_counter(trimmed_value, env);
 		expanded_value = quote_handler_cpy(cmd_len, trimmed_value, env);
-		// free(trimmed_value); free?
 		if (!expanded_value)
 		{
-			perror("quote_handler_cpy failed");
 			token->value = NULL;
 			return (NULL);
 		}
@@ -135,4 +129,3 @@ char	*quote_handler(t_token *token, char **env, int *is_unclosed)
 		return (original_value);
 	}
 }
-
