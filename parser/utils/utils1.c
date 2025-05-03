@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:39:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:18:42 by hde-barr         ###   ########.fr       */
+/*   Updated: 2025/05/03 23:31:46 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,15 @@ long long	get_token_id(void)
 char	*ft_strcpy(char *dest, const char *src)
 {
 	char	*tmp;
+	int		i;
 
 	tmp = dest;
-	while (*dest && *src)
-		*dest++ = *src++;
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
 	return (tmp);
 }
