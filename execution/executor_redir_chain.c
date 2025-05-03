@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include "minishell_part2.h"
 
-static int	process_redir_chain_node(t_node_tree **current,
+static int	process_redir_chain_node(t_node_tree **current, \
 	t_node_tree *redir_nodes[], int *redir_count, t_node_tree **command_node)
 {
 	if ((*current)->type >= AST_REDIR_IN && (*current)->type <= AST_HEREDOC)
@@ -27,20 +27,23 @@ static int	process_redir_chain_node(t_node_tree **current,
 		else if ((*current)->right)
 			*current = (*current)->right;
 		else
-			return (ft_putstr_fd("konosubash: syntax error redir\n", 2), 2);
+			*current = NULL;
 	}
 	else if ((*current)->type == AST_COMMAND)
 	{
 		*command_node = *current;
 		*current = NULL;
-		return (0);
 	}
 	else
-		return (st_prsr_err("internal error: unexpected node type", NULL), 3);
+	{
+		ft_putstr_fd("konosubash: internal error: unexpected node type\n", 2);
+		return (3);
+	}
 	return (0);
 }
 
-static int	collect_redir_and_command_nodes(t_node_tree *redir_nodes[],
+/* Assuming collect_redir_and_command_nodes uses the above correctly */
+static int	collect_redir_and_command_nodes(t_node_tree *redir_nodes[], \
 	int *redir_count, t_node_tree **command_node, t_node_tree *node)
 {
 	t_node_tree	*current;
@@ -49,8 +52,8 @@ static int	collect_redir_and_command_nodes(t_node_tree *redir_nodes[],
 	current = node;
 	while (current)
 	{
-		status = process_redir_chain_node(&current, redir_nodes,
-				redir_count, command_node);
+		status = process_redir_chain_node(&current, redir_nodes, \
+						redir_count, command_node);
 		if (status != 0)
 			return (status);
 		if (*command_node)
@@ -59,8 +62,8 @@ static int	collect_redir_and_command_nodes(t_node_tree *redir_nodes[],
 	return (0);
 }
 
-static int	apply_redirection_nodes(t_node_tree *redir_nodes[],
-	int redir_count)
+/* Assuming apply_redirection_nodes uses handle_redirections correctly */
+static int	apply_redirection_nodes(t_node_tree *redir_nodes[], int redir_count)
 {
 	int	i;
 	int	status;
@@ -77,6 +80,7 @@ static int	apply_redirection_nodes(t_node_tree *redir_nodes[],
 	return (0);
 }
 
+/* Modified execute_redir_chain_core */
 static int	execute_redir_chain_core(t_shell *shell, t_node_tree *node)
 {
 	int			status;
@@ -86,17 +90,21 @@ static int	execute_redir_chain_core(t_shell *shell, t_node_tree *node)
 
 	command_node = NULL;
 	redir_count = 0;
-	status = collect_redir_and_command_nodes(redir_nodes, &redir_count,
-			&command_node, node);
-	if (status == 0 && !command_node && redir_count > 0)
-	{
-		ft_putstr_fd("konosubash: syntax error: command missing\n", 2);
-		status = 2;
-	}
-	if (status == 0 && redir_count > 0)
+	status = collect_redir_and_command_nodes(redir_nodes, &redir_count, \
+											&command_node, node);
+	if (status != 0)
+		return (set_current_exit_status(status), status);
+	status = 0;
+	if (redir_count > 0)
 		status = apply_redirection_nodes(redir_nodes, redir_count);
-	if (status == 0 && command_node)
-		status = execute_simple_command(shell, command_node);
+	if (status == 0)
+	{
+		if (command_node)
+			status = execute_simple_command(shell, command_node);
+		else
+			status = 0;
+	}
+	set_current_exit_status(status);
 	return (status);
 }
 
@@ -106,24 +114,19 @@ int	execute_redirection_chain(t_shell *shell, t_node_tree *node)
 	int	original_fds[2];
 	int	fds_saved;
 
-	if (!node || (node->type < AST_REDIR_IN || node->type > AST_HEREDOC))
-	{
-		ft_putstr_fd("konosubash: internal error: invalid node type\n", 2);
+	if (!node)
 		return (1);
-	}
 	fds_saved = (save_original_fds(original_fds) == 0);
 	status = 0;
 	if (!fds_saved)
 	{
 		perror("konosubash: execute_redirection_chain: Failed to save fds");
 		status = 1;
+		set_current_exit_status(status);
+		return (status);
 	}
-	if (fds_saved)
-		status = execute_redir_chain_core(shell, node);
-	if (fds_saved)
-	{
-		restore_fds(original_fds);
-		close_fds(original_fds);
-	}
+	status = execute_redir_chain_core(shell, node);
+	restore_fds(original_fds);
+	close_fds(original_fds);
 	return (status);
 }
