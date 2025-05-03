@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   yggdrasil.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/01 19:53:33 by hde-barr         ###   ########.fr       */
+/*   Updated: 2025/05/03 14:41:25 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -473,17 +473,17 @@ static bool fdp(t_obj_ygg ob_yg, t_token *t, t_token *f, t_token *e)
 {
 	ob_yg.left_child_token = find_left_token(t, f);
 	ob_yg.right_child_token = find_right_token(t, e);
-	ob_yg.y->left = make_yggdrasil(ob_yg.left_child_token, f, t, ob_yg.y);
+	ob_yg.y->left = mke_yggdrasil(ob_yg.left_child_token, f, t, ob_yg.y);
 	if (get_current_exit_status() != 0 && ob_yg.y->left == NULL && l(ob_yg))
 		return (true);
-	ob_yg.y->right = make_yggdrasil(ob_yg.right_child_token, t, e, ob_yg.y);
+	ob_yg.y->right = mke_yggdrasil(ob_yg.right_child_token, t, e, ob_yg.y);
 	if (get_current_exit_status() != 0 && ob_yg.y->right == NULL && r(ob_yg))
 		return (true);
 	return (false);
 }
 
 
-t_node_tree	*make_yggdrasil(t_token *t, t_token *f, t_token *e, \
+t_node_tree	*mke_yggdrasil(t_token *t, t_token *f, t_token *e, \
 t_node_tree *parent_y)
 {
 	t_obj_ygg	ob_yg;
