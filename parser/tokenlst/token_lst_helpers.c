@@ -27,19 +27,22 @@ char	**get_path_list(char **env)
 	return (path_list);
 }
 
-char	**command_list_malloc(char **env)
+char **command_list_malloc(char **env)
 {
-	long long	count;
-	char		**allocated_list;
+    long long count;
+    char **allocated_list;
 
-	allocated_list = NULL;
-	count = count_commands_in_path(env);
-	if (count < 0)
-		return (NULL);
-	allocated_list = malloc(sizeof(char *) * (count + 1));
-	if (!allocated_list)
-		perror("minishell: malloc command list");
-	return (allocated_list);
+    allocated_list = NULL;
+    count = count_commands_in_path(env);
+    if (count < 0)
+        return (NULL);
+    allocated_list = malloc(sizeof(char *) * (count + 1));
+    // --- DEBUG ---
+    dprintf(2, "[%d] DEBUG: command_list_malloc allocated pointer %p\n", getpid(), (void *)allocated_list);
+    // --- END DEBUG ---
+    if (!allocated_list)
+        perror("minishell: malloc command list");
+    return (allocated_list);
 }
 
 char	*get_envar(char **env, char *var)
@@ -79,17 +82,24 @@ bool	search_list(char *search, char **env)
 		return (is_valid_exc(search));
 	else
 	{
+		// init_command_list uses command_list_malloc (std malloc)
 		list = init_command_list(env);
 		if (!list)
-			return (false);
+			return (false); // Return false if list creation failed
 		current = list;
 		while (*current)
 		{
 			if (ft_strcmp(search, *current) == 0)
-				return (ft_free_strarray(list), true);
+			{
+				// Found: Free the malloc'd list pointer and return true
+				ft_free_strarray(list); // *** ADDED FREE ***
+				return (true);
+			}
 			current++;
 		}
-		return (ft_free_strarray(list), false);
+		// Not found: Free the malloc'd list pointer and return false
+		ft_free_strarray(list); // *** ADDED FREE ***
+		return (false);
 	}
 }
 

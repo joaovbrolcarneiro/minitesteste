@@ -61,7 +61,7 @@ static int	duplicate_env_array(char **dest, char **src, int count)
 	{
 		dest[i] = ft_strdup(src[i]);
 		if (!dest[i])
-			return (ft_free_strarray(dest), 1);
+			return (1);
 		i++;
 	}
 	dest[count] = NULL;

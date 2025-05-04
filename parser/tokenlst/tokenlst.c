@@ -140,7 +140,7 @@ char	**init_command_list(char **env)
 	if (populate_status != 0)
 	{
 		// ft_free_strarray correctly frees the standard malloc'd list pointer
-		ft_free_strarray(list); // Keep this call uncommented
+		//ft_free_strarray(list); // Keep this call uncommented
 		return (NULL);
 	}
 	// Return the malloc'd list pointer containing GC-managed strings
