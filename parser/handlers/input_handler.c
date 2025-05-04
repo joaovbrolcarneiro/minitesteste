@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:05:15 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 00:18:26 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:10:35 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,6 @@ t_token *delegated_by_input_handler(char *input, char **env) -- FUNCAO ANTIGA
 	return (token);
 }*/
 
-typedef struct s_inpt_hndlr
-{
-	t_token		*token_list;
-	t_node_tree	*tree;
-	bool		parse_error_flagged_in_tokens;
-	t_token		*temp;
-}	t_inpt_hndlr;
-
 t_inpt_hndlr	input_handler_part2(t_shell *shell, char *input)
 {
 	t_token		*token_list;
@@ -69,25 +61,25 @@ t_inpt_hndlr	input_handler_part2(t_shell *shell, char *input)
 	parse_error_flagged_in_tokens, temp});
 }
 
-void input_handler_part3(t_shell *shell, t_token *token_list)
+void	input_handler_part3(t_shell *shell, t_token *token_list)
 {
 	process_variable_assignments(shell, token_list);
 	expand_token_list_no_assignments(token_list, shell->env);
 	parser_cmd_no_found(token_list, shell->env);
 }
 
-void input_handler_part4(t_inpt_hndlr *cu)
+void	input_handler_part4(t_inpt_hndlr *cu)
 {
-		while (cu->temp)
-		{
-			cu->temp->used = false;
-			cu->temp = cu->temp->next;
-		}
+	while (cu->temp)
+	{
+		cu->temp->used = false;
+		cu->temp = cu->temp->next;
+	}
 }
 
 t_token	*input_handler(t_shell *shell, char *input)
 {
-	t_inpt_hndlr cu;
+	t_inpt_hndlr	cu;
 
 	cu = input_handler_part2(shell, input);
 	if (!cu.token_list)
