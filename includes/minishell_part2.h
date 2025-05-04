@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor_utils_env2.c                              :+:      :+:    :+:   */
+/*   minishell_part2.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:52:12 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 02:46:10 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,20 @@ typedef struct s_token_vec
 	t_token	*so_far;
 }	t_token_vec;
 
+typedef struct s_flt_vrs
+{
+	t_token		*cu_tken;
+	t_token		*last_highest_found;
+	t_ranking	max_rank_found;
+}t_flt_vrs;
+
+typedef struct s_obj_ygg
+{
+	t_node_tree	*y;
+	t_token		*left_child_token;
+	t_token		*right_child_token;
+}	t_obj_ygg;
+
 // --- Function Prototypes ---
 
 // General Utils
@@ -102,6 +116,7 @@ bool		is_cmd_super(char *input, char **env);
 bool		is_eof(char *input);
 void		typealize_call_loop(t_token *token, char **env);
 void		merg_tok_excep_cll_revloop(t_token *token);
+char		**gather_arguments(t_token *cmd_token, t_token *segment_end_token);
 
 // Linked List Operations (Tokens)
 t_token		*get_lastone_nodeof_rank(t_token *lst, t_ranking this_ranking);
@@ -148,6 +163,19 @@ void		parser_cmd_no_found(t_token *token, char **env);
 // Development / Debugging Utils
 char		*print_type(t_token *lst);
 void		print_token_lst(t_token *lst);
+t_obj_ygg    make_yggdrasil_init(void);
+bool		is_redirection(t_obj_ygg obj);
+void	handle_parser_error(t_token *t);
+bool	set_ygg_children(t_obj_ygg *obj, t_token *t, t_token *f, t_token *e);
+bool	has_left(t_obj_ygg obj);
+bool	has_right(t_obj_ygg obj);
+bool	flt_nrm(t_token *target_node, t_token *first_in_segment, t_flt_vrs *vrs);
+void	flt_nrm2(t_flt_vrs *vrs);
+t_gthr_arg_vrs	gthr_arg_vrs_init(t_gthr_arg_vrs *cu);
+bool	gather_arg_helper(t_token *cmd_token, t_gthr_arg_vrs *cu);
+bool	gather_arg_helper2(t_token *cmd_token, t_gthr_arg_vrs *cu);
+int		process_current_token_for_args(t_gthr_arg_vrs *cu);
+bool	is_whitespace(char c);
 
 // Deprecated / Not to use?
 // void is_minishell_exit(char *input); // not to use

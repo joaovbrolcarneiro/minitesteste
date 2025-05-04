@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 00:10:21 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 01:51:55 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <readline/history.h>
 # include <limits.h>
 # include <string.h>
-
 # include "../libft/libft.h"
 # include "../libft/ft_printf.h"
 # include "../libft/get_next_line.h"
@@ -166,6 +165,16 @@ typedef struct s_command_redir
 	char			*file;
 }	t_command_redir;
 
+typedef struct s_gthr_arg_vrs
+{
+	char	**args;
+	t_token	*current;
+	int		arg_count_total;
+	int		arg_capacity;
+	int		i;
+	char	**temp_realloc;
+}	t_gthr_arg_vrs;
+
 /*
 ** Parser functions
 */
@@ -289,6 +298,7 @@ char		**get_path_list(char **env);
 char		**command_list_malloc(char **env);
 int			populate_command_list(char **list, char **env);
 char		**init_command_list(char **env);
+char		**gather_arg_helper3(t_gthr_arg_vrs *cu);
 
 /*
 ** Error Handling
@@ -298,5 +308,6 @@ void		st_prsr_err(const char *message, const char *token_value);
 void		*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 int			process_heredoc_line(char *line, int pipe_write_fd, \
 	char **env, bool expand);
+char	*gather_filename(t_token *redir_token, t_token *end_token);
 
 #endif /* MINISHELL_H */
