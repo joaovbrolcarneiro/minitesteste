@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 02:46:10 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:44:29 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,34 @@
 # define STAR "\001⭐\002"
 # define YEN "\001¥\002"
 # define BWN "\001\e[38;2;105;50;0m\002"
-# define TITLE BWN"``"PNK"K"YLW"o"PNK"N"YLW"o"PNK"S"YLW"u"PNK"B"YLW"a"PNK"sh!"BWN"\""GRN"$-> "RST // Norminette Error: PREPROC_CONSTANT
-# define UPPER_PROMPT "╭─ \001\e[4;36m\002"
-# define LP_L "╰─ \001\e[1;35m\002KONOSUBASH"
-# define LP_R "\001\e[1;33m\002 $-> \001\e[0m\b\002"
 
-// --- Structs and Typedefs ---
-/*
-typedef struct s_envar_obj
-{
-	char	*key;
-	char	*value;
-}	t_envar_obj;
+// --- TITLE Components (Replaces original TITLE define) ---
+# define TITLE_P1 BWN
+# define TITLE_P2 "``"
+# define TITLE_P3 PNK
+# define TITLE_P4 "K"
+# define TITLE_P5 YLW
+# define TITLE_P6 "o"
+# define TITLE_P7 PNK
+# define TITLE_P8 "N"
+# define TITLE_P9 YLW
+# define TITLE_P10 "o"
+# define TITLE_P11 PNK
+# define TITLE_P12 "S"
+# define TITLE_P13 YLW
+# define TITLE_P14 "u"
+# define TITLE_P15 PNK
+# define TITLE_P16 "B"
+# define TITLE_P17 YLW
+# define TITLE_P18 "a"
+# define TITLE_P19 PNK
+# define TITLE_P20 "sh!"
+# define TITLE_P21 BWN
+# define TITLE_P22 "\""
+# define TITLE_P23 GRN
+# define TITLE_P24 "$-> "
+# define TITLE_P25 RST
 
-enum e_var
-{
-	KEY = 0,
-	VALUE = 1
-};
-*/
 typedef struct s_token_vec
 {
 	t_token	*first;
@@ -65,7 +74,7 @@ typedef struct s_flt_vrs
 	t_token		*cu_tken;
 	t_token		*last_highest_found;
 	t_ranking	max_rank_found;
-}t_flt_vrs;
+}	t_flt_vrs;
 
 typedef struct s_obj_ygg
 {
@@ -82,14 +91,10 @@ t_token		*get_prev_node(t_token *node, t_token *lst);
 size_t		ft_strsetlen(char *s, const char *set);
 size_t		ft_strnlen(char *s, char n);
 long long	get_token_id(void);
-
-// Environment Variable Handling
 char		*get_envar(char **env, char *var);
 void		print_env(char **env);
 char		**get_path_list(char **env);
 bool		search_list(char *search, char **env);
-
-// Quote and Expansion Handling
 char		*domane_expantion(char **env, char *input);
 int			quote_handler_counter(char *input, char **env);
 char		*quote_handler_cpy(int count, char *input, char **env);
@@ -98,8 +103,6 @@ bool		handler_quote_operator(char *input);
 char		*quote_handler(t_token *token, char **env, int *is_unclosed);
 bool		merge_to_token_exception(t_token *token);
 void		quote_handler_call_loop(t_token *token, char **env);
-
-// Tokenization and Parsing (split_input, typealize, node creation)
 bool		proximity_exception(char *input, int i);
 t_token		*split_input(char *input, int i);
 t_token		*typealize(t_token *token, char **env);
@@ -116,66 +119,56 @@ bool		is_cmd_super(char *input, char **env);
 bool		is_eof(char *input);
 void		typealize_call_loop(t_token *token, char **env);
 void		merg_tok_excep_cll_revloop(t_token *token);
-char		**gather_arguments(t_token *cmd_token, t_token *segment_end_token);
-
-// Linked List Operations (Tokens)
+char		**gather_arguments(t_token *cmd_token,
+				t_token *segment_end_token); // Line break for length
 t_token		*get_lastone_nodeof_rank(t_token *lst, t_ranking this_ranking);
 t_token		*untie_node(t_token *node, t_token *lst);
 t_token		*rm_node_lst(t_token *token, t_token *first);
 void		add_node_lst(t_token *dst_lst, t_token *token);
 t_token		*last_token(t_token *token);
 t_token		*remap_lst(t_token *token);
-
-// Abstract Syntax Tree (AST - Yggdrasil)
 t_token		*find_right_token(t_token *token, t_token *eof);
 t_token		*find_left_token(t_token *token, t_token *first);
 t_node_tree	*new_yggnode(t_token *token);
-t_node_tree	*mke_yggdrasil(t_token *t, t_token *f, t_token *e, t_node_tree *y);
+t_node_tree	*mke_yggdrasil(t_token *t, t_token *f, t_token *e,
+				t_node_tree *y); // Line break for length
 bool		token_err(t_token *token_lst);
 t_node_tree	*init_yggdrasil(t_token *token_lst);
 void		print_yggdrasil(t_node_tree *yggnode, int num_tabs, char *leg);
-
-// Argument/File Handling in Parser
 void		join_and_split(t_token *priv, t_token *arg_token);
 t_token		*redir_handler_file(t_token *token, t_token *first);
 t_token		*cmd_handler_args(t_token *token, t_token *first);
 t_token		*handler_args_file(t_token *token, t_token *first);
-
-// Pipe Handling
 void		handler_pipes(t_token_vec *token_vec);
-
-// Input Loop and Signal Handling
 void		handle_ctrl_c(int sig);
 t_token		*delegated_by_input_handler(char *input, char **env);
 t_token		*input_handler(t_shell *shell, char *input);
 void		readline_loop(t_shell *shell);
-
-// Execution and File Checks
 bool		is_executable(const char *path);
 bool		is_regular_file(const char *path);
 bool		is_valid_exc(const char *path);
 bool		konopwd(bool cmd_exist, const char *input);
-
-// Error Handling / Exceptions
 bool		is_too_long_input_exption(char *input);
 void		parser_cmd_no_found(t_token *token, char **env);
+t_gthr_arg	gthr_arg_vrs_init(t_gthr_arg *cu);
 
 // Development / Debugging Utils
 char		*print_type(t_token *lst);
 void		print_token_lst(t_token *lst);
-t_obj_ygg    make_yggdrasil_init(void);
+t_obj_ygg	make_yggdrasil_init(void);
 bool		is_redirection(t_obj_ygg obj);
-void	handle_parser_error(t_token *t);
-bool	set_ygg_children(t_obj_ygg *obj, t_token *t, t_token *f, t_token *e);
-bool	has_left(t_obj_ygg obj);
-bool	has_right(t_obj_ygg obj);
-bool	flt_nrm(t_token *target_node, t_token *first_in_segment, t_flt_vrs *vrs);
-void	flt_nrm2(t_flt_vrs *vrs);
-t_gthr_arg_vrs	gthr_arg_vrs_init(t_gthr_arg_vrs *cu);
-bool	gather_arg_helper(t_token *cmd_token, t_gthr_arg_vrs *cu);
-bool	gather_arg_helper2(t_token *cmd_token, t_gthr_arg_vrs *cu);
-int		process_current_token_for_args(t_gthr_arg_vrs *cu);
-bool	is_whitespace(char c);
+void		handle_parser_error(t_token *t);
+bool		set_ygg_children(t_obj_ygg *obj, t_token *t, t_token *f,
+				t_token *e); // Broken line for length
+bool		has_left(t_obj_ygg obj);
+bool		has_right(t_obj_ygg obj);
+bool		flt_nrm(t_token *target_node, t_token *first_in_segment,
+				t_flt_vrs *vrs); // Broken line for length
+void		flt_nrm2(t_flt_vrs *vrs);
+bool		gather_arg_helper(t_token *cmd_token, t_gthr_arg *cu);
+bool		gather_arg_helper2(t_token *cmd_token, t_gthr_arg *cu);
+int			process_current_token_for_args(t_gthr_arg *cu);
+bool		is_whitespace(char c);
 
 // Deprecated / Not to use?
 // void is_minishell_exit(char *input); // not to use

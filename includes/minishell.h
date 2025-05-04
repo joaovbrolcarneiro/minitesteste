@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 01:51:55 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:46:00 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ typedef struct s_gthr_arg_vrs
 	int		arg_capacity;
 	int		i;
 	char	**temp_realloc;
-}	t_gthr_arg_vrs;
+}	t_gthr_arg;
 
 /*
 ** Parser functions
@@ -298,7 +298,7 @@ char		**get_path_list(char **env);
 char		**command_list_malloc(char **env);
 int			populate_command_list(char **list, char **env);
 char		**init_command_list(char **env);
-char		**gather_arg_helper3(t_gthr_arg_vrs *cu);
+char		**gather_arg_helper3(t_gthr_arg *cu);
 
 /*
 ** Error Handling
@@ -308,6 +308,6 @@ void		st_prsr_err(const char *message, const char *token_value);
 void		*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 int			process_heredoc_line(char *line, int pipe_write_fd, \
 	char **env, bool expand);
-char	*gather_filename(t_token *redir_token, t_token *end_token);
+char		*gather_filename(t_token *redir_token, t_token *end_token);
 
 #endif /* MINISHELL_H */
