@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 02:14:17 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:45:30 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	count_following_words(t_token *cmd_token)
 
 char	**gather_arguments(t_token *cmd_token, t_token *segment_end_token)
 {
-	t_gthr_arg_vrs	cu;
+	t_gthr_arg	cu;
 
 	(void)segment_end_token;
 	cu = gthr_arg_vrs_init(&cu);
@@ -57,7 +57,7 @@ char	**gather_arguments(t_token *cmd_token, t_token *segment_end_token)
 	return (cu.args);
 }
 
-bool	gather_arg_helper(t_token *cmd_token, t_gthr_arg_vrs *cu)
+bool	gather_arg_helper(t_token *cmd_token, t_gthr_arg *cu)
 {
 	if (!cmd_token || !cmd_token->value)
 		return (true);
@@ -67,7 +67,7 @@ bool	gather_arg_helper(t_token *cmd_token, t_gthr_arg_vrs *cu)
 	return (false);
 }
 
-bool	gather_arg_helper2(t_token *cmd_token, t_gthr_arg_vrs *cu)
+bool	gather_arg_helper2(t_token *cmd_token, t_gthr_arg *cu)
 {
 	if (!cu->args)
 		return (set_current_exit_status(1), true);

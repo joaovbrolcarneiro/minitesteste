@@ -6,14 +6,14 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 02:40:16 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:45:40 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_part2.h"
 
-t_gthr_arg_vrs	gthr_arg_vrs_init(t_gthr_arg_vrs *cu)
+t_gthr_arg	gthr_arg_vrs_init(t_gthr_arg *cu)
 {
 	cu->args = NULL;
 	cu->temp_realloc = NULL;
@@ -21,7 +21,7 @@ t_gthr_arg_vrs	gthr_arg_vrs_init(t_gthr_arg_vrs *cu)
 	return (*cu);
 }
 
-static bool	gather_arg_helper3_part2(t_gthr_arg_vrs *cu)
+static bool	gather_arg_helper3_part2(t_gthr_arg *cu)
 {
 	size_t	old_byte_size;
 	size_t	new_byte_size;
@@ -39,7 +39,7 @@ static bool	gather_arg_helper3_part2(t_gthr_arg_vrs *cu)
 	return (false);
 }
 
-static bool	gather_arg_helper3_part3(t_gthr_arg_vrs *cu)
+static bool	gather_arg_helper3_part3(t_gthr_arg *cu)
 {
 	if (!cu->args[cu->i])
 		return (set_current_exit_status(1), true);
@@ -49,7 +49,7 @@ static bool	gather_arg_helper3_part3(t_gthr_arg_vrs *cu)
 	return (false);
 }
 
-char	**gather_arg_helper3(t_gthr_arg_vrs *cu)
+char	**gather_arg_helper3(t_gthr_arg *cu)
 {
 	int	status;
 
@@ -67,7 +67,7 @@ char	**gather_arg_helper3(t_gthr_arg_vrs *cu)
 	return (cu->args);
 }
 
-int	process_current_token_for_args(t_gthr_arg_vrs *cu)
+int	process_current_token_for_args(t_gthr_arg *cu)
 {
 	t_token	*filename_token;
 
