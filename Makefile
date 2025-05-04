@@ -77,15 +77,15 @@ SRCS = \
     $(PARSER_TL)/init_node0.c \
     $(PARSER_TL)/init_node1.c \
     $(PARSER_TL)/who_is_node.c \
-    $(PARSER_TREE)/init_tree.c \
     $(PARSER_TREE)/tree.c \
     $(PARSER_UTILS)/utils1.c \
     $(PARSER_UTILS)/utils2.c \
     $(PARSER_YGG)/init_yggdrasil.c \
-    $(PARSER_YGG)/yggdrasil.c
-    ##$(PARSER_ENVAR)/envar0.c \
-    $(PARSER_ENVAR)/envar1.c \
-    $(PARSER_ENVAR)/envar2.c \            
+    $(PARSER_YGG)/yggdrasil_core.c \
+    $(PARSER_YGG)/yggdrasil_finders.c \
+    $(PARSER_YGG)/yggdrasil_gather_helpers.c \
+    $(PARSER_YGG)/yggdrasil_gather.c \
+    $(PARSER_YGG)/yggdrasil.c         
 
 OBJS        = $(SRCS:.c=.o)
 LIBFT       = $(LIBFT_DIR)/libft.a
