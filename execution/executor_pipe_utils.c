@@ -17,30 +17,33 @@ void	left_child(t_shell *shell, t_node_tree *left, int pipefd[2])
 {
 	int	exit_status;
 
-	close(pipefd[0]);
+	close(pipefd[0]); // Close read end in left child
 	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 	{
 		perror("minishell: dup2 stdout left_child");
+		minigarbege_colector(); // Call GC before exit
 		exit(EXIT_FAILURE);
 	}
-	close(pipefd[1]);
+	close(pipefd[1]); // Close write end after dup2
 	exit_status = execute_ast(shell, left);
+	minigarbege_colector(); // Call GC before exit
 	exit(exit_status);
 }
 
-/* Executes right side of pipe in child process */
 void	right_child(t_shell *shell, t_node_tree *right, int pipefd[2])
 {
 	int	exit_status;
 
-	close(pipefd[1]);
+	close(pipefd[1]); // Close write end in right child
 	if (dup2(pipefd[0], STDIN_FILENO) == -1)
 	{
 		perror("minishell: dup2 stdin right_child");
+		minigarbege_colector(); // Call GC before exit
 		exit(EXIT_FAILURE);
 	}
-	close(pipefd[0]);
+	close(pipefd[0]); // Close read end after dup2
 	exit_status = execute_ast(shell, right);
+	minigarbege_colector(); // Call GC before exit
 	exit(exit_status);
 }
 
