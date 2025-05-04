@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 15:08:58 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:46:45 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,6 @@ typedef struct s_token
 	bool			join_next;
 }	t_token;
 
-typedef struct s_inpt_hndlr
-{
-	t_token		*token_list;
-	t_node_tree	*tree;
-	bool		parse_error_flagged_in_tokens;
-	t_token		*temp;
-}	t_inpt_hndlr;
-
 typedef struct s_node_tree
 {
 	t_ranking			rank;
@@ -124,6 +116,14 @@ typedef struct s_node_tree
 	bool				literal;
 	bool				merge_next;
 }	t_node_tree;
+
+typedef struct s_inpt_hndlr
+{
+	t_token		*token_list;
+	t_node_tree	*tree;
+	bool		parse_error_flagged_in_tokens;
+	t_token		*temp;
+}	t_inpt_hndlr;
 
 typedef t_node_tree	*t_tree;
 
@@ -266,6 +266,7 @@ long long	get_new_token_id(void);
 t_token		*create_and_init_token(char *input, int start, int token_len);
 void		perform_quote_concatenation(t_token *token_list);
 t_token		*finalize_list(t_token *first, t_token *last);
+int			get_unquoted_token_len(char *input);
 
 /*
 ** AST / Tree manipulation functions
@@ -297,6 +298,7 @@ void		expand_token_list_no_assignments(t_token *token_list, char **env);
 int			is_valid_assignment(const char *token);
 void		apply_variable_assignment(t_shell *shell, t_token *token_list);
 void		process_variable_assignments(t_shell *shell, t_token *token_list);
+int			get_token_len(char *input);
 
 /*
 ** Command list functions

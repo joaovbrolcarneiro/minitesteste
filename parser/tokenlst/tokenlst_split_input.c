@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tokenlst_split_input.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:54:43 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 18:01:01 by hde-barr         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:46:35 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_part2.h"
 
-static int	get_unquoted_token_len(char *input)
+int	get_unquoted_token_len(char *input)
 {
 	int		i;
 	char	start_char;
@@ -35,27 +35,6 @@ static int	get_unquoted_token_len(char *input)
 	return (i);
 }
 
-int	get_token_len(char *input)
-{
-	int		i;
-	char	start_char;
-
-	i = 1;
-	start_char = *input;
-	if (ischarset("\"'", start_char))
-	{
-		while (input[i] && input[i] != start_char)
-			i++;
-		if (input[i] == start_char)
-			i++;
-		else
-			i = 1;
-	}
-	else
-		i = get_unquoted_token_len(input);
-	return (i);
-}
-
 static void	add_token_to_list(t_token **first, t_token **lst,
 	t_token *new_token)
 {
@@ -69,12 +48,6 @@ static void	add_token_to_list(t_token **first, t_token **lst,
 		(*lst)->next = new_token;
 		*lst = new_token;
 	}
-}
-
-static bool	is_whitespace(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\n' \
-	|| c == '\v' || c == '\f' || c == '\r');
 }
 
 t_token	*create_and_init_token(char *input, int start, int token_len)

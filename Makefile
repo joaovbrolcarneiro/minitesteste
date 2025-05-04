@@ -74,6 +74,7 @@ SRCS = \
     $(PARSER_TL)/tokenlst_split_input.c \
     $(PARSER_TL)/tokenlst_v2.c \
     $(PARSER_TL)/token_lst_helpers.c \
+    $(PARSER_TL)/split_input.c \
     $(PARSER_TL)/init_node0.c \
     $(PARSER_TL)/init_node1.c \
     $(PARSER_TL)/who_is_node.c \

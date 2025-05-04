@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_lst_helpers.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:14:05 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 17:51:12 by hde-barr         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:29:54 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,9 @@ bool	search_list(char *search, char **env)
 {
 	char	**list;
 	char	**current;
-	bool	found;
 
-	if (!search || !*search || !env || ft_strcmp(search, ".") == 0 || \
-		ft_strcmp(search, "..") == 0)
+	if (!search || !*search || !env || ft_strcmp(search, ".") == 0
+		|| ft_strcmp(search, "..") == 0)
 		return (false);
 	if (ft_strchr(search, '/') != NULL)
 		return (is_valid_exc(search));
@@ -84,17 +83,13 @@ bool	search_list(char *search, char **env)
 		if (!list)
 			return (false);
 		current = list;
-		found = false;
 		while (*current)
 		{
 			if (ft_strcmp(search, *current) == 0)
-			{
-				found = true;
-				break ;
-			}
+				return (ft_free_strarray(list), true);
 			current++;
 		}
-		return (ft_free_strarray(list), found);
+		return (ft_free_strarray(list), false);
 	}
 }
 
@@ -109,21 +104,4 @@ t_token	*finalize_list(t_token *first, t_token *last)
 		return (NULL);
 	}
 	return (first);
-}
-
-void	st_prsr_err(const char *message, const char *token_value)
-{
-	ft_putstr_fd((char *)"konosubash: ", 2);
-	if (message)
-		ft_putstr_fd((char *)message, 2);
-	else
-		ft_putstr_fd((char *)"syntax error", 2);
-	if (token_value && *token_value)
-	{
-		ft_putstr_fd((char *)" near unexpected token `", 2);
-		ft_putstr_fd((char *)token_value, 2);
-		ft_putstr_fd((char *)"'", 2);
-	}
-	ft_putstr_fd((char *)"\n", 2);
-	set_current_exit_status(2);
 }

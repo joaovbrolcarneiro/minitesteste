@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:50:41 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 15:12:48 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:51:13 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,21 @@ void	handler_pipes(t_token_vec *token_vec) // - alterei - JOAO
 			}
 		}
 	}
+}
+
+t_token	*delegated_by_input_handler(char *input, char **env)
+{
+	t_token	*first;
+
+	first = split_input(input, 0);
+	if (!first)
+		return (NULL);
+	quote_handler_call_loop(first, env);
+	typealize_call_loop(first, env);
+	perform_quote_concatenation(first);
+	if (has_parser_error(first))
+		return (first);
+	return (first);
 }
 
 /*void handler_pipes(t_token_vec *token_vec) - FUNCAO ANTIGA

@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 14:44:29 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:48:37 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,8 @@ bool		gather_arg_helper(t_token *cmd_token, t_gthr_arg *cu);
 bool		gather_arg_helper2(t_token *cmd_token, t_gthr_arg *cu);
 int			process_current_token_for_args(t_gthr_arg *cu);
 bool		is_whitespace(char c);
+void		perform_quote_con_part2(t_token	*current, \
+	t_token	*node_to_remove, char	*joined_value, char	*temp_value_ptr);
 
 // Deprecated / Not to use?
 // void is_minishell_exit(char *input); // not to use

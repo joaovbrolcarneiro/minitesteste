@@ -6,28 +6,12 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:05:15 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 15:10:35 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:50:47 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_part2.h"
-
-t_token	*delegated_by_input_handler(char *input, char **env)
-{
-	t_token	*first;
-
-	first = split_input(input, 0);
-	if (!first)
-		return (NULL);
-	quote_handler_call_loop(first, env);
-	typealize_call_loop(first, env);
-	perform_quote_concatenation(first);
-	if (has_parser_error(first))
-		return (first);
-	return (first);
-}
-
 /*
 t_token *delegated_by_input_handler(char *input, char **env) -- FUNCAO ANTIGA
 {

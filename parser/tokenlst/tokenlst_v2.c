@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   tokenlst_v2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:05:42 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 18:08:43 by hde-barr         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:47:13 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_part2.h"
 
-bool	proximity_exception(char *input, int i)
+/*bool	proximity_exception(char *input, int i)
 {
 	if ((!ischarset("|<>", input[i]) && input[i] != ' ') && \
 	input[i] && !ischarset("|<>", *input))
 		return (true);
 	return (false);
-}
+}*/
 
 /////////////////////////////////////////////// MEXI NESSA FUNCAO
 
 t_token	*typealize(t_token *token, char **env)
 {
-	if (token->type == TOKEN_ASSIGNMENT) // coloquei isso de resto mudei nada
+	if (token->type == TOKEN_ASSIGNMENT)
 		return (token);
 	if (is_pipe_super(token->value))
 		return (new_token_super(new_pipe(token)));

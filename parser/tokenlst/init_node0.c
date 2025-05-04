@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_node0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:52:43 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 17:21:58 by hde-barr         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:14:00 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,6 @@ t_token	*remove_node_after(t_token *prev_node)
 	node_to_remove->next = NULL;
 	return (node_to_remove);
 }
-
-/*void free_single_token(t_token *token) {
-    if (!token) 
-		return;
-    if (token->value) 
-	{
-        free(token->value); //free?
-    }
-    free(token); // free?
-}*/
 
 void	perform_quote_con_part2(t_token	*current, t_token	*node_to_remove, \
 char	*joined_value, char	*temp_value_ptr)
@@ -69,20 +59,6 @@ char	*joined_value, char	*temp_value_ptr)
 		else
 			current = current->next;
 	}
-}
-
-void	perform_quote_concatenation(t_token *token_list)
-{
-	t_token	*currnt;
-	t_token	*node_to_rm;
-	char	*joined_value;
-	char	*temp_value_ptr;
-
-	node_to_rm = NULL;
-	joined_value = NULL;
-	temp_value_ptr = NULL;
-	currnt = token_list;
-	perform_quote_con_part2(currnt, node_to_rm, joined_value, temp_value_ptr);
 }
 
 /* perform_quote_concatenation old!!!!!
