@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:52:35 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:14:14 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	append_str_to_exp_vars(t_exp_vars *v, char *str)
 
 /* Appends expanded exit status ($?) to result */
 /* Assumes append_str_to_exp_vars handles errors */
-void	handle_exit_status(t_exp_vars *v)
+void	handle_exit_status(t_exp_vars *v) // free retirado
 {
 	char	*exit_str;
 
@@ -42,7 +42,7 @@ void	handle_exit_status(t_exp_vars *v)
 		return ;
 	}
 	append_str_to_exp_vars(v, exit_str);
-	free(exit_str);
+	//free(exit_str);
 	v->i++;
 }
 
@@ -65,7 +65,7 @@ static size_t	get_var_name_len(const char *input, size_t start_index)
 
 /* Appends expanded variable ($VAR) to result */
 /* Assumes append_str_to_exp_vars handles errors */
-void	handle_variable(t_exp_vars *v)
+void	handle_variable(t_exp_vars *v) // free retirado
 {
 	char	*var_name;
 	size_t	var_len;
@@ -82,7 +82,7 @@ void	handle_variable(t_exp_vars *v)
 		return ;
 	}
 	v->var_value = get_env_value_exp(var_name, v->env);
-	free(var_name);
+	//free(var_name);
 	append_str_to_exp_vars(v, v->var_value);
 }
 

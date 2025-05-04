@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:50:25 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 19:29:38 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,45 @@ static void	child_exec_external(t_shell *shell, char **args)
 	char	*cmd_path;
 
 	cmd_path = NULL;
-	handle_child_signals();
+	handle_child_signals(); // Set signals for child
+
+	// Determine command path
 	if (args[0] && ft_strchr(args[0], '/'))
-		cmd_path = ft_strdup(args[0]);
+	{ // Added braces
+		cmd_path = ft_strdup(args[0]); // Assumes ft_strdup uses hb_malloc (GC'd)
+	} // Added braces
 	else if (args[0])
-		cmd_path = find_command_path(args[0], shell->env);
+	{ // Added braces
+		cmd_path = find_command_path(args[0], shell->env); // Returns GC'd path
+	} // Added braces
+
+	// *** DEBUG PRINT ADDED HERE ***
+	if (cmd_path)
+		dprintf(2, "DEBUG: Found path: [%s]\n", cmd_path);
+	else
+		dprintf(2, "DEBUG: find_command_path returned NULL for [%s]\n", args[0]);
+	// *** END DEBUG PRINT ***
+
+	// Handle command not found
 	if (!cmd_path)
 	{
 		ft_putstr_fd("konosubash: command not found: ", 2);
 		ft_putstr_fd(args[0], 2);
 		ft_putstr_fd("\n", 2);
-		exit(127);
+		exit(127); // Standard exit code for command not found
 	}
+
+	// Execute the command
 	execve(cmd_path, args, shell->env);
+
+	// execve only returns on error
 	perror("konosubash: execve");
-	free(cmd_path);
+	// free(cmd_path); // Correctly removed previously
+
+	// Determine exit code based on errno
 	if (errno == EACCES)
-		exit(126);
-	exit(EXIT_FAILURE);
+		exit(126); // Standard exit code for permission denied
+	exit(EXIT_FAILURE); // Default exit for other execve errors
 }
 
 /* Part of execute_external_command: parent process logic */
@@ -63,24 +84,28 @@ static int	parent_wait_external(pid_t pid)
 /* Executes external command */
 int	execute_external_command(t_shell *shell, char **args)
 {
-	pid_t	pid;
+    pid_t	pid;
 
-	if (!args || !args[0] || !args[0][0])
-		return (1);
-	pid = fork();
-	if (pid == 0)
-	{
-		child_exec_external(shell, args);
-	}
-	else if (pid < 0)
-	{
-		return (perror("minishell: fork"), 1);
-	}
-	else if (pid > 0)
-	{
-		return (parent_wait_external(pid));
-	}
-	return (EXIT_FAILURE);
+    dprintf(2, "DEBUG: execute_external_command called with args[0]: [%s]\n",
+            (args && args[0]) ? args[0] : "NULL"); // DEBUG
+
+    if (!args || !args[0] || !args[0][0])
+        return (1);
+
+    pid = fork();
+    if (pid == 0)
+    {
+        child_exec_external(shell, args); // Contains the cmd_path debug print
+    }
+    else if (pid < 0)
+    {
+        return (perror("minishell: fork"), 1);
+    }
+    else if (pid > 0)
+    {
+        return (parent_wait_external(pid));
+    }
+    return (EXIT_FAILURE);
 }
 
 /* Checks and executes builtins, returns status or -1 if not a builtin */
@@ -104,12 +129,19 @@ static int	check_and_run_builtin(t_shell *shell, char **args)
 /* Dispatches command execution (builtin or external) */
 int	execute_command(t_shell *shell, char **args)
 {
-	int	builtin_status;
+    int	builtin_status;
 
-	if (!args || !args[0] || !args[0][0])
-		return (0);
-	builtin_status = check_and_run_builtin(shell, args);
-	if (builtin_status != -1)
-		return (builtin_status);
-	return (execute_external_command(shell, args));
+    dprintf(2, "DEBUG: execute_command called with args[0]: [%s]\n",
+            (args && args[0]) ? args[0] : "NULL"); // DEBUG
+
+    if (!args || !args[0] || !args[0][0])
+        return (0);
+    builtin_status = check_and_run_builtin(shell, args);
+    if (builtin_status != -1)
+    {
+        dprintf(2, "DEBUG: execute_command running as builtin, status: %d\n", builtin_status); // DEBUG
+        return (builtin_status);
+    }
+    dprintf(2, "DEBUG: execute_command running as external\n"); // DEBUG
+    return (execute_external_command(shell, args));
 }

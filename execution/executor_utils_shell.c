@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:52:23 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 17:34:53 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,14 @@ char	**ft_strdup_array(char **array)
 }
 
 /* Frees a string array */
-void	ft_free_strarray(char **array)
+void	ft_free_strarray(char **array) // free retirado array[i] 
 {
 	int	i;
 
 	i = 0;
 	if (!array)
 		return ;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
+	free(array); 
 }
 
 /* Initializes the shell structure */
@@ -100,6 +95,7 @@ void	cleanup_shell(t_shell *shell)
 		close(shell->saved_stdout);
 		shell->saved_stdout = -1;
 	}
+	minigarbege_colector();
 }
 
 int	ft_echo(char **args)

@@ -17,12 +17,14 @@ bool	konopwd(bool cmd_exist, const char *input) /////rare_candy
 	char			*buf;
 	const size_t	size = 4096;
 
-	buf = hb_malloc(size);
-	if (ft_strncmp(ft_strtrim(input, " "), "pwd", 4096) == 0)
+	buf = malloc(size);
+	if (ft_strcmp(input, "pwd") == 0)
 	{
 		ft_printf(RDK"%s\n", getcwd(buf, size));
+		free (buf);
 		return (true);
 	}
+	free (buf);
 	return (cmd_exist != false);
 }
 

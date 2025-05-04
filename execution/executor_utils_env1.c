@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 23:34:17 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 17:34:22 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	update_existing_env(char ***env, char *new_var, const char *var)
 		if (ft_strncmp((*env)[i], var, var_len) == 0 && \
 			(*env)[i][var_len] == '=')
 		{
-			free((*env)[i]);
+			//free((*env)[i]);
 			(*env)[i] = new_var;
 			return (1);
 		}
@@ -79,7 +79,7 @@ static int	add_new_env_var(char ***env, char *new_var)
 }
 
 /* Updates existing env variable or adds a new one */
-int	update_env(char ***env, char *var, char *value)
+int	update_env(char ***env, char *var, char *value) // free retirado
 {
 	char	*new_var;
 	size_t	len;

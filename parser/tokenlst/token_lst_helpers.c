@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:14:05 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 15:29:54 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:57:37 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,14 @@ bool	search_list(char *search, char **env)
 	}
 }
 
-t_token	*finalize_list(t_token *first, t_token *last)
+t_token	*finalize_list(t_token *first, t_token *last) // free retirado
 {
 	if (last)
 		last->next = NULL;
 	if (!first || !first->value)
 	{
 		if (first)
-			free(first);
+			//free(first);
 		return (NULL);
 	}
 	return (first);

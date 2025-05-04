@@ -6,14 +6,14 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 00:03:16 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 19:02:56 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Helper for append_char: Reallocates buffer if needed */
-static int	realloc_exp_buffer(char **buf, size_t len, size_t *cap)
+static int	realloc_exp_buffer(char **buf, size_t len, size_t *cap) // free retirado
 {
 	size_t	i;
 	char	*new_buf;
@@ -33,7 +33,7 @@ static int	realloc_exp_buffer(char **buf, size_t len, size_t *cap)
 			new_buf[i] = (*buf)[i];
 			i++;
 		}
-		free(*buf);
+		//free(*buf);
 	}
 	*buf = new_buf;
 	*cap = new_cap;
@@ -71,7 +71,7 @@ long long	get_new_token_id(void)
 }
 
 int	process_heredoc_line(char *line, int pipe_write_fd, \
-						char **env, bool expand)
+						char **env, bool expand) // free retirado
 {
 	char	*line_to_write;
 	int		write_status;
@@ -86,7 +86,7 @@ int	process_heredoc_line(char *line, int pipe_write_fd, \
 	write_status = write(pipe_write_fd, line_to_write, \
 							ft_strlen(line_to_write));
 	if (line_to_write != line)
-		free(line_to_write);
+		//free(line_to_write);
 	if (write_status == -1)
 	{
 		perror("minishell: write heredoc pipe");

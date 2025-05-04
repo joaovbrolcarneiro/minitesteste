@@ -6,14 +6,14 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 18:17:08 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:08:38 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Helper for ft_unset: Finds and removes one var */
-static int	find_and_remove_var(t_shell *shell, const char *varname)
+static int	find_and_remove_var(t_shell *shell, const char *varname) // free retirado
 {
 	int		j;
 	int		k;
@@ -26,7 +26,7 @@ static int	find_and_remove_var(t_shell *shell, const char *varname)
 		if (ft_strncmp(shell->env[j], varname, name_len) == 0 \
 			&& shell->env[j][name_len] == '=')
 		{
-			free(shell->env[j]);
+			//free(shell->env[j]);
 			k = j;
 			while (shell->env[k + 1])
 			{

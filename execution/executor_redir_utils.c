@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:51:33 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 19:29:01 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,29 +59,31 @@ int	execute_redir_cmd_node(t_shell *shell, t_node_tree *redir_node)
 /* Called only by execute_ast within this file */
 static int	dispatch_ast_node(t_shell *shell, t_node_tree *node)
 {
-	int	status;
+    int	status;
 
-	status = 1;
-	if (!node)
-		return (0);
-	if (node->type == AST_PIPE)
-		status = handle_pipe_execution(shell, node);
-	else if (node->type >= AST_REDIR_IN && node->type <= AST_HEREDOC)
-		status = execute_redirection_chain(shell, node);
-	else if (node->type == AST_COMMAND)
-		status = handle_command_execution(shell, node);
-	else if (node->type == (t_ast_type)TOKEN_ASSIGNMENT)
-		status = handle_assignment_execution(node);
-	else if (node->type == (t_ast_type)TOKEN_WORD)
-		status = handle_word_token_execution(node);
-	else
-	{
-		ft_putstr_fd("konosubash: execute_ast: Unknown node type ", 2);
-		ft_putnbr_fd(node->type, 2);
-		ft_putstr_fd("\n", 2);
-		status = 1;
-	}
-	return (status);
+    status = 1;
+    if (!node)
+        return (0);
+
+    dprintf(2, "DEBUG: dispatch_ast_node called for type: %d, content: [%s]\n",
+            node->type, node->content ? node->content : "NULL"); // DEBUG
+
+    if (node->type == AST_PIPE)
+        status = handle_pipe_execution(shell, node);
+    else if (node->type >= AST_REDIR_IN && node->type <= AST_HEREDOC)
+         status = execute_redirection_chain(shell, node); // Make sure this exists
+    else if (node->type == AST_COMMAND)
+        status = handle_command_execution(shell, node);
+    // ... other types ...
+    else
+    {
+        dprintf(2, "DEBUG: dispatch_ast_node unknown type: %d\n", node->type); // DEBUG
+        ft_putstr_fd("konosubash: execute_ast: Unknown node type ", 2);
+        ft_putnbr_fd(node->type, 2);
+        ft_putstr_fd("\n", 2);
+        status = 1;
+    }
+    return (status);
 }
 
 /* Main execution entry point (lives here as requested by user) */

@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:31:39 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 14:53:51 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 19:19:26 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	readline_loop(t_shell *shell)
 
 	while (1)
 	{
+		//minigarbege_colector();
 		setup_interactive_signals();
 		prompt = build_prompt_string();
 		if (!prompt)

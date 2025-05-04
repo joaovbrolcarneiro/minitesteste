@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 18:17:04 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:00:41 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	process_export_args(char **args, char ***env)
 }
 
 /* Helper for ft_export: Prints sorted env */
-static int	print_sorted_env(char ***env)
+static int	print_sorted_env(char ***env) // - free retirado
 {
 	char	**sorted;
 	int		i;
@@ -86,7 +86,7 @@ static int	print_sorted_env(char ***env)
 		else
 			ft_putstr_fd(sorted[i], STDOUT_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
-		free(sorted[i++]);
+		//free(sorted[i++]);
 	}
 	return (free(sorted), 0);
 }

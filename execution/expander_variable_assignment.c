@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:52:48 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:43:24 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	expand_token_list_no_assignments(t_token *token_list, char **env)
 				ft_putstr_fd("minishell: warning: expansion failed\n", 2);
 			else if (expanded != original_value)
 			{
-				free(original_value);
+				//free(original_value);
 				cur->value = expanded;
 			}
 		}
@@ -101,7 +101,7 @@ int	exp_var_init(t_exp_vars *v, const char *input, char **env)
 	v->var_start = 0;
 	v->pos = 0;
 	v->var_value = NULL;
-	v->result = malloc(v->res_cap);
+	v->result = hb_malloc(v->res_cap);
 	if (!v->result)
 		return (perror("minishell: exp_var_init malloc"), 1);
 	v->result[0] = '\0';
