@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 14:46:00 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:08:58 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,14 @@ typedef struct s_token
 	bool			literal;
 	bool			join_next;
 }	t_token;
+
+typedef struct s_inpt_hndlr
+{
+	t_token		*token_list;
+	t_node_tree	*tree;
+	bool		parse_error_flagged_in_tokens;
+	t_token		*temp;
+}	t_inpt_hndlr;
 
 typedef struct s_node_tree
 {
