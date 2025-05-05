@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 18:14:14 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:46:21 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	handle_exit_status(t_exp_vars *v) // free retirado
 		return ;
 	}
 	append_str_to_exp_vars(v, exit_str);
-	//free(exit_str);
 	v->i++;
 }
 
@@ -82,7 +81,6 @@ void	handle_variable(t_exp_vars *v) // free retirado
 		return ;
 	}
 	v->var_value = get_env_value_exp(var_name, v->env);
-	//free(var_name);
 	append_str_to_exp_vars(v, v->var_value);
 }
 

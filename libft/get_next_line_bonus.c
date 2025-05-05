@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:03:18 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 15:51:42 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:11:12 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,42 +67,23 @@ char	*ft_take_date(int fd, char *buffer)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*buffer; // Static buffer for leftovers
+	static char	*buffer;
 
-	// Handle special cleanup call
 	if (fd == GNL_CLEANUP)
 	{
 		if (buffer)
-			free(buffer); // Free the static buffer if it exists
-		buffer = NULL;    // Reset the static pointer
-		return (NULL);    // Return NULL for cleanup call
-	}
-
-	// Standard GNL validation
-	if (fd < 0 || BUFFER_SIZE < 1)
-		return (NULL); // Invalid input, don't touch static buffer yet
-
-	// Read data into buffer, potentially reallocating and freeing old buffer internally
-	buffer = ft_take_date(fd, buffer);
-	if (!buffer) // Error during read or EOF before any data was buffered
+			free(buffer);
+		buffer = NULL;
 		return (NULL);
-
-	// Extract the line to return (allocates 'line' with std malloc)
+	}
+	if (fd < 0 || BUFFER_SIZE < 1)
+		return (NULL);
+	buffer = ft_take_date(fd, buffer);
+	if (!buffer)
+		return (NULL);
 	line = ft_take_line(buffer);
-
-	// Update static buffer with leftovers.
-	// ft_rebuffer frees the buffer passed to it and returns a new buffer
-	// (allocated with std malloc) or NULL if no leftovers/error.
 	buffer = ft_rebuffer(buffer);
-
-	// If ft_take_line failed (e.g., buffer was empty or only contained '\n'),
-	// line is NULL. In this case, ft_rebuffer should have also received an
-	// effectively empty buffer, freed it, and returned NULL. The static buffer
-	// pointer is now correctly NULL.
 	if (!line)
 		return (NULL);
-
-	// Return the malloc'd line. Caller must free it.
-	// The static buffer now holds only leftovers or is NULL.
 	return (line);
 }

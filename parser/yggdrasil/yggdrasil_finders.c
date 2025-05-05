@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 02:13:49 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:19:19 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,16 @@ void	flt_nrm2(t_flt_vrs *vrs)
 {
 	vrs->max_rank_found = vrs->cu_tken->rank;
 	vrs->last_highest_found = vrs->cu_tken;
+}
+
+void	typealize_call_loop(t_token *token, char **env)
+{
+	t_token	*current_token;
+
+	current_token = token;
+	while (current_token)
+	{
+		typealize(current_token, env);
+		current_token = current_token->next;
+	}
 }

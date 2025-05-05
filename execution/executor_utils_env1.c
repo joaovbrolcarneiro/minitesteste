@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 21:21:48 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:45:09 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static int	update_existing_env(char ***env, char *new_var, const char *var)
 		if (ft_strncmp((*env)[i], var, var_len) == 0 && \
 			(*env)[i][var_len] == '=')
 		{
-			//free((*env)[i]);
 			(*env)[i] = new_var;
 			return (1);
 		}
@@ -62,12 +61,10 @@ static int	add_new_env_var(char ***env, char *new_var)
 	i = 0;
 	while ((*env)[i])
 		i++;
-	new_env = hb_malloc(sizeof(char *) * (i + 2)); // Use hb_malloc
+	new_env = hb_malloc(sizeof(char *) * (i + 2));
 	if (!new_env)
 	{
-		// Let GC handle freeing new_var if this allocation fails
 		perror("minishell: add_new_env_var hb_malloc");
-		// Do NOT free(new_var) here if it was hb_malloc'd
 		return (1);
 	}
 	i = 0;
@@ -76,10 +73,9 @@ static int	add_new_env_var(char ***env, char *new_var)
 		new_env[i] = (*env)[i];
 		i++;
 	}
-	new_env[i] = new_var; // new_var comes from update_env (hb_malloc'd)
+	new_env[i] = new_var;
 	new_env[i + 1] = NULL;
-	// free(*env); // REMOVED: Let GC handle the old array pointer
-	*env = new_env; // Update shell's env pointer to the new, GC-tracked array
+	*env = new_env;
 	return (0);
 }
 
@@ -91,7 +87,7 @@ int	update_env(char ***env, char *var, char *value)
 	int		updated;
 
 	len = ft_strlen(var) + ft_strlen(value) + 2;
-	new_var = hb_malloc(len); // Use hb_malloc
+	new_var = hb_malloc(len);
 	if (!new_var)
 		return (perror("minishell: update_env hb_malloc"), 1);
 	ft_strcpy(new_var, var);
@@ -100,16 +96,11 @@ int	update_env(char ***env, char *var, char *value)
 	updated = update_existing_env(env, new_var, var);
 	if (!updated)
 	{
-		// add_new_env_var takes ownership of hb_malloc'd new_var if successful
 		if (add_new_env_var(env, new_var) != 0)
 		{
-			// If add failed, new_var is still tracked by GC, so don't free manually
 			return (1);
 		}
 	}
-	// Whether updated or added, new_var is now in the env, tracked by GC.
-	// The old string (if updated) remains tracked by GC until cleanup.
-	// The old env array (if added) remains tracked by GC until cleanup.
 	return (0);
 }
 

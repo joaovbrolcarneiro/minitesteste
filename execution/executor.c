@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 19:29:38 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:35:14 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	child_exec_external(t_shell *shell, char **args)
 		ft_putstr_fd("konosubash: command not found: ", 2);
 		ft_putstr_fd(args[0], 2);
 		ft_putstr_fd("\n", 2);
-		minigarbege_colector(); // Call GC before exit
+		minigarbege_colector();
 		exit(127);
 	}
 	execve(cmd_path, args, shell->env);
@@ -38,7 +38,7 @@ static void	child_exec_external(t_shell *shell, char **args)
 		exit_status = 126;
 	else
 		exit_status = EXIT_FAILURE;
-	minigarbege_colector(); // Call GC before exit
+	minigarbege_colector();
 	exit(exit_status);
 }
 

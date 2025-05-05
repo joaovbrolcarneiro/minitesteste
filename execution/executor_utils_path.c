@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 17:39:49 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:41:18 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@ char	*ft_path_join(char *path, char *file) // free retirado
 	if (!tmp)
 		return (NULL);
 	res = ft_strjoin(tmp, file);
-	//free(tmp);
 	return (res);
 }
 
 /* Helper for find_command_path: checks access in PATH directories */
 /* Returns 0 on success (path found), 1 if not found, -1 on malloc error */
-static int	check_path_access(char *cmd, char **paths, char **found_path) // free retirado
+static int	check_path_access(char *cmd, char **paths, char **found_path)
 {
 	int			i;
 	char		*full_path;
@@ -53,7 +52,6 @@ static int	check_path_access(char *cmd, char **paths, char **found_path) // free
 				return (0);
 			}
 		}
-		//free(full_path);
 		i++;
 	}
 	return (1);
@@ -73,7 +71,7 @@ static char	*check_direct_path(char *cmd)
 }
 
 /* Helper for find_command_path: searches through PATH */
-static char	*search_in_path_env(char *cmd, char **env) // free retirado
+static char	*search_in_path_env(char *cmd, char **env)
 {
 	char	*path_env;
 	char	**paths;
@@ -88,7 +86,6 @@ static char	*search_in_path_env(char *cmd, char **env) // free retirado
 	if (!paths)
 		return (NULL);
 	result = check_path_access(cmd, paths, &found_path);
-	//ft_free_strarray(paths);
 	if (result == 0)
 		return (found_path);
 	return (NULL);

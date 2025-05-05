@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 18:55:15 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:55:06 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ t_node_tree	*mke_yggdrasil(t_token *t, t_token *f, t_token *e, t_node_tree *y)
 		return (NULL);
 	obj.y = new_yggnode(t);
 	if (!obj.y)
-	{
-		set_current_exit_status(1);
-		return (NULL);
-	}
+		return (set_current_exit_status(1), NULL);
 	if (obj.y->type == AST_COMMAND)
 	{
 		obj.y->args = gather_arguments(t, NULL);
@@ -37,10 +34,7 @@ t_node_tree	*mke_yggdrasil(t_token *t, t_token *f, t_token *e, t_node_tree *y)
 	{
 		obj.y->file = gather_filename(t, e);
 		if (!obj.y->file)
-		{
-			handle_parser_error(t);
-			return (NULL);
-		}
+			return (handle_parser_error(t), NULL);
 	}
 	if (set_ygg_children(&obj, t, f, e))
 		return (NULL);

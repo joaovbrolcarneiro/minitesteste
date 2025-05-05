@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 18:10:25 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 18:59:29 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:01:19 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,14 @@ static long long	count_dir_entries(DIR *dir)
 	struct dirent	*entry;
 
 	count = 0;
-	rewinddir(dir); // Ensure counting starts from the beginning
+	rewinddir(dir);
 	while (1)
 	{
 		entry = readdir(dir);
 		if (!entry)
 			break ;
-		// Filter out "." and ".." if necessary
-		if (ft_strcmp(entry->d_name, ".") != 0 &&
-			ft_strcmp(entry->d_name, "..") != 0)
+		if (ft_strcmp(entry->d_name, ".") != 0 \
+		&& ft_strcmp(entry->d_name, "..") != 0)
 			count++;
 	}
 	return (count);
@@ -39,11 +38,10 @@ long long	count_commands_in_path(char **env)
 {
 	long long	count;
 	DIR			*dir;
-	char		**path_list; // Will point to GC-managed memory from ft_split
+	char		**path_list;
 	int			i;
 
 	count = 0;
-	// path_list and its contents assumed GC-managed (from ft_split -> hb_malloc)
 	path_list = get_path_list(env);
 	if (!path_list)
 		return (-1);
@@ -54,11 +52,10 @@ long long	count_commands_in_path(char **env)
 		if (dir != NULL)
 		{
 			count += count_dir_entries(dir);
-			closedir(dir); // Close directory stream
+			closedir(dir);
 		}
 		i++;
 	}
-	// ft_free_strarray(path_list); // REMOVED: path_list is GC-managed
 	return (count);
 }
 
@@ -68,43 +65,40 @@ static int	populate_list_from_dir(char **list, DIR *dir, \
 {
 	struct dirent	*d;
 
-	rewinddir(dir); // Ensure reading starts from the beginning
+	rewinddir(dir);
 	while (1)
 	{
 		d = readdir(dir);
 		if (!d)
-			break ; // End of directory or error
-		// Filter out "." and ".."
+			break ;
 		if (ft_strcmp(d->d_name, ".") == 0 || ft_strcmp(d->d_name, "..") == 0)
-			continue;
-		// list pointer itself is malloc'd, strings inside are hb_malloc'd
-		list[*current_index] = ft_strdup(d->d_name); // ft_strdup uses hb_malloc
+			continue ;
+		list[*current_index] = ft_strdup(d->d_name);
 		if (!list[*current_index])
 		{
 			perror("minishell: strdup command list");
 			closedir(dir);
-			return (1); // Error
+			return (1);
 		}
 		(*current_index)++;
 	}
-	closedir(dir); // Close directory stream
-	return (0); // Success for this directory
+	closedir(dir);
+	return (0);
 }
 
 /* Populates the command list array */
 int	populate_command_list(char **list, char **env)
 {
-	char		**path_list; // Will point to GC-managed memory from ft_split
+	char		**path_list;
 	DIR			*dir;
 	long long	current_index;
 	int			path_idx;
 	int			status;
 
 	current_index = 0;
-	// path_list assumed GC-managed (from ft_split -> hb_malloc)
 	path_list = get_path_list(env);
 	if (!path_list)
-		return (1); // Error getting path list
+		return (1);
 	path_idx = 0;
 	status = 0;
 	while (path_list[path_idx] && status == 0)
@@ -112,17 +106,14 @@ int	populate_command_list(char **list, char **env)
 		dir = opendir(path_list[path_idx]);
 		if (dir != NULL)
 		{
-			// populate_list_from_dir fills 'list' with GC-managed strings
 			status = populate_list_from_dir(list, dir, &current_index);
-			// closedir is called inside populate_list_from_dir
 		}
 		path_idx++;
 	}
-	list[current_index] = NULL; // Null-terminate the list array
-	// ft_free_strarray(path_list); // REMOVED: path_list is GC-managed
+	list[current_index] = NULL;
 	if (status != 0)
-		return (1); // Error during population
-	return (0); // Success
+		return (1);
+	return (0);
 }
 
 /* Initializes the command list */
@@ -131,19 +122,14 @@ char	**init_command_list(char **env)
 	char	**list;
 	int		populate_status;
 
-	// list pointer is allocated with standard malloc
 	list = command_list_malloc(env);
 	if (!list)
 		return (NULL);
-	// populate_command_list fills 'list' with GC-managed strings
 	populate_status = populate_command_list(list, env);
 	if (populate_status != 0)
 	{
-		// ft_free_strarray correctly frees the standard malloc'd list pointer
-		//ft_free_strarray(list); // Keep this call uncommented
 		return (NULL);
 	}
-	// Return the malloc'd list pointer containing GC-managed strings
 	return (list);
 }
 

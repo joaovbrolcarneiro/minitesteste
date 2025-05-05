@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:14:05 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 18:44:35 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:01:56 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ char	**get_path_list(char **env)
 	return (path_list);
 }
 
-char **command_list_malloc(char **env)
+char	**command_list_malloc(char **env)
 {
-    long long count;
-    char **allocated_list;
+	long long	count;
+	char		**allocated_list;
 
-    allocated_list = NULL;
-    count = count_commands_in_path(env);
-    if (count < 0)
-        return (NULL);
-    allocated_list = malloc(sizeof(char *) * (count + 1));
-    if (!allocated_list)
-        perror("minishell: malloc command list");
-    return (allocated_list);
+	allocated_list = NULL;
+	count = count_commands_in_path(env);
+	if (count < 0)
+		return (NULL);
+	allocated_list = malloc(sizeof(char *) * (count + 1));
+	if (!allocated_list)
+		perror("minishell: malloc command list");
+	return (allocated_list);
 }
 
 char	*get_envar(char **env, char *var)
@@ -79,35 +79,27 @@ bool	search_list(char *search, char **env)
 		return (is_valid_exc(search));
 	else
 	{
-		// init_command_list uses command_list_malloc (std malloc)
 		list = init_command_list(env);
 		if (!list)
-			return (false); // Return false if list creation failed
+			return (false);
 		current = list;
 		while (*current)
 		{
 			if (ft_strcmp(search, *current) == 0)
-			{
-				// Found: Free the malloc'd list pointer and return true
-				ft_free_strarray(list); // *** ADDED FREE ***
-				return (true);
-			}
+				return (ft_free_strarray(list), true);
 			current++;
 		}
-		// Not found: Free the malloc'd list pointer and return false
-		ft_free_strarray(list); // *** ADDED FREE ***
+		ft_free_strarray(list);
 		return (false);
 	}
 }
 
-t_token	*finalize_list(t_token *first, t_token *last) // free retirado
+t_token	*finalize_list(t_token *first, t_token *last)
 {
 	if (last)
 		last->next = NULL;
 	if (!first || !first->value)
 	{
-		if (first)
-			//free(first);
 		return (NULL);
 	}
 	return (first);

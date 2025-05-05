@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/03 16:51:21 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:44:12 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void	left_child(t_shell *shell, t_node_tree *left, int pipefd[2])
 {
 	int	exit_status;
 
-	close(pipefd[0]); // Close read end in left child
+	close(pipefd[0]);
 	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 	{
 		perror("minishell: dup2 stdout left_child");
-		minigarbege_colector(); // Call GC before exit
+		minigarbege_colector();
 		exit(EXIT_FAILURE);
 	}
-	close(pipefd[1]); // Close write end after dup2
+	close(pipefd[1]);
 	exit_status = execute_ast(shell, left);
-	minigarbege_colector(); // Call GC before exit
+	minigarbege_colector();
 	exit(exit_status);
 }
 
@@ -34,16 +34,16 @@ void	right_child(t_shell *shell, t_node_tree *right, int pipefd[2])
 {
 	int	exit_status;
 
-	close(pipefd[1]); // Close write end in right child
+	close(pipefd[1]);
 	if (dup2(pipefd[0], STDIN_FILENO) == -1)
 	{
 		perror("minishell: dup2 stdin right_child");
-		minigarbege_colector(); // Call GC before exit
+		minigarbege_colector();
 		exit(EXIT_FAILURE);
 	}
-	close(pipefd[0]); // Close read end after dup2
+	close(pipefd[0]);
 	exit_status = execute_ast(shell, right);
-	minigarbege_colector(); // Call GC before exit
+	minigarbege_colector();
 	exit(exit_status);
 }
 

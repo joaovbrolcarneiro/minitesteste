@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 18:43:24 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:43:39 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	expand_token_list_no_assignments(t_token *token_list, char **env)
 				ft_putstr_fd("minishell: warning: expansion failed\n", 2);
 			else if (expanded != original_value)
 			{
-				//free(original_value);
 				cur->value = expanded;
 			}
 		}
