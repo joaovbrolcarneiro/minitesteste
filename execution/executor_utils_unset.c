@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 22:48:09 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:45:30 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,23 @@ int	ft_unset(char **args, t_shell *shell)
 		i++;
 	}
 	return (exit_code);
+}
+
+char	*ft_strcat(char *dest, const char *src)
+{
+	char	*tmp;
+
+	tmp = dest;
+	while (*dest)
+	{
+		dest++;
+	}
+	while (*src)
+	{
+		*dest = *src;
+		dest++;
+		src++;
+	}
+	*dest = '\0';
+	return (tmp);
 }

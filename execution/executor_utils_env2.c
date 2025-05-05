@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 22:38:39 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:44:35 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,37 +62,52 @@ static int	process_export_args(char **args, char ***env)
 }
 
 /* Helper for ft_export: Prints sorted env */
+static void	print_single_env_var(char *env_var)
+{
+	char	*equal_sign;
+
+	equal_sign = ft_strchr(env_var, '=');
+	write(STDOUT_FILENO, "declare -x ", 11);
+	if (equal_sign)
+	{
+		write(STDOUT_FILENO, env_var, equal_sign - env_var);
+		write(STDOUT_FILENO, "=\"", 2);
+		ft_putstr_fd(equal_sign + 1, STDOUT_FILENO);
+		write(STDOUT_FILENO, "\"", 1);
+	}
+	else
+	{
+		ft_putstr_fd(env_var, STDOUT_FILENO);
+	}
+	write(STDOUT_FILENO, "\n", 1);
+}
+
+/**
+ * @brief Sorts and prints environment variables in 'declare -x' format.
+ * Skips the special '_' variable.
+ * @param env Pointer to the environment array (char ***).
+ * @return int 0 on success, 1 on error (e.g., allocation failure).
+ */
 static int	print_sorted_env(char ***env)
 {
 	char	**sorted;
 	int		i;
-	char	*equal_sign;
 
 	sorted = sort_env(*env);
+	if (!sorted)
+		return (perror("minishell: export/sort_env"), 1);
 	i = 0;
 	while (sorted[i])
 	{
-		if (ft_strncmp(sorted[i], "_=", 2) == 0
-			|| ft_strcmp(sorted[i], "_") == 0)
+		if (!(ft_strncmp(sorted[i], "_=", 2) == 0
+				|| ft_strcmp(sorted[i], "_") == 0))
 		{
-			i++;
-			continue ;
+			print_single_env_var(sorted[i]);
 		}
-		equal_sign = ft_strchr(sorted[i], '=');
-		write(STDOUT_FILENO, "declare -x ", 11);
-		if (equal_sign)
-		{
-			write(STDOUT_FILENO, sorted[i], equal_sign - sorted[i]);
-			write(STDOUT_FILENO, "=\"", 2);
-			ft_putstr_fd(equal_sign + 1, STDOUT_FILENO);
-			write(STDOUT_FILENO, "\"", 1);
-		}
-		else
-			ft_putstr_fd(sorted[i], STDOUT_FILENO);
-		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
-	return (free(sorted), 0);
+	free(sorted);
+	return (0);
 }
 
 /* Builtin export command */
@@ -102,23 +117,4 @@ int	ft_export(char **args, char ***env)
 		return (print_sorted_env(env));
 	else
 		return (process_export_args(args, env));
-}
-
-char	*ft_strcat(char *dest, const char *src)
-{
-	char	*tmp;
-
-	tmp = dest;
-	while (*dest)
-	{
-		dest++;
-	}
-	while (*src)
-	{
-		*dest = *src;
-		dest++;
-		src++;
-	}
-	*dest = '\0';
-	return (tmp);
 }
