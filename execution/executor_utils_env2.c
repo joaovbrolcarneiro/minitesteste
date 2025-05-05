@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 18:00:41 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:53:21 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,28 @@ static int	process_export_args(char **args, char ***env)
 }
 
 /* Helper for ft_export: Prints sorted env */
-static int	print_sorted_env(char ***env) // - free retirado
+static int	print_sorted_env(char ***env)
 {
 	char	**sorted;
 	int		i;
 	char	*equal_sign;
 
-	sorted = sort_env(*env);
+	sorted = sort_env(*env); // Assume this uses standard malloc for the array
 	if (!sorted)
-		return (perror("minishell: export"), 1);
+	{
+		perror("minishell: export");
+		return (1);
+	}
 	i = 0;
 	while (sorted[i])
 	{
+		// Skip '_' variable if needed
+		if (ft_strncmp(sorted[i], "_=", 2) == 0
+			|| ft_strcmp(sorted[i], "_") == 0)
+		{
+			i++;
+			continue ;
+		}
 		equal_sign = ft_strchr(sorted[i], '=');
 		write(STDOUT_FILENO, "declare -x ", 11);
 		if (equal_sign)
@@ -84,11 +94,15 @@ static int	print_sorted_env(char ***env) // - free retirado
 			write(STDOUT_FILENO, "\"", 1);
 		}
 		else
+		{
 			ft_putstr_fd(sorted[i], STDOUT_FILENO);
+		}
 		write(STDOUT_FILENO, "\n", 1);
-		//free(sorted[i++]);
+		// free(sorted[i]); // Keep removed - Assume GC handles hb_malloc'd strings
+		i++;
 	}
-	return (free(sorted), 0);
+	free(sorted); // <<< ADD THIS BACK: Free the array allocated by sort_env
+	return (0);
 }
 
 /* Builtin export command */
