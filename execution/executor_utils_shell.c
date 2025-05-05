@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 16:02:51 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:44:28 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ void ft_free_strarray(char **array)
 {
     if (!array)
         return ;
-    // --- DEBUG ---
-    dprintf(2, "[%d] DEBUG: ft_free_strarray freeing pointer %p\n", getpid(), (void *)array);
-    // --- END DEBUG ---
     free(array);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 19:46:48 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:55:15 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,44 +17,34 @@ t_node_tree	*mke_yggdrasil(t_token *t, t_token *f, t_token *e, t_node_tree *y)
 {
 	t_obj_ygg	obj;
 
-	(void)y; // Parent pointer might not be needed in this logic
-	// Base cases: invalid token, end token reached, or token already used
+	(void)y;
+	obj = make_yggdrasil_init();
 	if (!t || t == e || t->used)
 		return (NULL);
-
-	obj = make_yggdrasil_init(); // Initialize helper struct
-	obj.y = new_yggnode(t); // Create the node from the token
+	obj.y = new_yggnode(t);
 	if (!obj.y)
-		return (set_current_exit_status(1), NULL); // Node creation failed
-
-	// --- DEBUG PRINT ADDED ---
-	// Print the type assigned by new_yggnode and the token's original type
-	dprintf(2, "DEBUG: mke_yggdrasil created node type: %d (AST) from token type: %d for value: [%s]\n",
-		obj.y->type, t->type, obj.y->content ? obj.y->content : "NULL");
-	// --- END DEBUG PRINT ---
-
-	// Handle specific node types
+	{
+		set_current_exit_status(1);
+		return (NULL);
+	}
 	if (obj.y->type == AST_COMMAND)
 	{
-		obj.y->args = gather_arguments(t, NULL); // Gather arguments
-		// Check if argument gathering failed (indicated by exit status)
+		obj.y->args = gather_arguments(t, NULL);
 		if (!obj.y->args && get_current_exit_status() != 0)
-			return (NULL); // Propagate error
+			return (NULL);
 	}
-	else if (is_redirection(obj)) // Check if it's any redirection type
+	else if (is_redirection(obj))
 	{
-		obj.y->file = gather_filename(t, e); // Gather filename
-		// Check if filename gathering failed (syntax error)
+		obj.y->file = gather_filename(t, e);
 		if (!obj.y->file)
-			return (handle_parser_error(t), NULL); // Report syntax error
+		{
+			handle_parser_error(t);
+			return (NULL);
+		}
 	}
-	// Add handling for AST_PIPE if necessary (though often handled by structure)
-
-	// Recursively build children
 	if (set_ygg_children(&obj, t, f, e))
-		return (NULL); // Error occurred during child creation
-
-	return (obj.y); // Return the built node/subtree
+		return (NULL);
+	return (obj.y);
 }
 
 t_node_tree	*new_yggnode(t_token *token)

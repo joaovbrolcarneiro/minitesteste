@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:14:05 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 18:57:37 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:44:35 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ char **command_list_malloc(char **env)
     if (count < 0)
         return (NULL);
     allocated_list = malloc(sizeof(char *) * (count + 1));
-    // --- DEBUG ---
-    dprintf(2, "[%d] DEBUG: command_list_malloc allocated pointer %p\n", getpid(), (void *)allocated_list);
-    // --- END DEBUG ---
     if (!allocated_list)
         perror("minishell: malloc command list");
     return (allocated_list);
