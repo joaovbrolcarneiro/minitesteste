@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 17:34:53 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:02:51 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	cleanup_shell(t_shell *shell)
 		close(shell->saved_stdout);
 		shell->saved_stdout = -1;
 	}
+	get_next_line(GNL_CLEANUP);
 	minigarbege_colector();
 }
 

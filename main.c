@@ -64,6 +64,7 @@ int	main(int argc, char **argv, char **envp)
 	set_current_exit_status(0);
 	init_shell(&shell, envp);
 	readline_loop(&shell);
+	get_next_line(GNL_CLEANUP);
 	cleanup_shell(&shell);
 	return (get_current_exit_status());
 }

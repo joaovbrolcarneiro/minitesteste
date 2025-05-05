@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 15:46:45 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:45:03 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define PURPLE				"\033[0;35m"
 # define RESET				"\033[0;0m"
 # define MAX_REDIRECTIONS	1024
-
+# define GNL_CLEANUP -42
 /*
 ** Types
 */

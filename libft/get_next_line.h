@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hde-barr <hde-barr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:03:00 by hde-barr          #+#    #+#             */
-/*   Updated: 2024/12/10 15:50:22 by hde-barr         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:54:56 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
+
+# define GNL_CLEANUP -42
 
 # include <stdlib.h>
 # include <fcntl.h>

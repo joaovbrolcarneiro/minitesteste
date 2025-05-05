@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 00:09:41 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:35:45 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,22 @@ void	handle_parent_signals(void)
 /* Helper: Checks if line matches heredoc delimiter */
 static bool	is_heredoc_delim(const char *line, const char *delimiter)
 {
-	size_t	len;
-	bool	match_name;
-	bool	match_end;
+	size_t	delim_len;
+	size_t	line_len;
 
-	len = ft_strlen(delimiter);
-	match_name = (ft_strncmp(line, delimiter, len) == 0);
-	match_end = (line[len] == '\n' || line[len] == '\0');
-	return (match_name && match_end);
+	if (!line || !delimiter)
+		return (false);
+	delim_len = ft_strlen(delimiter);
+	line_len = ft_strlen(line);
+	if (line_len > 0 && line[line_len - 1] == '\n')
+	{
+		line_len--;
+	}
+	if (line_len != delim_len)
+		return (false);
+	if (ft_strncmp(line, delimiter, delim_len) == 0)
+		return (true);
+	return (false);
 }
 
 /* Helper: Reads heredoc lines until delimiter or EOF */
