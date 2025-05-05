@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:31:39 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 19:19:26 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:28:51 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	readline_loop(t_shell *shell)
 
 	while (1)
 	{
-		//minigarbege_colector();
 		setup_interactive_signals();
 		prompt = build_prompt_string();
 		if (!prompt)
@@ -87,15 +86,17 @@ void	readline_loop(t_shell *shell)
 		if (prompt != NULL && strcmp(prompt, "$ ") != 0)
 			free(prompt);
 		if (!input)
-			handle_eof(shell);
+			handle_eof(shell); // Assumes handle_eof exits
 		if (*input)
 			add_history(input);
-		if (!ft_strlen(input))
-			free(input);
-		if (!ft_strlen(input))
-			continue ;
-		input_handler(shell, input);
-		free(input);
+		if (!ft_strlen(input)) // Check ONCE if empty
+		{
+			free(input);       // Free if empty
+			continue ;         // Skip rest of loop (input_handler and second free)
+		}
+		// Removed the redundant second check
+		input_handler(shell, input); // Only called if input was not empty
+		free(input);                 // Free the non-empty input
 	}
 }
 

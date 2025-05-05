@@ -1,2 +1,0 @@
-Heredoc Line 1
-Heredoc Line 2
