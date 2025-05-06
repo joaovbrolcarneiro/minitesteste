@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:31:39 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 23:08:37 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:55:33 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ void	readline_loop(t_shell *shell)
 			free(prompt);
 		if (!input)
 			handle_eof(shell);
-		if (*input)
-			add_history(input);
-		if (!ft_strlen(input))
+		if (!*input)
+		{
 			free(input);
-		if (!ft_strlen(input))
 			continue ;
+		}
+		add_history(input);
 		input_handler(shell, input);
 		free(input);
 	}
