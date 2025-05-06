@@ -1,0 +1,99 @@
+----------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+~/Documents/minipedmonte (master*) » bash                                               hde-barr@c2r1s3
+hde-barr@c2r1s3:~/Documents/minipedmonte$ name=Pedro
+hde-barr@c2r1s3:~/Documents/minipedmonte$ echo $name
+Pedro
+hde-barr@c2r1s3:~/Documents/minipedmonte$ env | grep name
+hde-barr@c2r1s3:~/Documents/minipedmonte$ export | grep name
+hde-barr@c2r1s3:~/Documents/minipedmonte$ export name
+hde-barr@c2r1s3:~/Documents/minipedmonte$ export | grep name
+declare -x name="Pedro"
+hde-barr@c2r1s3:~/Documents/minipedmonte$ ./minishell 
+💥/home/hde-barr/Documents/minipedmonte
+``KoNoSuBash!"$-> name5=kk
+💥/home/hde-barr/Documents/minipedmonte
+``KoNoSuBash!"$-> ./minishell 
+💥/home/hde-barr/Documents/minipedmonte
+``KoNoSuBash!"$-> echo $name5
+kk
+💥/home/hde-barr/Documents/minipedmonte
+``KoNoSuBash!"$-> exit
+exit
+💥/home/hde-barr/Documents/minipedmonte
+``KoNoSuBash!"$-> exit
+exit
+hde-barr@c2r1s3:~/Documents/minipedmonte$ name6=rrr
+hde-barr@c2r1s3:~/Documents/minipedmonte$ bash
+hde-barr@c2r1s3:~/Documents/minipedmonte$ echo $name6
+
+hde-barr@c2r1s3:~/Documents/minipedmonte$ exit
+exit
+hde-barr@c2r1s3:~/Documents/minipedmonte$ export name6
+hde-barr@c2r1s3:~/Documents/minipedmonte$ bash
+hde-barr@c2r1s3:~/Documents/minipedmonte$ echo $name6
+rrr
+hde-barr@c2r1s3:~/Documents/minipedmonte$ 
+
+
+💥/home/hde-barr/Documents/minipedmonte
+``KoNoSuBash!"$-> cd teste/
+💥/home/hde-barr/Documents/minipedmonte/teste
+``KoNoSuBash!"$-> rm -f ./teste
+💥/home/hde-barr/Documents/minipedmonte/teste
+``KoNoSuBash!"$-> cd ..
+💥/home/hde-barr/Documents/minipedmonte
+``KoNoSuBash!"$-> ls
+execution  includes  libft  main.c  main.o  Makefile  minishell  parser  teste
+💥/home/hde-barr/Documents/minipedmonte
+``KoNoSuBash!"$-> cd teste/
+💥/home/hde-barr/Documents/minipedmonte/teste
+``KoNoSuBash!"$-> rm -f ../teste/
+rm: cannot remove '../teste/': Is a directory
+💥/home/hde-barr/Documents/minipedmonte/teste
+``KoNoSuBash!"$-> rm -rf ../teste/
+💥(null)
+``KoNoSuBash!"$-> pwd
+minishell: pwd: No such file or directory
+💥(null)
+``KoNoSuBash!"$-> cd ..
+minishell: cd: getcwd(before): No such file or directory
+💥(null)
+``KoNoSuBash!"$-> pwd
+minishell: pwd: No such file or directory
+💥(null)
+``KoNoSuBash!"$-> cd ..
+minishell: cd: getcwd(before): No such file or directory
+💥(null)
+``KoNoSuBash!"$-> exit
+exit
+==113578== 
+==113578== HEAP SUMMARY:
+==113578==     in use at exit: 209,632 bytes in 265 blocks
+==113578==   total heap usage: 154,413 allocs, 154,148 frees, 21,157,736 bytes allocated
+==113578== 
+==113578== LEAK SUMMARY:
+==113578==    definitely lost: 0 bytes in 0 blocks
+==113578==    indirectly lost: 0 bytes in 0 blocks
+==113578==      possibly lost: 0 bytes in 0 blocks
+==113578==    still reachable: 209,632 bytes in 265 blocks
+==113578==         suppressed: 0 bytes in 0 blocks
+==113578== Rerun with --leak-check=full to see details of leaked memory
+==113578== 
+==113578== For lists of detected and suppressed errors, rerun with: -s
+==113578== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--------------------------------------------------------------------------------------------------------
+~/Documents/minipedmonte (master*) » bash                                           1 ↵ hde-barr@c2r1s3
+hde-barr@c2r1s3:~/Documents/minipedmonte$ ls
+execution  includes  libft  main.c  main.o  Makefile  minishell  parser
+hde-barr@c2r1s3:~/Documents/minipedmonte$ mkdir teste
+hde-barr@c2r1s3:~/Documents/minipedmonte$ cd teste/
+hde-barr@c2r1s3:~/Documents/minipedmonte/teste$ rm -rf ../teste/
+hde-barr@c2r1s3:~/Documents/minipedmonte/teste$ pwd
+/home/hde-barr/Documents/minipedmonte/teste
+hde-barr@c2r1s3:~/Documents/minipedmonte/teste$ cd ..
+hde-barr@c2r1s3:~/Documents/minipedmonte$ pwd
+/home/hde-barr/Documents/minipedmonte
+hde-barr@c2r1s3:~/Documents/minipedmonte$ ls
+execution  includes  libft  main.c  main.o  Makefile  minishell  parser
+hde-barr@c2r1s3:~/Documents/minipedmonte$ 
