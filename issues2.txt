@@ -1,0 +1,1189 @@
+-------------------------------------------------------------------------------
+~/Documents/new » git clone git@vogsphere.42porto.com:vogsphere/intra-uuid-f490df86-afa2-4fcf-838f-97aef2903399-6311989-hde-barr joana
+Cloning into 'joana'...
+remote: Enumerating objects: 136, done.
+remote: Counting objects: 100% (136/136), done.
+remote: Compressing objects: 100% (72/72), done.
+remote: Total 136 (delta 58), reused 136 (delta 58)
+Receiving objects: 100% (136/136), 66.21 KiB | 33.10 MiB/s, done.
+Resolving deltas: 100% (58/58), done.
+--------------------------------------------------------------------------------
+~/Documents/new » cd joana                                      hde-barr@c2r1s3
+--------------------------------------------------------------------------------
+~/Documents/new/joana (master) » ls                             hde-barr@c2r1s3
+execution  includes  libft  main.c  Makefile  parser
+--------------------------------------------------------------------------------
+~/Documents/new/joana (master) » norminette                     hde-barr@c2r1s3
+main.c: OK!
+Notice: GLOBAL_VAR_DETECTED  (line:  16, col:   1):	Global variable present in file. Make sure it is a reasonable choice.
+execution/executor.c: OK!
+execution/executor_dispatch.c: OK!
+execution/executor_extra.c: OK!
+execution/executor_fd_utils.c: OK!
+execution/executor_pipe_utils.c: OK!
+execution/executor_pipes.c: OK!
+execution/executor_redir_chain.c: OK!
+execution/executor_redir_utils.c: OK!
+execution/executor_redirections.c: OK!
+execution/executor_signals.c: OK!
+execution/executor_simple_cmd.c: OK!
+execution/executor_utils_builtins.c: OK!
+execution/executor_utils_builtins_nav.c: OK!
+execution/executor_utils_env1.c: OK!
+execution/executor_utils_env2.c: OK!
+execution/executor_utils_path.c: OK!
+execution/executor_utils_shell.c: OK!
+execution/executor_utils_sort.c: OK!
+execution/executor_utils_unset.c: OK!
+execution/expander.c: OK!
+execution/expander_utils.c: OK!
+execution/expander_utils2.c: OK!
+execution/expander_variable_assignment.c: OK!
+includes/minishell.h: OK!
+includes/minishell_part2.h: OK!
+libft/ft_atoi.c: OK!
+libft/ft_bzero.c: OK!
+libft/ft_calloc.c: OK!
+libft/ft_isalnum.c: OK!
+libft/ft_isalpha.c: OK!
+libft/ft_isascii.c: OK!
+libft/ft_isdigit.c: OK!
+libft/ft_isprint.c: OK!
+libft/ft_itoa.c: OK!
+libft/ft_lstadd_back.c: OK!
+libft/ft_lstadd_front.c: OK!
+libft/ft_lstclear.c: OK!
+libft/ft_lstdelone.c: OK!
+libft/ft_lstiter.c: OK!
+libft/ft_lstlast.c: OK!
+libft/ft_lstmap.c: OK!
+libft/ft_lstnew.c: OK!
+libft/ft_lstsize.c: OK!
+libft/ft_memchr.c: OK!
+libft/ft_memcmp.c: OK!
+libft/ft_memcpy.c: OK!
+libft/ft_memmove.c: OK!
+libft/ft_memset.c: OK!
+libft/ft_printf.c: OK!
+libft/ft_printf.h: OK!
+libft/ft_putchar.c: OK!
+libft/ft_putchar_fd.c: OK!
+libft/ft_putendl_fd.c: OK!
+libft/ft_putnbr.c: OK!
+libft/ft_putnbr_fd.c: OK!
+libft/ft_putptr.c: OK!
+libft/ft_putstr.c: OK!
+libft/ft_putstr_fd.c: OK!
+libft/ft_putulnbr_base.c: OK!
+libft/ft_putunbr_base.c: OK!
+libft/ft_split.c: OK!
+libft/ft_strchr.c: OK!
+libft/ft_strcmp.c: OK!
+libft/ft_strdup.c: OK!
+libft/ft_striteri.c: OK!
+libft/ft_strjoin.c: OK!
+libft/ft_strlcat.c: OK!
+libft/ft_strlcpy.c: OK!
+libft/ft_strlen.c: OK!
+libft/ft_strmapi.c: OK!
+libft/ft_strncmp.c: OK!
+libft/ft_strnstr.c: OK!
+libft/ft_strrchr.c: OK!
+libft/ft_strtrim.c: OK!
+libft/ft_substr.c: OK!
+libft/ft_tolower.c: OK!
+libft/ft_toupper.c: OK!
+libft/garbege_colector.c: OK!
+libft/get_next_line.c: OK!
+libft/get_next_line.h: OK!
+libft/get_next_line_bonus.c: OK!
+libft/get_next_line_bonus.h: OK!
+libft/get_next_line_utils.c: OK!
+libft/get_next_line_utils_bonus.c: OK!
+libft/libft.h: OK!
+parser/binery_tree/binery_tree.c: OK!
+parser/candy/rare_candy.c: OK!
+parser/exceptions_msg/parser_cmd_no_found.c: OK!
+parser/handlers/handler_args_file.c: OK!
+parser/handlers/handler_ctrl_c.c: OK!
+parser/handlers/handler_pipes.c: OK!
+parser/handlers/input_handler.c: OK!
+parser/lkd_lst/lkd_lst1.c: OK!
+parser/lkd_lst/lkd_lst2.c: OK!
+parser/quote_handling/merge_to_token_exception.c: OK!
+parser/quote_handling/quote_expansion.c: OK!
+parser/quote_handling/quote_handling.c: OK!
+parser/readline_loop/readline_loop.c: OK!
+parser/size_hardler/size_hardler.c: OK!
+parser/tokenlst/init_node0.c: OK!
+parser/tokenlst/init_node1.c: OK!
+parser/tokenlst/split_input.c: OK!
+parser/tokenlst/token_lst_helpers.c: OK!
+parser/tokenlst/tokenlst.c: OK!
+parser/tokenlst/tokenlst_split_input.c: OK!
+parser/tokenlst/tokenlst_v2.c: OK!
+parser/tokenlst/who_is_node.c: OK!
+parser/utils/utils1.c: OK!
+parser/utils/utils2.c: OK!
+parser/yggdrasil/init_yggdrasil.c: OK!
+parser/yggdrasil/yggdrasil.c: OK!
+parser/yggdrasil/yggdrasil_core.c: OK!
+parser/yggdrasil/yggdrasil_finders.c: OK!
+parser/yggdrasil/yggdrasil_gather.c: OK!
+parser/yggdrasil/yggdrasil_gather_helpers.c: OK!
+--------------------------------------------------------------------------------
+~/Documents/new/joana (master) » make                           hde-barr@c2r1s3
+make[1]: Entering directory '/home/hde-barr/Documents/new/joana/libft'
+make[1]: Leaving directory '/home/hde-barr/Documents/new/joana/libft'
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c main.c -o main.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor.c -o execution/executor.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_dispatch.c -o execution/executor_dispatch.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_extra.c -o execution/executor_extra.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_fd_utils.c -o execution/executor_fd_utils.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_pipe_utils.c -o execution/executor_pipe_utils.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_pipes.c -o execution/executor_pipes.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_redir_utils.c -o execution/executor_redir_utils.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_redirections.c -o execution/executor_redirections.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_redir_chain.c -o execution/executor_redir_chain.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_simple_cmd.c -o execution/executor_simple_cmd.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_signals.c -o execution/executor_signals.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_utils_builtins.c -o execution/executor_utils_builtins.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_utils_builtins_nav.c -o execution/executor_utils_builtins_nav.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_utils_env1.c -o execution/executor_utils_env1.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_utils_env2.c -o execution/executor_utils_env2.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_utils_path.c -o execution/executor_utils_path.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_utils_shell.c -o execution/executor_utils_shell.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_utils_sort.c -o execution/executor_utils_sort.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/executor_utils_unset.c -o execution/executor_utils_unset.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/expander.c -o execution/expander.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/expander_utils.c -o execution/expander_utils.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/expander_utils2.c -o execution/expander_utils2.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c execution/expander_variable_assignment.c -o execution/expander_variable_assignment.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/binery_tree/binery_tree.c -o parser/binery_tree/binery_tree.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/candy/rare_candy.c -o parser/candy/rare_candy.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/exceptions_msg/parser_cmd_no_found.c -o parser/exceptions_msg/parser_cmd_no_found.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/handlers/handler_args_file.c -o parser/handlers/handler_args_file.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/handlers/handler_ctrl_c.c -o parser/handlers/handler_ctrl_c.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/handlers/handler_pipes.c -o parser/handlers/handler_pipes.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/handlers/input_handler.c -o parser/handlers/input_handler.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/lkd_lst/lkd_lst1.c -o parser/lkd_lst/lkd_lst1.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/lkd_lst/lkd_lst2.c -o parser/lkd_lst/lkd_lst2.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/quote_handling/quote_expansion.c -o parser/quote_handling/quote_expansion.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/quote_handling/quote_handling.c -o parser/quote_handling/quote_handling.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/quote_handling/merge_to_token_exception.c -o parser/quote_handling/merge_to_token_exception.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/readline_loop/readline_loop.c -o parser/readline_loop/readline_loop.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/size_hardler/size_hardler.c -o parser/size_hardler/size_hardler.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/tokenlst/tokenlst.c -o parser/tokenlst/tokenlst.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/tokenlst/tokenlst_split_input.c -o parser/tokenlst/tokenlst_split_input.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/tokenlst/tokenlst_v2.c -o parser/tokenlst/tokenlst_v2.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/tokenlst/token_lst_helpers.c -o parser/tokenlst/token_lst_helpers.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/tokenlst/split_input.c -o parser/tokenlst/split_input.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/tokenlst/init_node0.c -o parser/tokenlst/init_node0.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/tokenlst/init_node1.c -o parser/tokenlst/init_node1.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/tokenlst/who_is_node.c -o parser/tokenlst/who_is_node.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/utils/utils1.c -o parser/utils/utils1.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/utils/utils2.c -o parser/utils/utils2.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/yggdrasil/init_yggdrasil.c -o parser/yggdrasil/init_yggdrasil.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/yggdrasil/yggdrasil_core.c -o parser/yggdrasil/yggdrasil_core.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/yggdrasil/yggdrasil_finders.c -o parser/yggdrasil/yggdrasil_finders.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/yggdrasil/yggdrasil_gather_helpers.c -o parser/yggdrasil/yggdrasil_gather_helpers.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/yggdrasil/yggdrasil_gather.c -o parser/yggdrasil/yggdrasil_gather.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft -c parser/yggdrasil/yggdrasil.c -o parser/yggdrasil/yggdrasil.o
+cc -Wall -Wextra -Werror -g -I/usr/local/opt/readline/include -Iincludes -Ilibft -I includes -I libft main.o execution/executor.o execution/executor_dispatch.o execution/executor_extra.o execution/executor_fd_utils.o execution/executor_pipe_utils.o execution/executor_pipes.o execution/executor_redir_utils.o execution/executor_redirections.o execution/executor_redir_chain.o execution/executor_simple_cmd.o execution/executor_signals.o execution/executor_utils_builtins.o execution/executor_utils_builtins_nav.o execution/executor_utils_env1.o execution/executor_utils_env2.o execution/executor_utils_path.o execution/executor_utils_shell.o execution/executor_utils_sort.o execution/executor_utils_unset.o execution/expander.o execution/expander_utils.o execution/expander_utils2.o execution/expander_variable_assignment.o parser/binery_tree/binery_tree.o parser/candy/rare_candy.o parser/exceptions_msg/parser_cmd_no_found.o parser/handlers/handler_args_file.o parser/handlers/handler_ctrl_c.o parser/handlers/handler_pipes.o parser/handlers/input_handler.o parser/lkd_lst/lkd_lst1.o parser/lkd_lst/lkd_lst2.o parser/quote_handling/quote_expansion.o parser/quote_handling/quote_handling.o parser/quote_handling/merge_to_token_exception.o parser/readline_loop/readline_loop.o parser/size_hardler/size_hardler.o parser/tokenlst/tokenlst.o parser/tokenlst/tokenlst_split_input.o parser/tokenlst/tokenlst_v2.o parser/tokenlst/token_lst_helpers.o parser/tokenlst/split_input.o parser/tokenlst/init_node0.o parser/tokenlst/init_node1.o parser/tokenlst/who_is_node.o parser/utils/utils1.o parser/utils/utils2.o parser/yggdrasil/init_yggdrasil.o parser/yggdrasil/yggdrasil_core.o parser/yggdrasil/yggdrasil_finders.o parser/yggdrasil/yggdrasil_gather_helpers.o parser/yggdrasil/yggdrasil_gather.o parser/yggdrasil/yggdrasil.o libft/libft.a -L/usr/local/opt/readline/lib -lreadline -lncurses -o minishell
+--------------------------------------------------------------------------------
+~/Documents/new/joana (master*) » ./minishell                   hde-barr@c2r1s3
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ls
+execution  includes  libft  main.c  main.o  Makefile  minishell  parser
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ls | cat -e
+execution$
+includes$
+libft$
+main.c$
+main.o$
+Makefile$
+minishell$
+parser$
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ls | cat -e | cat -e | cat -e
+execution$$$
+includes$$$
+libft$$$
+main.c$$$
+main.o$$$
+Makefile$$$
+minishell$$$
+parser$$$
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat | ls
+execution  includes  libft  main.c  main.o  Makefile  minishell  parser
+
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat | cat | ls
+execution  includes  libft  main.c  main.o  Makefile  minishell  parser
+
+
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> "" | ls
+execution  includes  libft  main.c  main.o  Makefile  minishell  parser
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ls | ""
+konosubash: : command not found
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> "" | ls
+execution  includes  libft  main.c  main.o  Makefile  minishell  parser
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> /bin/ls
+execution  includes  libft  main.c  main.o  Makefile  minishell  parser
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ""
+konosubash: : command not found
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> kjvnovne
+konosubash: kjvnovne: command not found
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> fewhfoew | ls
+execution  includes  libft  main.c  main.o  Makefile  minishell  parser
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo ola
+ola
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo ola ""
+ola 
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo ola hi
+ola hi
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo ola hi -n
+ola hi -n
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo -n ola hi
+ola hi💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo -nnnnnnnnnnnnnnnnnnn ola hi -nn
+-nnnnnnnnnnnnnnnnnnn ola hi -nn
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ^C
+``KoNoSuBash!"$-> echo -nnnnnnnnnnnnnnnnnnn ola hi
+-nnnnnnnnnnnnnnnnnnn ola hi
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo -nn ola hi
+-nn ola hi
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> exit
+exit
+--------------------------------------------------------------------------
+~/Documents/new/joana (master*) » ./minishell             hde-barr@c2r1s3
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> exit
+exit
+--------------------------------------------------------------------------
+~/Documents/new/joana (master*) » $?                      hde-barr@c2r1s3
+zsh: command not found: 0
+--------------------------------------------------------------------------
+~/Documents/new/joana (master*) » ./minishell       127 ↵ hde-barr@c2r1s3
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> exit
+exit
+--------------------------------------------------------------------------
+~/Documents/new/joana (master*) » echo $?                 hde-barr@c2r1s3
+0
+--------------------------------------------------------------------------
+~/Documents/new/joana (master*) » ./minishell             hde-barr@c2r1s3
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> /bin/ls 
+execution  includes  libft  main.c  main.o  Makefile  minishell  parser
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo $?
+0
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> /bin/joifofe
+konosubash: /bin/joifofe: command not found
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo $?
+127
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> $? + $?
+konosubash: 0: command not found
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo $?
+127
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> expr $? + $?
+0
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ^C
+``KoNoSuBash!"$-> ^C
+``KoNoSuBash!"$-> ^C
+``KoNoSuBash!"$-> ^C
+``KoNoSuBash!"$-> 
+exit
+--------------------------------------------------------------------------
+~/Documents/new/joana (master*) » ./minishell         1 ↵ hde-barr@c2r1s3
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> sfadfad^C
+``KoNoSuBash!"$-> 
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> 
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> 
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> 
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat 
+^C
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat 
+^\Quit (core dumped)
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat 
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo "cat lol.c | cta > lol.c"
+cat lol.c | cta > lol.c
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo '"cat lol .c | cta > lol.c"'
+"cat lol .c | cta > lol.c"
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo '"$USER"'
+"$USER"
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo '$USER'
+$USER
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo ''
+
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo 'ls | cat -e'
+ls | cat -e
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> env
+SYSTEMD_EXEC_PID=85824
+SSH_AUTH_SOCK=/run/user/102390/keyring/ssh
+SESSION_MANAGER=local/c2r1s3.42porto.com:@/tmp/.ICE-unix/85824,unix/c2r1s3.42porto.com:/tmp/.ICE-unix/85824
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/45f604e6_b20f_4755_85b1_c915012f4cd7
+LANG=en_US.UTF-8
+LANGUAGE=en
+XDG_CURRENT_DESKTOP=ubuntu:GNOME
+FT_HOOK_NAME=login-user
+FT_HOOK_PATHNAME=login-user.d
+XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/hde-barr
+LIBVIRT_DEFAULT_URI=qemu:///system
+GPG_AGENT_INFO=/run/user/102390/gnupg/S.gpg-agent:0:1
+DESKTOP_SESSION=ubuntu
+QT_IM_MODULE=ibus
+XDG_MENU_PREFIX=gnome-
+XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session2
+PWD=/home/hde-barr/Documents/new/joana
+USER=hde-barr
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166
+DOCKER_HOST=unix:///run/user/102390/docker.sock
+SSH_AGENT_LAUNCHER=gnome-keyring
+GTK_MODULES=gail:atk-bridge
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+GTK_IM_MODULE=ibus
+XDG_SESSION_DESKTOP=ubuntu
+QT_ACCESSIBILITY=1
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+KRB5CCNAME=FILE:/tmp/krb5cc_102390_Gp7bAl
+XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+LOGNAME=hde-barr
+GNOME_TERMINAL_SERVICE=:1.862
+PATH=/home/hde-barr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+XDG_RUNTIME_DIR=/run/user/102390
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/home/hde-barr/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+XMODIFIERS=@im=ibus
+SHELL=/bin/zsh
+XDG_SESSION_TYPE=x11
+DBUS_STARTER_BUS_TYPE=session
+HOME=/home/hde-barr
+VTE_VERSION=6800
+GDM_LANG=en
+COLORTERM=truecolor
+XAUTHORITY=/home/hde-barr/.Xauthority
+DBUS_STARTER_ADDRESS=unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166
+DISPLAY=:0
+TERM=xterm-256color
+GDMSESSION=ubuntu
+XDG_SESSION_CLASS=user
+SHLVL=1
+OLDPWD=/home/hde-barr/Documents/new
+ZSH=/home/hde-barr/.oh-my-zsh
+PAGER=less
+LESS=-R
+LSCOLORS=Gxfxcxdxbxegedabagacad
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+FT_LINE1=7
+FT_LINE2=15
+FT_USER=bocal
+_=/home/hde-barr/Documents/new/joana/./minishell
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> export
+declare -x COLORTERM="truecolor"
+declare -x DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166"
+declare -x DBUS_STARTER_ADDRESS="unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166"
+declare -x DBUS_STARTER_BUS_TYPE="session"
+declare -x DESKTOP_SESSION="ubuntu"
+declare -x DISPLAY=":0"
+declare -x DOCKER_HOST="unix:///run/user/102390/docker.sock"
+declare -x FT_HOOK_NAME="login-user"
+declare -x FT_HOOK_PATHNAME="login-user.d"
+declare -x FT_LINE1="7"
+declare -x FT_LINE2="15"
+declare -x FT_USER="bocal"
+declare -x GDMSESSION="ubuntu"
+declare -x GDM_LANG="en"
+declare -x GNOME_DESKTOP_SESSION_ID="this-is-deprecated"
+declare -x GNOME_TERMINAL_SCREEN="/org/gnome/Terminal/screen/45f604e6_b20f_4755_85b1_c915012f4cd7"
+declare -x GNOME_TERMINAL_SERVICE=":1.862"
+declare -x GPG_AGENT_INFO="/run/user/102390/gnupg/S.gpg-agent:0:1"
+declare -x GTK_IM_MODULE="ibus"
+declare -x GTK_MODULES="gail:atk-bridge"
+declare -x HOME="/home/hde-barr"
+declare -x KRB5CCNAME="FILE:/tmp/krb5cc_102390_Gp7bAl"
+declare -x LANG="en_US.UTF-8"
+declare -x LANGUAGE="en"
+declare -x LESS="-R"
+declare -x LIBVIRT_DEFAULT_URI="qemu:///system"
+declare -x LOGNAME="hde-barr"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
+declare -x OLDPWD="/home/hde-barr/Documents/new"
+declare -x PAGER="less"
+declare -x PATH="/home/hde-barr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+declare -x PWD="/home/hde-barr/Documents/new/joana"
+declare -x QT_ACCESSIBILITY="1"
+declare -x QT_IM_MODULE="ibus"
+declare -x SESSION_MANAGER="local/c2r1s3.42porto.com:@/tmp/.ICE-unix/85824,unix/c2r1s3.42porto.com:/tmp/.ICE-unix/85824"
+declare -x SHELL="/bin/zsh"
+declare -x SHLVL="1"
+declare -x SSH_AGENT_LAUNCHER="gnome-keyring"
+declare -x SSH_AUTH_SOCK="/run/user/102390/keyring/ssh"
+declare -x SYSTEMD_EXEC_PID="85824"
+declare -x TERM="xterm-256color"
+declare -x USER="hde-barr"
+declare -x VTE_VERSION="6800"
+declare -x XAUTHORITY="/home/hde-barr/.Xauthority"
+declare -x XDG_CONFIG_DIRS="/etc/xdg/xdg-ubuntu:/etc/xdg"
+declare -x XDG_CURRENT_DESKTOP="ubuntu:GNOME"
+declare -x XDG_DATA_DIRS="/usr/share/ubuntu:/usr/share/gnome:/home/hde-barr/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop"
+declare -x XDG_GREETER_DATA_DIR="/var/lib/lightdm-data/hde-barr"
+declare -x XDG_MENU_PREFIX="gnome-"
+declare -x XDG_RUNTIME_DIR="/run/user/102390"
+declare -x XDG_SEAT_PATH="/org/freedesktop/DisplayManager/Seat0"
+declare -x XDG_SESSION_CLASS="user"
+declare -x XDG_SESSION_DESKTOP="ubuntu"
+declare -x XDG_SESSION_PATH="/org/freedesktop/DisplayManager/Session2"
+declare -x XDG_SESSION_TYPE="x11"
+declare -x XMODIFIERS="@im=ibus"
+declare -x ZSH="/home/hde-barr/.oh-my-zsh"
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> export VAR=HELLO
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> export
+declare -x COLORTERM="truecolor"
+declare -x DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166"
+declare -x DBUS_STARTER_ADDRESS="unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166"
+declare -x DBUS_STARTER_BUS_TYPE="session"
+declare -x DESKTOP_SESSION="ubuntu"
+declare -x DISPLAY=":0"
+declare -x DOCKER_HOST="unix:///run/user/102390/docker.sock"
+declare -x FT_HOOK_NAME="login-user"
+declare -x FT_HOOK_PATHNAME="login-user.d"
+declare -x FT_LINE1="7"
+declare -x FT_LINE2="15"
+declare -x FT_USER="bocal"
+declare -x GDMSESSION="ubuntu"
+declare -x GDM_LANG="en"
+declare -x GNOME_DESKTOP_SESSION_ID="this-is-deprecated"
+declare -x GNOME_TERMINAL_SCREEN="/org/gnome/Terminal/screen/45f604e6_b20f_4755_85b1_c915012f4cd7"
+declare -x GNOME_TERMINAL_SERVICE=":1.862"
+declare -x GPG_AGENT_INFO="/run/user/102390/gnupg/S.gpg-agent:0:1"
+declare -x GTK_IM_MODULE="ibus"
+declare -x GTK_MODULES="gail:atk-bridge"
+declare -x HOME="/home/hde-barr"
+declare -x KRB5CCNAME="FILE:/tmp/krb5cc_102390_Gp7bAl"
+declare -x LANG="en_US.UTF-8"
+declare -x LANGUAGE="en"
+declare -x LESS="-R"
+declare -x LIBVIRT_DEFAULT_URI="qemu:///system"
+declare -x LOGNAME="hde-barr"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
+declare -x OLDPWD="/home/hde-barr/Documents/new"
+declare -x PAGER="less"
+declare -x PATH="/home/hde-barr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+declare -x PWD="/home/hde-barr/Documents/new/joana"
+declare -x QT_ACCESSIBILITY="1"
+declare -x QT_IM_MODULE="ibus"
+declare -x SESSION_MANAGER="local/c2r1s3.42porto.com:@/tmp/.ICE-unix/85824,unix/c2r1s3.42porto.com:/tmp/.ICE-unix/85824"
+declare -x SHELL="/bin/zsh"
+declare -x SHLVL="1"
+declare -x SSH_AGENT_LAUNCHER="gnome-keyring"
+declare -x SSH_AUTH_SOCK="/run/user/102390/keyring/ssh"
+declare -x SYSTEMD_EXEC_PID="85824"
+declare -x TERM="xterm-256color"
+declare -x USER="hde-barr"
+declare -x VAR="HELLO"
+declare -x VTE_VERSION="6800"
+declare -x XAUTHORITY="/home/hde-barr/.Xauthority"
+declare -x XDG_CONFIG_DIRS="/etc/xdg/xdg-ubuntu:/etc/xdg"
+declare -x XDG_CURRENT_DESKTOP="ubuntu:GNOME"
+declare -x XDG_DATA_DIRS="/usr/share/ubuntu:/usr/share/gnome:/home/hde-barr/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop"
+declare -x XDG_GREETER_DATA_DIR="/var/lib/lightdm-data/hde-barr"
+declare -x XDG_MENU_PREFIX="gnome-"
+declare -x XDG_RUNTIME_DIR="/run/user/102390"
+declare -x XDG_SEAT_PATH="/org/freedesktop/DisplayManager/Seat0"
+declare -x XDG_SESSION_CLASS="user"
+declare -x XDG_SESSION_DESKTOP="ubuntu"
+declare -x XDG_SESSION_PATH="/org/freedesktop/DisplayManager/Session2"
+declare -x XDG_SESSION_TYPE="x11"
+declare -x XMODIFIERS="@im=ibus"
+declare -x ZSH="/home/hde-barr/.oh-my-zsh"
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> unset VAR=HELLO
+konosubash: unset: `VAR=HELLO': not a valid identifier
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> unset VAR
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> export
+declare -x COLORTERM="truecolor"
+declare -x DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166"
+declare -x DBUS_STARTER_ADDRESS="unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166"
+declare -x DBUS_STARTER_BUS_TYPE="session"
+declare -x DESKTOP_SESSION="ubuntu"
+declare -x DISPLAY=":0"
+declare -x DOCKER_HOST="unix:///run/user/102390/docker.sock"
+declare -x FT_HOOK_NAME="login-user"
+declare -x FT_HOOK_PATHNAME="login-user.d"
+declare -x FT_LINE1="7"
+declare -x FT_LINE2="15"
+declare -x FT_USER="bocal"
+declare -x GDMSESSION="ubuntu"
+declare -x GDM_LANG="en"
+declare -x GNOME_DESKTOP_SESSION_ID="this-is-deprecated"
+declare -x GNOME_TERMINAL_SCREEN="/org/gnome/Terminal/screen/45f604e6_b20f_4755_85b1_c915012f4cd7"
+declare -x GNOME_TERMINAL_SERVICE=":1.862"
+declare -x GPG_AGENT_INFO="/run/user/102390/gnupg/S.gpg-agent:0:1"
+declare -x GTK_IM_MODULE="ibus"
+declare -x GTK_MODULES="gail:atk-bridge"
+declare -x HOME="/home/hde-barr"
+declare -x KRB5CCNAME="FILE:/tmp/krb5cc_102390_Gp7bAl"
+declare -x LANG="en_US.UTF-8"
+declare -x LANGUAGE="en"
+declare -x LESS="-R"
+declare -x LIBVIRT_DEFAULT_URI="qemu:///system"
+declare -x LOGNAME="hde-barr"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
+declare -x OLDPWD="/home/hde-barr/Documents/new"
+declare -x PAGER="less"
+declare -x PATH="/home/hde-barr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+declare -x PWD="/home/hde-barr/Documents/new/joana"
+declare -x QT_ACCESSIBILITY="1"
+declare -x QT_IM_MODULE="ibus"
+declare -x SESSION_MANAGER="local/c2r1s3.42porto.com:@/tmp/.ICE-unix/85824,unix/c2r1s3.42porto.com:/tmp/.ICE-unix/85824"
+declare -x SHELL="/bin/zsh"
+declare -x SHLVL="1"
+declare -x SSH_AGENT_LAUNCHER="gnome-keyring"
+declare -x SSH_AUTH_SOCK="/run/user/102390/keyring/ssh"
+declare -x SYSTEMD_EXEC_PID="85824"
+declare -x TERM="xterm-256color"
+declare -x USER="hde-barr"
+declare -x VTE_VERSION="6800"
+declare -x XAUTHORITY="/home/hde-barr/.Xauthority"
+declare -x XDG_CONFIG_DIRS="/etc/xdg/xdg-ubuntu:/etc/xdg"
+declare -x XDG_CURRENT_DESKTOP="ubuntu:GNOME"
+declare -x XDG_DATA_DIRS="/usr/share/ubuntu:/usr/share/gnome:/home/hde-barr/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop"
+declare -x XDG_GREETER_DATA_DIR="/var/lib/lightdm-data/hde-barr"
+declare -x XDG_MENU_PREFIX="gnome-"
+declare -x XDG_RUNTIME_DIR="/run/user/102390"
+declare -x XDG_SEAT_PATH="/org/freedesktop/DisplayManager/Seat0"
+declare -x XDG_SESSION_CLASS="user"
+declare -x XDG_SESSION_DESKTOP="ubuntu"
+declare -x XDG_SESSION_PATH="/org/freedesktop/DisplayManager/Session2"
+declare -x XDG_SESSION_TYPE="x11"
+declare -x XMODIFIERS="@im=ibus"
+declare -x ZSH="/home/hde-barr/.oh-my-zsh"
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> env
+SYSTEMD_EXEC_PID=85824
+SSH_AUTH_SOCK=/run/user/102390/keyring/ssh
+SESSION_MANAGER=local/c2r1s3.42porto.com:@/tmp/.ICE-unix/85824,unix/c2r1s3.42porto.com:/tmp/.ICE-unix/85824
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/45f604e6_b20f_4755_85b1_c915012f4cd7
+LANG=en_US.UTF-8
+LANGUAGE=en
+XDG_CURRENT_DESKTOP=ubuntu:GNOME
+FT_HOOK_NAME=login-user
+FT_HOOK_PATHNAME=login-user.d
+XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/hde-barr
+LIBVIRT_DEFAULT_URI=qemu:///system
+GPG_AGENT_INFO=/run/user/102390/gnupg/S.gpg-agent:0:1
+DESKTOP_SESSION=ubuntu
+QT_IM_MODULE=ibus
+XDG_MENU_PREFIX=gnome-
+XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session2
+PWD=/home/hde-barr/Documents/new/joana
+USER=hde-barr
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166
+DOCKER_HOST=unix:///run/user/102390/docker.sock
+SSH_AGENT_LAUNCHER=gnome-keyring
+GTK_MODULES=gail:atk-bridge
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+GTK_IM_MODULE=ibus
+XDG_SESSION_DESKTOP=ubuntu
+QT_ACCESSIBILITY=1
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+KRB5CCNAME=FILE:/tmp/krb5cc_102390_Gp7bAl
+XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+LOGNAME=hde-barr
+GNOME_TERMINAL_SERVICE=:1.862
+PATH=/home/hde-barr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+XDG_RUNTIME_DIR=/run/user/102390
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/home/hde-barr/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+XMODIFIERS=@im=ibus
+SHELL=/bin/zsh
+XDG_SESSION_TYPE=x11
+DBUS_STARTER_BUS_TYPE=session
+HOME=/home/hde-barr
+VTE_VERSION=6800
+GDM_LANG=en
+COLORTERM=truecolor
+XAUTHORITY=/home/hde-barr/.Xauthority
+DBUS_STARTER_ADDRESS=unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166
+DISPLAY=:0
+TERM=xterm-256color
+GDMSESSION=ubuntu
+XDG_SESSION_CLASS=user
+SHLVL=1
+OLDPWD=/home/hde-barr/Documents/new
+ZSH=/home/hde-barr/.oh-my-zsh
+PAGER=less
+LESS=-R
+LSCOLORS=Gxfxcxdxbxegedabagacad
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+FT_LINE1=7
+FT_LINE2=15
+FT_USER=bocal
+_=/home/hde-barr/Documents/new/joana/./minishell
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> export VAR=HELLO
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> env
+SYSTEMD_EXEC_PID=85824
+SSH_AUTH_SOCK=/run/user/102390/keyring/ssh
+SESSION_MANAGER=local/c2r1s3.42porto.com:@/tmp/.ICE-unix/85824,unix/c2r1s3.42porto.com:/tmp/.ICE-unix/85824
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/45f604e6_b20f_4755_85b1_c915012f4cd7
+LANG=en_US.UTF-8
+LANGUAGE=en
+XDG_CURRENT_DESKTOP=ubuntu:GNOME
+FT_HOOK_NAME=login-user
+FT_HOOK_PATHNAME=login-user.d
+XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/hde-barr
+LIBVIRT_DEFAULT_URI=qemu:///system
+GPG_AGENT_INFO=/run/user/102390/gnupg/S.gpg-agent:0:1
+DESKTOP_SESSION=ubuntu
+QT_IM_MODULE=ibus
+XDG_MENU_PREFIX=gnome-
+XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session2
+PWD=/home/hde-barr/Documents/new/joana
+USER=hde-barr
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166
+DOCKER_HOST=unix:///run/user/102390/docker.sock
+SSH_AGENT_LAUNCHER=gnome-keyring
+GTK_MODULES=gail:atk-bridge
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+GTK_IM_MODULE=ibus
+XDG_SESSION_DESKTOP=ubuntu
+QT_ACCESSIBILITY=1
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+KRB5CCNAME=FILE:/tmp/krb5cc_102390_Gp7bAl
+XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+LOGNAME=hde-barr
+GNOME_TERMINAL_SERVICE=:1.862
+PATH=/home/hde-barr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+XDG_RUNTIME_DIR=/run/user/102390
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/home/hde-barr/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+XMODIFIERS=@im=ibus
+SHELL=/bin/zsh
+XDG_SESSION_TYPE=x11
+DBUS_STARTER_BUS_TYPE=session
+HOME=/home/hde-barr
+VTE_VERSION=6800
+GDM_LANG=en
+COLORTERM=truecolor
+XAUTHORITY=/home/hde-barr/.Xauthority
+DBUS_STARTER_ADDRESS=unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166
+DISPLAY=:0
+TERM=xterm-256color
+GDMSESSION=ubuntu
+XDG_SESSION_CLASS=user
+SHLVL=1
+OLDPWD=/home/hde-barr/Documents/new
+ZSH=/home/hde-barr/.oh-my-zsh
+PAGER=less
+LESS=-R
+LSCOLORS=Gxfxcxdxbxegedabagacad
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+FT_LINE1=7
+FT_LINE2=15
+FT_USER=bocal
+_=/home/hde-barr/Documents/new/joana/./minishell
+VAR=HELLO
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cd 
+💥/home/hde-barr
+``KoNoSuBash!"$-> ls
+Desktop    goinfre	    Pictures  snap	 Videos
+Documents  mini-moulinette  Public    Templates  VSCode-linux-x64
+Downloads  Music	    sgoinfre  teste	 workspace
+💥/home/hde-barr
+``KoNoSuBash!"$-> cd -
+/home/hde-barr/Documents/new/joana
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cd ..
+💥/home/hde-barr/Documents/new
+``KoNoSuBash!"$-> cd joana/
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> pwd
+/home/hde-barr/Documents/new/joana
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cd ..
+💥/home/hde-barr/Documents/new
+``KoNoSuBash!"$-> pwd
+/home/hde-barr/Documents/new
+💥/home/hde-barr/Documents/new
+``KoNoSuBash!"$-> cd joana/
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> unset PATH
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ls
+konosubash: ls: command not found
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat
+konosubash: cat: command not found
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> 
+exit
+--------------------------------------------------------------------------
+~/Documents/new/joana (master*) » ./minishell       127 ↵ hde-barr@c2r1s3
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> PATH=/home/hde-barr/:/usr/bin/
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo $PATH
+/home/hde-barr/:/usr/bin/
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ls
+execution  includes  libft  main.c  main.o  Makefile  minishell  parser
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> env
+SYSTEMD_EXEC_PID=85824
+SSH_AUTH_SOCK=/run/user/102390/keyring/ssh
+SESSION_MANAGER=local/c2r1s3.42porto.com:@/tmp/.ICE-unix/85824,unix/c2r1s3.42porto.com:/tmp/.ICE-unix/85824
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/45f604e6_b20f_4755_85b1_c915012f4cd7
+LANG=en_US.UTF-8
+LANGUAGE=en
+XDG_CURRENT_DESKTOP=ubuntu:GNOME
+FT_HOOK_NAME=login-user
+FT_HOOK_PATHNAME=login-user.d
+XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/hde-barr
+LIBVIRT_DEFAULT_URI=qemu:///system
+GPG_AGENT_INFO=/run/user/102390/gnupg/S.gpg-agent:0:1
+DESKTOP_SESSION=ubuntu
+QT_IM_MODULE=ibus
+XDG_MENU_PREFIX=gnome-
+XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session2
+PWD=/home/hde-barr/Documents/new/joana
+USER=hde-barr
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166
+DOCKER_HOST=unix:///run/user/102390/docker.sock
+SSH_AGENT_LAUNCHER=gnome-keyring
+GTK_MODULES=gail:atk-bridge
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+GTK_IM_MODULE=ibus
+XDG_SESSION_DESKTOP=ubuntu
+QT_ACCESSIBILITY=1
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+KRB5CCNAME=FILE:/tmp/krb5cc_102390_Gp7bAl
+XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+LOGNAME=hde-barr
+GNOME_TERMINAL_SERVICE=:1.862
+PATH=/home/hde-barr/:/usr/bin/
+XDG_RUNTIME_DIR=/run/user/102390
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/home/hde-barr/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+XMODIFIERS=@im=ibus
+SHELL=/bin/zsh
+XDG_SESSION_TYPE=x11
+DBUS_STARTER_BUS_TYPE=session
+HOME=/home/hde-barr
+VTE_VERSION=6800
+GDM_LANG=en
+COLORTERM=truecolor
+XAUTHORITY=/home/hde-barr/.Xauthority
+DBUS_STARTER_ADDRESS=unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166
+DISPLAY=:0
+TERM=xterm-256color
+GDMSESSION=ubuntu
+XDG_SESSION_CLASS=user
+SHLVL=1
+OLDPWD=/home/hde-barr/Documents/new
+ZSH=/home/hde-barr/.oh-my-zsh
+PAGER=less
+LESS=-R
+LSCOLORS=Gxfxcxdxbxegedabagacad
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+FT_LINE1=7
+FT_LINE2=15
+FT_USER=bocal
+_=/home/hde-barr/Documents/new/joana/./minishell
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> export
+declare -x COLORTERM="truecolor"
+declare -x DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166"
+declare -x DBUS_STARTER_ADDRESS="unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166"
+declare -x DBUS_STARTER_BUS_TYPE="session"
+declare -x DESKTOP_SESSION="ubuntu"
+declare -x DISPLAY=":0"
+declare -x DOCKER_HOST="unix:///run/user/102390/docker.sock"
+declare -x FT_HOOK_NAME="login-user"
+declare -x FT_HOOK_PATHNAME="login-user.d"
+declare -x FT_LINE1="7"
+declare -x FT_LINE2="15"
+declare -x FT_USER="bocal"
+declare -x GDMSESSION="ubuntu"
+declare -x GDM_LANG="en"
+declare -x GNOME_DESKTOP_SESSION_ID="this-is-deprecated"
+declare -x GNOME_TERMINAL_SCREEN="/org/gnome/Terminal/screen/45f604e6_b20f_4755_85b1_c915012f4cd7"
+declare -x GNOME_TERMINAL_SERVICE=":1.862"
+declare -x GPG_AGENT_INFO="/run/user/102390/gnupg/S.gpg-agent:0:1"
+declare -x GTK_IM_MODULE="ibus"
+declare -x GTK_MODULES="gail:atk-bridge"
+declare -x HOME="/home/hde-barr"
+declare -x KRB5CCNAME="FILE:/tmp/krb5cc_102390_Gp7bAl"
+declare -x LANG="en_US.UTF-8"
+declare -x LANGUAGE="en"
+declare -x LESS="-R"
+declare -x LIBVIRT_DEFAULT_URI="qemu:///system"
+declare -x LOGNAME="hde-barr"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
+declare -x OLDPWD="/home/hde-barr/Documents/new"
+declare -x PAGER="less"
+declare -x PATH="/home/hde-barr/:/usr/bin/"
+declare -x PWD="/home/hde-barr/Documents/new/joana"
+declare -x QT_ACCESSIBILITY="1"
+declare -x QT_IM_MODULE="ibus"
+declare -x SESSION_MANAGER="local/c2r1s3.42porto.com:@/tmp/.ICE-unix/85824,unix/c2r1s3.42porto.com:/tmp/.ICE-unix/85824"
+declare -x SHELL="/bin/zsh"
+declare -x SHLVL="1"
+declare -x SSH_AGENT_LAUNCHER="gnome-keyring"
+declare -x SSH_AUTH_SOCK="/run/user/102390/keyring/ssh"
+declare -x SYSTEMD_EXEC_PID="85824"
+declare -x TERM="xterm-256color"
+declare -x USER="hde-barr"
+declare -x VTE_VERSION="6800"
+declare -x XAUTHORITY="/home/hde-barr/.Xauthority"
+declare -x XDG_CONFIG_DIRS="/etc/xdg/xdg-ubuntu:/etc/xdg"
+declare -x XDG_CURRENT_DESKTOP="ubuntu:GNOME"
+declare -x XDG_DATA_DIRS="/usr/share/ubuntu:/usr/share/gnome:/home/hde-barr/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop"
+declare -x XDG_GREETER_DATA_DIR="/var/lib/lightdm-data/hde-barr"
+declare -x XDG_MENU_PREFIX="gnome-"
+declare -x XDG_RUNTIME_DIR="/run/user/102390"
+declare -x XDG_SEAT_PATH="/org/freedesktop/DisplayManager/Seat0"
+declare -x XDG_SESSION_CLASS="user"
+declare -x XDG_SESSION_DESKTOP="ubuntu"
+declare -x XDG_SESSION_PATH="/org/freedesktop/DisplayManager/Session2"
+declare -x XDG_SESSION_TYPE="x11"
+declare -x XMODIFIERS="@im=ibus"
+declare -x ZSH="/home/hde-barr/.oh-my-zsh"
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> PATH=/home/hde-barr/:/home/
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> export
+declare -x COLORTERM="truecolor"
+declare -x DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166"
+declare -x DBUS_STARTER_ADDRESS="unix:path=/run/user/102390/bus,guid=dfa7d885f4682f15890d22c86819e166"
+declare -x DBUS_STARTER_BUS_TYPE="session"
+declare -x DESKTOP_SESSION="ubuntu"
+declare -x DISPLAY=":0"
+declare -x DOCKER_HOST="unix:///run/user/102390/docker.sock"
+declare -x FT_HOOK_NAME="login-user"
+declare -x FT_HOOK_PATHNAME="login-user.d"
+declare -x FT_LINE1="7"
+declare -x FT_LINE2="15"
+declare -x FT_USER="bocal"
+declare -x GDMSESSION="ubuntu"
+declare -x GDM_LANG="en"
+declare -x GNOME_DESKTOP_SESSION_ID="this-is-deprecated"
+declare -x GNOME_TERMINAL_SCREEN="/org/gnome/Terminal/screen/45f604e6_b20f_4755_85b1_c915012f4cd7"
+declare -x GNOME_TERMINAL_SERVICE=":1.862"
+declare -x GPG_AGENT_INFO="/run/user/102390/gnupg/S.gpg-agent:0:1"
+declare -x GTK_IM_MODULE="ibus"
+declare -x GTK_MODULES="gail:atk-bridge"
+declare -x HOME="/home/hde-barr"
+declare -x KRB5CCNAME="FILE:/tmp/krb5cc_102390_Gp7bAl"
+declare -x LANG="en_US.UTF-8"
+declare -x LANGUAGE="en"
+declare -x LESS="-R"
+declare -x LIBVIRT_DEFAULT_URI="qemu:///system"
+declare -x LOGNAME="hde-barr"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
+declare -x OLDPWD="/home/hde-barr/Documents/new"
+declare -x PAGER="less"
+declare -x PATH="/home/hde-barr/:/home/"
+declare -x PWD="/home/hde-barr/Documents/new/joana"
+declare -x QT_ACCESSIBILITY="1"
+declare -x QT_IM_MODULE="ibus"
+declare -x SESSION_MANAGER="local/c2r1s3.42porto.com:@/tmp/.ICE-unix/85824,unix/c2r1s3.42porto.com:/tmp/.ICE-unix/85824"
+declare -x SHELL="/bin/zsh"
+declare -x SHLVL="1"
+declare -x SSH_AGENT_LAUNCHER="gnome-keyring"
+declare -x SSH_AUTH_SOCK="/run/user/102390/keyring/ssh"
+declare -x SYSTEMD_EXEC_PID="85824"
+declare -x TERM="xterm-256color"
+declare -x USER="hde-barr"
+declare -x VTE_VERSION="6800"
+declare -x XAUTHORITY="/home/hde-barr/.Xauthority"
+declare -x XDG_CONFIG_DIRS="/etc/xdg/xdg-ubuntu:/etc/xdg"
+declare -x XDG_CURRENT_DESKTOP="ubuntu:GNOME"
+declare -x XDG_DATA_DIRS="/usr/share/ubuntu:/usr/share/gnome:/home/hde-barr/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop"
+declare -x XDG_GREETER_DATA_DIR="/var/lib/lightdm-data/hde-barr"
+declare -x XDG_MENU_PREFIX="gnome-"
+declare -x XDG_RUNTIME_DIR="/run/user/102390"
+declare -x XDG_SEAT_PATH="/org/freedesktop/DisplayManager/Seat0"
+declare -x XDG_SESSION_CLASS="user"
+declare -x XDG_SESSION_DESKTOP="ubuntu"
+declare -x XDG_SESSION_PATH="/org/freedesktop/DisplayManager/Session2"
+declare -x XDG_SESSION_TYPE="x11"
+declare -x XMODIFIERS="@im=ibus"
+declare -x ZSH="/home/hde-barr/.oh-my-zsh"
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ls
+konosubash: ls: command not found
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> 
+exit
+--------------------------------------------------------------------------
+~/Documents/new/joana (master*) » ./minishell       127 ↵ hde-barr@c2r1s3
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> touch test
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat > test
+konosubash: syntax error near unexpected token near unexpected token `>'
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat << LIM > test
+konosubash: syntax error near unexpected token near unexpected token `>'
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat << LIM| > test
+konosubash: syntax error near unexpected token near unexpected token `>'
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> << LIM cat > test
+konosubash: syntax error near unexpected token near unexpected token `>'
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ls
+execution  libft   main.o    minishell	test
+includes   main.c  Makefile  parser
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> << OPPP
+> 
+> 
+> 
+> 
+> OPPP
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> << OPPP > test
+konosubash: syntax error near unexpected token near unexpected token `>'
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> << OPPP >> test
+konosubash: syntax error near unexpected token near unexpected token `>>'
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat << OPPP >> test
+konosubash: syntax error near unexpected token near unexpected token `>>'
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> << OO
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> OO
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> viuhi | grep bla | cat -e
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ^C
+``KoNoSuBash!"$-> ufiwufwieu | cat -e
+^[[0;31mkonosubash: ufiwufwieu: command not found$
+^[[0;0m💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ufiwufwieu | cat -e
+^[[0;31mkonosubash: ufiwufwieu: command not found$
+^[[0;0m💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ufiwufwieu | cat -e
+^[[0;31mkonosubash: ufiwufwieu: command not found$
+^[[0;0m💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ufiwufwieu | cat
+konosubash: ufiwufwieu: command not found
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ufiwufwieu | cat
+konosubash: ufiwufwieu: command not found
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ufiwufwieu | cat -e
+^[[0;31mkonosubash: ufiwufwieu: command not found$
+^[[0;0m💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> 
+exit
+--------------------------------------------------------------------------
+~/Documents/new/joana (master*) » valgrind !!             hde-barr@c2r1s3
+--------------------------------------------------------------------------
+~/Documents/new/joana (master*) » valgrind ./minishell    hde-barr@c2r1s3
+==116755== Memcheck, a memory error detector
+==116755== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==116755== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==116755== Command: ./minishell
+==116755== 
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> hfosihf | cat -e
+^[[0;31mkonosubash: hfosihf: command not found$
+^[[0;0m==116757== 
+==116757== HEAP SUMMARY:
+==116757==     in use at exit: 208,721 bytes in 226 blocks
+==116757==   total heap usage: 31,230 allocs, 31,004 frees, 4,364,303 bytes allocated
+==116757== 
+==116757== LEAK SUMMARY:
+==116757==    definitely lost: 0 bytes in 0 blocks
+==116757==    indirectly lost: 0 bytes in 0 blocks
+==116757==      possibly lost: 0 bytes in 0 blocks
+==116757==    still reachable: 208,721 bytes in 226 blocks
+==116757==         suppressed: 0 bytes in 0 blocks
+==116757== Rerun with --leak-check=full to see details of leaked memory
+==116757== 
+==116757== For lists of detected and suppressed errors, rerun with: -s
+==116757== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==116758== 
+==116758== HEAP SUMMARY:
+==116758==     in use at exit: 208,721 bytes in 226 blocks
+==116758==   total heap usage: 31,230 allocs, 31,004 frees, 4,364,303 bytes allocated
+==116758== 
+==116758== LEAK SUMMARY:
+==116758==    definitely lost: 0 bytes in 0 blocks
+==116758==    indirectly lost: 0 bytes in 0 blocks
+==116758==      possibly lost: 0 bytes in 0 blocks
+==116758==    still reachable: 208,721 bytes in 226 blocks
+==116758==         suppressed: 0 bytes in 0 blocks
+==116758== Rerun with --leak-check=full to see details of leaked memory
+==116758== 
+==116758== For lists of detected and suppressed errors, rerun with: -s
+==116758== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat > test
+konosubash: syntax error near unexpected token near unexpected token `>'
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> rm test
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ls -l | wc -l
+==116910== 
+==116910== HEAP SUMMARY:
+==116910==     in use at exit: 209,116 bytes in 238 blocks
+==116910==   total heap usage: 113,216 allocs, 112,978 frees, 15,383,385 bytes allocated
+==116910== 
+==116910== LEAK SUMMARY:
+==116910==    definitely lost: 0 bytes in 0 blocks
+==116910==    indirectly lost: 0 bytes in 0 blocks
+==116910==      possibly lost: 0 bytes in 0 blocks
+==116910==    still reachable: 209,116 bytes in 238 blocks
+==116910==         suppressed: 0 bytes in 0 blocks
+==116910== Rerun with --leak-check=full to see details of leaked memory
+==116910== 
+==116910== For lists of detected and suppressed errors, rerun with: -s
+==116910== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+10
+==116911== 
+==116911== HEAP SUMMARY:
+==116911==     in use at exit: 209,116 bytes in 238 blocks
+==116911==   total heap usage: 113,216 allocs, 112,978 frees, 15,383,385 bytes allocated
+==116911== 
+==116911== LEAK SUMMARY:
+==116911==    definitely lost: 0 bytes in 0 blocks
+==116911==    indirectly lost: 0 bytes in 0 blocks
+==116911==      possibly lost: 0 bytes in 0 blocks
+==116911==    still reachable: 209,116 bytes in 238 blocks
+==116911==         suppressed: 0 bytes in 0 blocks
+==116911== Rerun with --leak-check=full to see details of leaked memory
+==116911== 
+==116911== For lists of detected and suppressed errors, rerun with: -s
+==116911== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat > test.c
+hello
+^C
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat > test.
+kfpoe
+
+
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat > test
+konosubash: syntax error near unexpected token near unexpected token `>'
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat > test-
+jfoew^C
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat > test3
+^C
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat > testA
+^[[A^[[A^[[A^[[B^[[B^[[B^C
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat > test
+konosubash: syntax error near unexpected token near unexpected token `>'
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat > testA
+gigi
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat testA
+gigi
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> "$USER"
+konosubash: hde-barr: command not found
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo "$USER"
+hde-barr
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo $USER
+hde-barr
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo '$USER'
+$USER
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo "'$USER'"
+'hde-barr'
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo '"'$USER'"'
+"$USER"
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> echo "'"'$USER'"'"
+'hde-barr'
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ^C
+``KoNoSuBash!"$-> << EOF > testA
+> ^C
+``KoNoSuBash!"$-> ls
+> EOF
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ls
+execution  libft   main.o    minishell	test-  test3  test.c
+includes   main.c  Makefile  parser	test.  testA  test.txt
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> cat
+^C
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> ls
+execution  libft   main.o    minishell	test-  test3  test.c
+includes   main.c  Makefile  parser	test.  testA  test.txt
+💥/home/hde-barr/Documents/new/joana
+``KoNoSuBash!"$-> 
+
+
