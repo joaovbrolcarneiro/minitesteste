@@ -6,11 +6,12 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 00:01:51 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:25:42 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_part2.h"
 
 /* Handles input redirection (<) */
 int	handle_redir_in(t_node_tree *node)
@@ -79,7 +80,7 @@ int	handle_append(t_node_tree *node)
 	return (0);
 }
 
-static int	process_heredoc_pipe(int pipefd[2], const char *delimiter, \
+/*static int	process_heredoc_pipe(int pipefd[2], const char *delimiter, \
 								char **env)
 {
 	int	read_status;
@@ -99,25 +100,116 @@ static int	process_heredoc_pipe(int pipefd[2], const char *delimiter, \
 	}
 	close(pipefd[0]);
 	return (0);
+}*/
+
+static int	process_one_heredoc_line(char *line, int pipe_write_fd, \
+									const char *delimiter, char **env, \
+									bool expand)
+{
+	char	*line_to_write;
+	int		write_status;
+
+	if (is_heredoc_delim(line, delimiter))
+		return (HEREDOC_DELIM_FOUND);
+	line_to_write = line;
+	if (expand)
+	{
+		line_to_write = expand_variables(line, env);
+		if (!line_to_write)
+			return (EXIT_FAILURE);
+	}
+	write_status = write(pipe_write_fd, line_to_write, \
+							ft_strlen(line_to_write));
+	if (line_to_write != line)
+		free(line_to_write);
+	if (write_status == -1)
+	{
+		perror("minishell: write heredoc pipe child");
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
+static int	heredoc_child_reader(int pipe_write_fd, const char *delimiter, \
+									char **env, int input_fd_for_heredoc)
+{
+	char	*line;
+	bool	expand_heredoc;
+	int		status;
+
+	expand_heredoc = true;
+	status = EXIT_SUCCESS;
+	while (status == EXIT_SUCCESS)
+	{
+		ft_putstr_fd("> ", STDOUT_FILENO);
+		line = get_next_line(input_fd_for_heredoc);
+		if (line == NULL)
+		{
+			ft_putstr_fd("minishell: warning: heredoc EOF (wanted `", 2);
+			ft_putstr_fd((char *)delimiter, 2);
+			ft_putstr_fd("')\n", 2);
+			return (EXIT_SUCCESS);
+		}
+		status = process_one_heredoc_line(line, pipe_write_fd, \
+											delimiter, env, expand_heredoc);
+		free(line);
+		if (status == HEREDOC_DELIM_FOUND)
+			return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
+}
+
+static int	handle_heredoc_parent_logic(pid_t pid, int pipefd[2])
+{
+	int	child_process_status;
+
+	close(pipefd[1]);
+	waitpid(pid, &child_process_status, 0);
+	if (!(WIFEXITED(child_process_status) && \
+		WEXITSTATUS(child_process_status) == EXIT_SUCCESS))
+	{
+		close(pipefd[0]);
+		set_current_exit_status(WIFEXITED(child_process_status) \
+			? WEXITSTATUS(child_process_status) : 1);
+		return (1);
+	}
+	if (dup2(pipefd[0], STDIN_FILENO) == -1)
+	{
+		perror("minishell: handle_heredoc: dup2 stdin failed");
+		close(pipefd[0]);
+		return (1);
+	}
+	close(pipefd[0]);
+	return (0);
 }
 
 int	handle_heredoc(t_node_tree *node, t_shell *shell)
 {
 	int		pipefd[2];
 	char	*delimiter;
+	pid_t	pid;
 
-	if (!shell || !shell->env)
+	if (!shell || !shell->env || shell->saved_stdin < 0)
 		return (1);
 	if (!node || !node->file)
-	{
-		ft_putstr_fd("minishell: Heredoc node missing delimiter\n", 2);
-		return (1);
-	}
+		return (ft_putstr_fd("minishell: Heredoc internal error\n", 2), 1);
 	delimiter = node->file;
 	if (pipe(pipefd) == -1)
+		return (perror("minishell: handle_heredoc: pipe failed"), 1);
+	pid = fork();
+	if (pid == -1)
 	{
-		perror("minishell: pipe heredoc");
-		return (1);
+		close(pipefd[0]);
+		close(pipefd[1]);
+		return (perror("minishell: handle_heredoc: fork failed"), 1);
 	}
-	return (process_heredoc_pipe(pipefd, delimiter, shell->env));
+	if (pid == 0)
+	{
+		handle_child_signals();
+		close(pipefd[0]);
+		exit(heredoc_child_reader(pipefd[1], delimiter, \
+									shell->env, shell->saved_stdin));
+	}
+	return (handle_heredoc_parent_logic(pid, pipefd));
 }
+

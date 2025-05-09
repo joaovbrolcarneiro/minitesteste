@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 15:45:03 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:25:19 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "../libft/libft.h"
 # include "../libft/ft_printf.h"
 # include "../libft/get_next_line.h"
+#define HEREDOC_DELIM_FOUND 2 // Special 
 
 /*
 ** Colors
@@ -309,6 +310,7 @@ char		**command_list_malloc(char **env);
 int			populate_command_list(char **list, char **env);
 char		**init_command_list(char **env);
 char		**gather_arg_helper3(t_gthr_arg *cu);
+bool	is_heredoc_delim(const char *line, const char *delimiter);
 
 /*
 ** Error Handling

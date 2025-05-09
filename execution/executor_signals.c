@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 15:35:45 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:24:50 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handle_parent_signals(void)
 /* --- Heredoc functions (Should ideally be in executor_redir_utils.c) --- */
 
 /* Helper: Checks if line matches heredoc delimiter */
-static bool	is_heredoc_delim(const char *line, const char *delimiter)
+bool	is_heredoc_delim(const char *line, const char *delimiter)
 {
 	size_t	delim_len;
 	size_t	line_len;
