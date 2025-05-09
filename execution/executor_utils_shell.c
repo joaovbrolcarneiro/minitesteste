@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 22:53:16 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:46:53 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,23 +95,47 @@ void	cleanup_shell(t_shell *shell)
 	minigarbege_colector();
 }
 
+static bool	is_valid_n_option(const char *arg)
+{
+	int	j;
+
+	if (!arg || arg[0] != '-')
+		return (false);
+	if (arg[1] == '\0') // Argument is just "-"
+		return (false);
+	j = 1;
+	while (arg[j])
+	{
+		if (arg[j] != 'n')
+			return (false);
+		j++;
+	}
+	return (true); // All characters after '-' were 'n'
+}
+
+/*
+** Builtin echo command. Handles -n option correctly.
+*/
 int	ft_echo(char **args)
 {
 	int		i;
 	bool	print_newline;
+	bool	first_arg_has_been_printed;
 
 	i = 1;
 	print_newline = true;
-	while (args[i] && ft_strcmp(args[i], "-n") == 0)
+	first_arg_has_been_printed = false;
+	while (args[i] && is_valid_n_option(args[i]))
 	{
 		print_newline = false;
 		i++;
 	}
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], STDOUT_FILENO);
-		if (args[i + 1])
+		if (first_arg_has_been_printed)
 			ft_putstr_fd(" ", STDOUT_FILENO);
+		ft_putstr_fd(args[i], STDOUT_FILENO);
+		first_arg_has_been_printed = true;
 		i++;
 	}
 	if (print_newline)

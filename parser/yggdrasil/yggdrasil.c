@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 02:03:38 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:23:01 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,36 @@ char	*gather_filename(t_token *redir_token, t_token *end_token)
 {
 	t_token	*file_token;
 	char	*filename;
+	bool	is_valid_type;
+	bool	is_not_operator;
 
+	filename = NULL;
 	if (!redir_token)
 		return (NULL);
 	file_token = redir_token->next;
 	while (file_token && file_token != end_token && file_token->used)
 		file_token = file_token->next;
-	if (file_token && file_token != end_token
-		&& file_token->type == TOKEN_WORD && !file_token->used)
+	if (file_token && file_token != end_token && !file_token->used)
 	{
-		filename = ft_strdup(file_token->value);
-		file_token->used = true;
-		return (filename);
+		is_valid_type = (file_token->type == TOKEN_WORD
+				|| file_token->type == TOKEN_CMD);
+		is_not_operator = (file_token->coretype != TOKEN_PIPE
+				&& file_token->coretype != REDIR);
+		if (is_valid_type && is_not_operator)
+		{
+			filename = ft_strdup(file_token->value);
+			if (!filename)
+			{
+				perror("minishell: gather_filename: strdup failed");
+				set_current_exit_status(1);
+				return (NULL);
+			}
+			file_token->used = true;
+			// Optional: Re-type the token to WORD if it was CMD
+			// file_token->type = TOKEN_WORD;
+			// file_token->coretype = TOKEN_WORD;
+			// file_token->rank = RANK_C;
+		}
 	}
-	return (NULL);
+	return (filename);
 }
