@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 15:23:01 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 19:41:46 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,38 @@ bool	has_left(t_obj_ygg obj)
 	return (obj.left_child_token && !obj.left_child_token->used);
 }
 
-/**
- * Handle parser syntax error and update exit status.
- */
-void	handle_parser_error(t_token *t)
-{
-	st_prsr_err("syntax error near unexpected token", t->value);
-	set_current_exit_status(2);
-}
-
 // This function was previously static but might need to be non-static
 // depending on where mke_yggdrasil is located after splitting files.
 // Assuming it needs to be non-static based on previous plan.
+static char	*try_strdup_filename(t_token *file_token)
+{
+	char	*filename;
+	bool	is_valid_type;
+	bool	is_not_operator;
+
+	is_valid_type = (file_token->type == TOKEN_WORD
+			|| file_token->type == TOKEN_CMD);
+	is_not_operator = (file_token->coretype != TOKEN_PIPE
+			&& file_token->coretype != REDIR);
+	if (is_valid_type && is_not_operator)
+	{
+		filename = ft_strdup(file_token->value);
+		if (!filename)
+		{
+			perror("minishell: gather_filename: strdup failed");
+			set_current_exit_status(1);
+			return (NULL);
+		}
+		file_token->used = true;
+		return (filename);
+	}
+	return (NULL);
+}
+
 char	*gather_filename(t_token *redir_token, t_token *end_token)
 {
 	t_token	*file_token;
 	char	*filename;
-	bool	is_valid_type;
-	bool	is_not_operator;
 
 	filename = NULL;
 	if (!redir_token)
@@ -58,26 +72,6 @@ char	*gather_filename(t_token *redir_token, t_token *end_token)
 	while (file_token && file_token != end_token && file_token->used)
 		file_token = file_token->next;
 	if (file_token && file_token != end_token && !file_token->used)
-	{
-		is_valid_type = (file_token->type == TOKEN_WORD
-				|| file_token->type == TOKEN_CMD);
-		is_not_operator = (file_token->coretype != TOKEN_PIPE
-				&& file_token->coretype != REDIR);
-		if (is_valid_type && is_not_operator)
-		{
-			filename = ft_strdup(file_token->value);
-			if (!filename)
-			{
-				perror("minishell: gather_filename: strdup failed");
-				set_current_exit_status(1);
-				return (NULL);
-			}
-			file_token->used = true;
-			// Optional: Re-type the token to WORD if it was CMD
-			// file_token->type = TOKEN_WORD;
-			// file_token->coretype = TOKEN_WORD;
-			// file_token->rank = RANK_C;
-		}
-	}
+		filename = try_strdup_filename(file_token);
 	return (filename);
 }

@@ -80,6 +80,7 @@ SRCS = \
     $(PARSER_TL)/who_is_node.c \
     $(PARSER_TREE)/tree.c \
     $(PARSER_UTILS)/utils1.c \
+    $(PARSER_UTILS)/utils3.c \
     $(PARSER_UTILS)/utils2.c \
     $(PARSER_YGG)/init_yggdrasil.c \
     $(PARSER_YGG)/yggdrasil_core.c \

@@ -6,20 +6,12 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:53:41 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 15:31:39 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 19:46:33 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_part2.h"
-
-bool	proximity_exception(char *input, int i)
-{
-	if ((!ischarset("|<>", input[i]) && input[i] != ' ') && \
-	input[i] && !ischarset("|<>", *input))
-		return (true);
-	return (false);
-}
 
 void	perform_quote_concatenation(t_token *token_list)
 {
@@ -52,29 +44,45 @@ void	st_prsr_err(const char *message, const char *token_value)
 	set_current_exit_status(2);
 }
 
-int	get_token_len(char *input)
+static int	get_dollar_special_quoted_len(char *input)
 {
 	int		i;
-	char	start_char;
+	char	quote_to_find;
 
-	i = 1;
-	start_char = *input;
-	if (ischarset("\"'", start_char))
-	{
-		while (input[i] && input[i] != start_char)
-			i++;
-		if (input[i] == start_char)
-			i++;
-		else
-			i = 1;
-	}
-	else
-		i = get_unquoted_token_len(input);
+	quote_to_find = input[1];
+	i = 2;
+	while (input[i] && input[i] != quote_to_find)
+		i++;
+	if (input[i] == quote_to_find)
+		i++;
 	return (i);
 }
 
-bool	is_whitespace(char c)
+static int	get_standard_quoted_len(char *input, char start_char)
 {
-	return (c == ' ' || c == '\t' || c == '\n' \
-	|| c == '\v' || c == '\f' || c == '\r');
+	int	i;
+
+	i = 1;
+	while (input[i] && input[i] != start_char)
+		i++;
+	if (input[i] == start_char)
+		i++;
+	else
+		i = 1;
+	return (i);
+}
+
+int	get_token_len(char *input)
+{
+	char	start_char;
+
+	if (!input || !*input)
+		return (0);
+	start_char = input[0];
+	if (start_char == '$' && (input[1] == '\'' || input[1] == '"'))
+		return (get_dollar_special_quoted_len(input));
+	else if (ischarset("\"'", start_char))
+		return (get_standard_quoted_len(input, start_char));
+	else
+		return (get_unquoted_token_len(input));
 }

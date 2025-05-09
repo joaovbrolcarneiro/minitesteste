@@ -6,34 +6,12 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:54:43 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 15:46:35 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:32:38 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_part2.h"
-
-int	get_unquoted_token_len(char *input)
-{
-	int		i;
-	char	start_char;
-
-	i = ft_strsetlen(input, "\"' |<>");
-	start_char = *input;
-	if (i == 0 && ischarset("|<>", start_char))
-	{
-		i = 1;
-		if (ischarset("<>", start_char) && input[1] == start_char)
-			i = 2;
-	}
-	else if (i == 0 && *input != '\0')
-		i = 1;
-	else if (i == 0 && *input == '\0')
-		return (0);
-	if (i == 0)
-		i = 1;
-	return (i);
-}
 
 static void	add_token_to_list(t_token **first, t_token **lst,
 	t_token *new_token)
@@ -50,12 +28,11 @@ static void	add_token_to_list(t_token **first, t_token **lst,
 	}
 }
 
+
 t_token	*create_and_init_token(char *input, int start, int token_len)
 {
 	t_token	*new_token;
-	int		index_after_token;
 
-	index_after_token = start + token_len;
 	new_token = hb_malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
@@ -63,18 +40,36 @@ t_token	*create_and_init_token(char *input, int start, int token_len)
 	new_token->value = ft_substr(input, start, token_len);
 	if (!new_token->value)
 		return (NULL);
-	new_token->id = get_new_token_id();
-	new_token->type = TOKEN_WORD;
-	new_token->coretype = TOKEN_WORD;
-	new_token->rank = RANK_C;
-	new_token->used = false;
-	new_token->err = 0;
-	new_token->literal = false;
-	new_token->next = NULL;
-	new_token->join_next = (input[index_after_token] != '\0' \
-	&& !is_whitespace(input[index_after_token]) \
-	&& !ischarset("|<>", input[index_after_token]));
+	initialize_remaining_token_fields(new_token, input, start, token_len);
 	return (new_token);
+}
+
+void	initialize_remaining_token_fields(t_token *token,
+											const char *input,
+											int start,
+											int token_len)
+{
+	int	index_after_token;
+
+	token->id = get_new_token_id();
+	token->type = TOKEN_WORD;
+	token->coretype = TOKEN_WORD;
+	token->rank = RANK_C;
+	token->used = false;
+	token->err = 0;
+	token->literal = false;
+	token->next = NULL;
+	index_after_token = start + token_len;
+	if (token_len == 1 && token->value[0] == '$')
+	{
+		token->join_next = false;
+	}
+	else
+	{
+		token->join_next = (input[index_after_token] != '\0'
+				&& !is_whitespace(input[index_after_token])
+				&& !ischarset("|<>", input[index_after_token]));
+	}
 }
 
 static int	process_single_token_block(char *input, int *start,

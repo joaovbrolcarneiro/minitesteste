@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 15:48:37 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:46:43 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,12 @@ typedef struct s_obj_ygg
 	t_token		*right_child_token;
 }	t_obj_ygg;
 
+typedef struct s_quote_params {
+	t_token	*token;
+	char	**env;
+	int		*is_unclosed_flag;
+	bool	is_literal_operator;
+}	t_quote_params;
 // --- Function Prototypes ---
 
 // General Utils
@@ -153,6 +159,8 @@ void		parser_cmd_no_found(t_token *token, char **env);
 t_gthr_arg	gthr_arg_vrs_init(t_gthr_arg *cu);
 
 // Development / Debugging Utils
+
+
 char		*print_type(t_token *lst);
 void		print_token_lst(t_token *lst);
 t_obj_ygg	make_yggdrasil_init(void);
@@ -169,8 +177,13 @@ bool		gather_arg_helper(t_token *cmd_token, t_gthr_arg *cu);
 bool		gather_arg_helper2(t_token *cmd_token, t_gthr_arg *cu);
 int			process_current_token_for_args(t_gthr_arg *cu);
 bool		is_whitespace(char c);
+int			handle_dollar_brace_expansion(t_exp_vars *v);
 void		perform_quote_con_part2(t_token	*current, \
 	t_token	*node_to_remove, char	*joined_value, char	*temp_value_ptr);
+void	initialize_remaining_token_fields(t_token *token,
+		const char *input,
+		int start,
+		int token_len);
 
 // Deprecated / Not to use?
 // void is_minishell_exit(char *input); // not to use

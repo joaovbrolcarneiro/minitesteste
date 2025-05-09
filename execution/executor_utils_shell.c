@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 15:46:53 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:18:01 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static bool	is_valid_n_option(const char *arg)
 
 	if (!arg || arg[0] != '-')
 		return (false);
-	if (arg[1] == '\0') // Argument is just "-"
+	if (arg[1] == '\0')
 		return (false);
 	j = 1;
 	while (arg[j])
@@ -110,7 +110,7 @@ static bool	is_valid_n_option(const char *arg)
 			return (false);
 		j++;
 	}
-	return (true); // All characters after '-' were 'n'
+	return (true);
 }
 
 /*

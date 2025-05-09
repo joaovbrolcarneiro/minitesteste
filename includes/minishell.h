@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 16:25:19 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:31:28 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,12 @@ typedef struct s_gthr_arg_vrs
 	char	**temp_realloc;
 }	t_gthr_arg;
 
+typedef struct s_heredoc_line_params {
+	int			pipe_write_fd;
+	const char	*delimiter;
+	char		**env;
+	bool		expand;
+}	t_heredoc_line_params;
 /*
 ** Parser functions
 */
@@ -321,5 +327,19 @@ void		*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 int			process_heredoc_line(char *line, int pipe_write_fd, \
 	char **env, bool expand);
 char		*gather_filename(t_token *redir_token, t_token *end_token);
+int			process_one_heredoc_line(char *line,
+							t_heredoc_line_params *params);
+int	heredoc_child_reader(int pipe_write_fd, const char *delimiter,
+							char **env, int input_fd_for_heredoc);
+int			handle_heredoc_parent_logic(pid_t pid, int pipefd[2]);
+int			handle_heredoc_eof(const char *delimiter);
+char		*heredoc_init_and_get_delimiter(t_node_tree *node, t_shell *shell);
+void		execute_heredoc_child(int pipe_write_fd, int pipe_read_fd,
+	const char *delimiter, t_shell *shell);
+int	append_str_to_exp_vars(t_exp_vars *v, char *str);
+
+
+
+	
 
 #endif /* MINISHELL_H */

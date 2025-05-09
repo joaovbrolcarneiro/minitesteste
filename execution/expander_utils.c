@@ -6,14 +6,14 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 22:46:21 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:31:11 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Helper: Appends null-terminated string content to v->result */
-static int	append_str_to_exp_vars(t_exp_vars *v, char *str)
+int	append_str_to_exp_vars(t_exp_vars *v, char *str)
 {
 	size_t	k;
 
@@ -27,22 +27,6 @@ static int	append_str_to_exp_vars(t_exp_vars *v, char *str)
 		k++;
 	}
 	return (0);
-}
-
-/* Appends expanded exit status ($?) to result */
-/* Assumes append_str_to_exp_vars handles errors */
-void	handle_exit_status(t_exp_vars *v) // free retirado
-{
-	char	*exit_str;
-
-	exit_str = ft_itoa(get_current_exit_status());
-	if (!exit_str)
-	{
-		perror("minishell: ft_itoa");
-		return ;
-	}
-	append_str_to_exp_vars(v, exit_str);
-	v->i++;
 }
 
 /* Helper: Extracts variable name length */
@@ -84,18 +68,43 @@ void	handle_variable(t_exp_vars *v) // free retirado
 	append_str_to_exp_vars(v, v->var_value);
 }
 
-/* Handles '$' expansion, returning 0 on success, 1 on failure */
-int	handle_dollar_expansion(t_exp_vars *v)
+int	handle_dollar_brace_expansion(t_exp_vars *v)
 {
-	v->i++;
-	if (v->input[v->i] == '?')
-	{
-		handle_exit_status(v);
-	}
-	else if (is_valid_var_char(v->input[v->i], 0))
+	(v->i)++;
+	if (is_valid_var_char(v->input[v->i], 0))
 	{
 		handle_variable(v);
+		if (v->input[v->i] == '}')
+			(v->i)++;
 	}
+	else
+	{
+		if (!append_char(&v->result, &v->res_len, &v->res_cap, '$'))
+			return (1);
+		if (!append_char(&v->result, &v->res_len, &v->res_cap, '{'))
+			return (1);
+	}
+	return (0);
+}
+
+int	handle_dollar_expansion(t_exp_vars *v)
+{
+	(v->i)++;
+	if (v->input[v->i] == '\0')
+	{
+		if (!append_char(&v->result, &v->res_len, &v->res_cap, '$'))
+			return (1);
+		return (0);
+	}
+	if (v->input[v->i] == '?')
+		handle_exit_status(v);
+	else if (v->input[v->i] == '{')
+	{
+		if (handle_dollar_brace_expansion(v) != 0)
+			return (1);
+	}
+	else if (is_valid_var_char(v->input[v->i], 0))
+		handle_variable(v);
 	else
 	{
 		if (!append_char(&v->result, &v->res_len, &v->res_cap, '$'))

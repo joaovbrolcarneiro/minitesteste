@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 14:45:30 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 19:41:42 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,13 @@ bool	gather_arg_helper2(t_token *cmd_token, t_gthr_arg *cu)
 	cu->i = 1;
 	cu->args[cu->i] = NULL;
 	return (false);
+}
+
+/**
+ * Handle parser syntax error and update exit status.
+ */
+void	handle_parser_error(t_token *t)
+{
+	st_prsr_err("syntax error near unexpected token", t->value);
+	set_current_exit_status(2);
 }

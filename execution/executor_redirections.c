@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 16:25:42 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:30:47 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,24 +102,23 @@ int	handle_append(t_node_tree *node)
 	return (0);
 }*/
 
-static int	process_one_heredoc_line(char *line, int pipe_write_fd, \
-									const char *delimiter, char **env, \
-									bool expand)
+int	process_one_heredoc_line(char *line,
+									t_heredoc_line_params *params)
 {
 	char	*line_to_write;
 	int		write_status;
 
-	if (is_heredoc_delim(line, delimiter))
+	if (is_heredoc_delim(line, params->delimiter))
 		return (HEREDOC_DELIM_FOUND);
 	line_to_write = line;
-	if (expand)
+	if (params->expand)
 	{
-		line_to_write = expand_variables(line, env);
+		line_to_write = expand_variables(line, params->env);
 		if (!line_to_write)
 			return (EXIT_FAILURE);
 	}
-	write_status = write(pipe_write_fd, line_to_write, \
-							ft_strlen(line_to_write));
+	write_status = write(params->pipe_write_fd, line_to_write,
+			ft_strlen(line_to_write));
 	if (line_to_write != line)
 		free(line_to_write);
 	if (write_status == -1)
@@ -130,28 +129,25 @@ static int	process_one_heredoc_line(char *line, int pipe_write_fd, \
 	return (EXIT_SUCCESS);
 }
 
-static int	heredoc_child_reader(int pipe_write_fd, const char *delimiter, \
-									char **env, int input_fd_for_heredoc)
+int	heredoc_child_reader(int pipe_write_fd, const char *delimiter,
+								char **env, int input_fd_for_heredoc)
 {
-	char	*line;
-	bool	expand_heredoc;
-	int		status;
+	char					*line;
+	int						status;
+	t_heredoc_line_params	line_params;
 
-	expand_heredoc = true;
 	status = EXIT_SUCCESS;
+	line_params.pipe_write_fd = pipe_write_fd;
+	line_params.delimiter = delimiter;
+	line_params.env = env;
+	line_params.expand = true;
 	while (status == EXIT_SUCCESS)
 	{
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		line = get_next_line(input_fd_for_heredoc);
 		if (line == NULL)
-		{
-			ft_putstr_fd("minishell: warning: heredoc EOF (wanted `", 2);
-			ft_putstr_fd((char *)delimiter, 2);
-			ft_putstr_fd("')\n", 2);
-			return (EXIT_SUCCESS);
-		}
-		status = process_one_heredoc_line(line, pipe_write_fd, \
-											delimiter, env, expand_heredoc);
+			return (handle_heredoc_eof(delimiter));
+		status = process_one_heredoc_line(line, &line_params);
 		free(line);
 		if (status == HEREDOC_DELIM_FOUND)
 			return (EXIT_SUCCESS);
@@ -159,17 +155,17 @@ static int	heredoc_child_reader(int pipe_write_fd, const char *delimiter, \
 	return (EXIT_FAILURE);
 }
 
-static int	handle_heredoc_parent_logic(pid_t pid, int pipefd[2])
+int	handle_heredoc_parent_logic(pid_t pid, int pipefd[2])
 {
 	int	child_process_status;
 
 	close(pipefd[1]);
 	waitpid(pid, &child_process_status, 0);
-	if (!(WIFEXITED(child_process_status) && \
-		WEXITSTATUS(child_process_status) == EXIT_SUCCESS))
+	if (!(WIFEXITED(child_process_status)
+			&& WEXITSTATUS(child_process_status) == EXIT_SUCCESS))
 	{
 		close(pipefd[0]);
-		set_current_exit_status(WIFEXITED(child_process_status) \
+		set_current_exit_status(WIFEXITED(child_process_status)
 			? WEXITSTATUS(child_process_status) : 1);
 		return (1);
 	}
@@ -189,27 +185,54 @@ int	handle_heredoc(t_node_tree *node, t_shell *shell)
 	char	*delimiter;
 	pid_t	pid;
 
-	if (!shell || !shell->env || shell->saved_stdin < 0)
+	delimiter = heredoc_init_and_get_delimiter(node, shell);
+	if (!delimiter)
 		return (1);
-	if (!node || !node->file)
-		return (ft_putstr_fd("minishell: Heredoc internal error\n", 2), 1);
-	delimiter = node->file;
 	if (pipe(pipefd) == -1)
-		return (perror("minishell: handle_heredoc: pipe failed"), 1);
+	{
+		perror("minishell: handle_heredoc: pipe failed");
+		return (1);
+	}
 	pid = fork();
 	if (pid == -1)
 	{
 		close(pipefd[0]);
 		close(pipefd[1]);
-		return (perror("minishell: handle_heredoc: fork failed"), 1);
+		perror("minishell: handle_heredoc: fork failed");
+		return (1);
 	}
 	if (pid == 0)
-	{
-		handle_child_signals();
-		close(pipefd[0]);
-		exit(heredoc_child_reader(pipefd[1], delimiter, \
-									shell->env, shell->saved_stdin));
-	}
+		execute_heredoc_child(pipefd[1], pipefd[0], delimiter, shell);
 	return (handle_heredoc_parent_logic(pid, pipefd));
 }
 
+int	handle_heredoc_eof(const char *delimiter)
+{
+	ft_putstr_fd("minishell: warning: heredoc EOF (wanted `", 2);
+	ft_putstr_fd((char *)delimiter, 2);
+	ft_putstr_fd("')\n", 2);
+	return (EXIT_SUCCESS);
+}
+
+char	*heredoc_init_and_get_delimiter(t_node_tree *node, t_shell *shell)
+{
+	if (!shell || !shell->env || shell->saved_stdin < 0)
+		return (NULL);
+	if (!node || !node->file)
+	{
+		ft_putstr_fd("minishell: Heredoc internal error\n", 2);
+		return (NULL);
+	}
+	return (node->file);
+}
+
+// Helper 2: Child process execution logic
+// Assuming handle_child_signals(), exit() are defined/available
+void	execute_heredoc_child(int pipe_write_fd, int pipe_read_fd,
+								const char *delimiter, t_shell *shell)
+{
+	handle_child_signals();
+	close(pipe_read_fd);
+	exit(heredoc_child_reader(pipe_write_fd, delimiter,
+			shell->env, shell->saved_stdin));
+}
