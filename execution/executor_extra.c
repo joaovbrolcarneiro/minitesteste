@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 20:32:19 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:55:26 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,27 @@ bool	is_whitespace(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' \
 	|| c == '\v' || c == '\f' || c == '\r');
+}
+
+/* Cleans up shell resources */
+void	cleanup_shell(t_shell *shell)
+{
+	if (!shell)
+		return ;
+	if (shell->env)
+	{
+		shell->env = NULL;
+	}
+	if (shell->saved_stdin >= 0)
+	{
+		close(shell->saved_stdin);
+		shell->saved_stdin = -1;
+	}
+	if (shell->saved_stdout >= 0)
+	{
+		close(shell->saved_stdout);
+		shell->saved_stdout = -1;
+	}
+	get_next_line(GNL_CLEANUP);
+	minigarbege_colector();
 }

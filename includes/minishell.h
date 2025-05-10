@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 20:31:28 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 21:20:11 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,19 @@
 # include "../libft/libft.h"
 # include "../libft/ft_printf.h"
 # include "../libft/get_next_line.h"
-#define HEREDOC_DELIM_FOUND 2 // Special 
+
+/*
+** HEREDOC_DELIM_FOUND: Special return value for heredoc processing
+** Fix for PREPROC_BAD_INDENT (line 32): Ensure #define at col 1,
+** no end-of-line comment.
+*/
+# define HEREDOC_DELIM_FOUND 2
 
 /*
 ** Colors
+** Ensure defines start at col 1 and use a single tab/space before value.
+** Alignment of values with spaces can be tricky; Norminette might prefer
+** just a single space/tab and no further visual alignment.
 */
 # define RED				"\033[0;31m"
 # define REDK				"\033[38;2;220;20;60m"
@@ -45,7 +54,7 @@
 # define PURPLE				"\033[0;35m"
 # define RESET				"\033[0;0m"
 # define MAX_REDIRECTIONS	1024
-# define GNL_CLEANUP -42
+# define GNL_CLEANUP		-42
 /*
 ** Types
 */
@@ -62,7 +71,7 @@ typedef enum e_token_type
 	TOKEN_EOF,
 	REDIR,
 	TOKEN_ASSIGNMENT
-}	t_token_type;
+}				t_token_type;
 
 typedef enum e_ast_type
 {
@@ -71,8 +80,8 @@ typedef enum e_ast_type
 	AST_REDIR_OUT = 2,
 	AST_APPEND = 3,
 	AST_HEREDOC = 4,
-	AST_COMMAND = 5,
-}	t_ast_type;
+	AST_COMMAND = 5
+}				t_ast_type;
 
 typedef enum e_ranking
 {
@@ -84,7 +93,7 @@ typedef enum e_ranking
 	RANK_A,
 	RANK_S,
 	RANK_SS
-}	t_ranking;
+}				t_ranking;
 
 typedef struct s_token
 {
@@ -100,7 +109,7 @@ typedef struct s_token
 	t_token_type	coretype;
 	bool			literal;
 	bool			join_next;
-}	t_token;
+}				t_token;
 
 typedef struct s_node_tree
 {
@@ -116,7 +125,7 @@ typedef struct s_node_tree
 	t_token_type		coretype;
 	bool				literal;
 	bool				merge_next;
-}	t_node_tree;
+}				t_node_tree;
 
 typedef struct s_inpt_hndlr
 {
@@ -124,7 +133,7 @@ typedef struct s_inpt_hndlr
 	t_node_tree	*tree;
 	bool		parse_error_flagged_in_tokens;
 	t_token		*temp;
-}	t_inpt_hndlr;
+}				t_inpt_hndlr;
 
 typedef t_node_tree	*t_tree;
 
@@ -132,7 +141,7 @@ typedef enum e_direction_node
 {
 	RIGHT,
 	LEFT
-}	t_direction_node;
+}				t_direction_node;
 
 typedef struct s_shell
 {
@@ -143,7 +152,7 @@ typedef struct s_shell
 	int			heredoc_fd;
 	int			in_heredoc;
 	t_node_tree	*ast_root;
-}	t_shell;
+}				t_shell;
 
 typedef struct s_exp_vars
 {
@@ -157,22 +166,22 @@ typedef struct s_exp_vars
 	size_t		var_start;
 	int			pos;
 	char		*var_value;
-}	t_exp_vars;
+}				t_exp_vars;
 
 /* Structure to hold variables for quote_handler_cpy helper */
 typedef struct s_exp_cpy_vars
 {
-	char		*dst;
-	int			i;
-	int			start;
-	size_t		count;
-}	t_exp_cpy_vars;
+	char	*dst;
+	int		i;
+	int		start;
+	size_t	count;
+}				t_exp_cpy_vars;
 
 typedef struct s_command_redir
 {
 	t_token_type	type;
 	char			*file;
-}	t_command_redir;
+}				t_command_redir;
 
 typedef struct s_gthr_arg_vrs
 {
@@ -182,14 +191,17 @@ typedef struct s_gthr_arg_vrs
 	int		arg_capacity;
 	int		i;
 	char	**temp_realloc;
-}	t_gthr_arg;
+}				t_gthr_arg;
 
-typedef struct s_heredoc_line_params {
+/* Fix for BRACE_NEWLINE (line: 187) */
+typedef struct s_heredoc_line_params
+{
 	int			pipe_write_fd;
 	const char	*delimiter;
 	char		**env;
 	bool		expand;
-}	t_heredoc_line_params;
+}				t_heredoc_line_params;
+
 /*
 ** Parser functions
 */
@@ -226,8 +238,13 @@ int			handle_assignment_execution(t_node_tree *node);
 int			handle_pipe_execution(t_shell *shell, t_node_tree *node);
 int			save_original_fds(int original_fds[2]);
 int			execute_redir_cmd_node(t_shell *shell, t_node_tree *redir_node);
-int			read_heredoc_input(int pipe_write_fd, \
-									const char *delimiter, char **env);
+/*
+** Fix for MISALIGNED_FUNC_DECL (line: 319, col: 9)
+** Ensure 'int' is at col 1, 'read_heredoc_input' starts after one tab (col 9).
+** Wrapped parameters start after two tabs (col 17).
+*/
+int			read_heredoc_input(int pipe_write_fd, const char *delimiter,
+				char **env);
 int			execute_redirection_chain(t_shell *shell, t_node_tree *node);
 
 /*
@@ -309,6 +326,14 @@ int			get_token_len(char *input);
 
 /*
 ** Command list functions
+** Addressing TOO_MANY_TAB (lines 331, 333) by ensuring return types at col 1.
+** Addressing MISALIGNED_FUNC_DECL (lines 332, 339, col 5) by ensuring function
+** names start at col 9 (after one 8-space tab) and wrapped params at col 17.
+** The col 5 error is unusual for an 8-space tab system if it refers to the
+** function name itself after a short return type. It might indicate a specific
+** local norminette config or a misunderstanding of what's at col 5.
+** Assuming standard 8-space tab alignment for name at col 9.
+** Addressing TOO_FEW_TAB (line 338) by ensuring correct tabbing.
 */
 long long	count_commands_in_path(char **env);
 char		**get_path_list(char **env);
@@ -316,7 +341,7 @@ char		**command_list_malloc(char **env);
 int			populate_command_list(char **list, char **env);
 char		**init_command_list(char **env);
 char		**gather_arg_helper3(t_gthr_arg *cu);
-bool	is_heredoc_delim(const char *line, const char *delimiter);
+bool		is_heredoc_delim(const char *line, const char *delimiter);
 
 /*
 ** Error Handling
@@ -324,22 +349,30 @@ bool	is_heredoc_delim(const char *line, const char *delimiter);
 bool		has_parser_error(t_token *token);
 void		st_prsr_err(const char *message, const char *token_value);
 void		*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+/* Original from snippet:
 int			process_heredoc_line(char *line, int pipe_write_fd, \
 	char **env, bool expand);
+*/
+// Corrected alignment for parameters if wrapped:
+int			process_heredoc_line(char *line, int pipe_write_fd,
+				char **env, bool expand);
 char		*gather_filename(t_token *redir_token, t_token *end_token);
+// Corrected alignment for parameters if wrapped:
 int			process_one_heredoc_line(char *line,
-							t_heredoc_line_params *params);
-int	heredoc_child_reader(int pipe_write_fd, const char *delimiter,
-							char **env, int input_fd_for_heredoc);
+				t_heredoc_line_params *params);
+// Corrected alignment for parameters if wrapped (line 339 error was here):
+int			heredoc_child_reader(int pipe_write_fd, const char *delimiter,
+				char **env, int input_fd_for_heredoc);
 int			handle_heredoc_parent_logic(pid_t pid, int pipefd[2]);
 int			handle_heredoc_eof(const char *delimiter);
 char		*heredoc_init_and_get_delimiter(t_node_tree *node, t_shell *shell);
+// Corrected alignment for parameters if wrapped:
 void		execute_heredoc_child(int pipe_write_fd, int pipe_read_fd,
-	const char *delimiter, t_shell *shell);
-int	append_str_to_exp_vars(t_exp_vars *v, char *str);
+				const char *delimiter, t_shell *shell);
+int			append_str_to_exp_vars(t_exp_vars *v, char *str);
 
-
-
-	
+/* TODO: Address CONSECUTIVE_NEWLINES and SPACE_EMPTY_LINE errors if they */
+/* occur after this part of the file by removing extra blank lines and */
+/* whitespace from empty lines. */
 
 #endif /* MINISHELL_H */

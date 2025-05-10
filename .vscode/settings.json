@@ -3,6 +3,7 @@
         "minishell_part2.h": "c",
         "errno.h": "c",
         "fcntl.h": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "cstdlib": "c"
     }
 }

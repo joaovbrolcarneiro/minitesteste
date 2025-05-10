@@ -39,6 +39,7 @@ SRCS = \
     $(EXEC_DIR)/executor_pipes.c \
     $(EXEC_DIR)/executor_redir_utils.c \
     $(EXEC_DIR)/executor_redirections.c \
+    $(EXEC_DIR)/executor_redirections2.c \
     $(EXEC_DIR)/executor_redir_chain.c \
     $(EXEC_DIR)/executor_simple_cmd.c \
     $(EXEC_DIR)/executor_signals.c \
@@ -67,6 +68,7 @@ SRCS = \
     $(PARSER_LST)/lkd_lst2.c \
     $(PARSER_QH)/quote_expansion.c \
     $(PARSER_QH)/quote_handling.c \
+    $(PARSER_QH)/quote_handling2.c \
     $(PARSER_QH)/merge_to_token_exception.c \
     $(PARSER_RLOOP)/readline_loop.c \
     $(PARSER_SIZEH)/size_hardler.c \

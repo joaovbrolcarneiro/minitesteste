@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:54:43 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 20:32:38 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:53:15 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	add_token_to_list(t_token **first, t_token **lst,
 		*lst = new_token;
 	}
 }
-
 
 t_token	*create_and_init_token(char *input, int start, int token_len)
 {

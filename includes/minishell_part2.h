@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 20:46:43 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:50:37 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,18 @@ t_gthr_arg	gthr_arg_vrs_init(t_gthr_arg *cu);
 
 // Development / Debugging Utils
 
-
+char		*finalize_token_assignment(t_token *token, char *new_val,
+	char *orig_val, int *is_unclosed_flag);
+char		*determine_and_process_quotes(t_quote_params *params,
+	char *current_value);
+char		*process_regular_quotes(t_quote_params *params,
+	char *current_value);
+char		*handle_dollar_double_quotes(t_token *token, char **env, \
+			char *original_value);
+char		*handle_dollar_single_quotes(t_token *token, char *original_value);
+char		*handle_double_quotes(t_token *token, char **env, \
+			char *original_value, bool is_operator_literal);
+char		*handle_single_quotes(t_token *token, char *original_value);
 char		*print_type(t_token *lst);
 void		print_token_lst(t_token *lst);
 t_obj_ygg	make_yggdrasil_init(void);
