@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/15 21:52:14 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:04:19 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,45 +84,38 @@ int handle_heredoc_parent_logic(pid_t pid, int pipefd[2])
 }
 
 
-int handle_heredoc(t_node_tree *node, t_shell *shell)
+int	handle_heredoc(t_node_tree *node, t_shell *shell)
 {
-    int     pipefd[2];
-    char    *delimiter;
-    pid_t   pid;
+	int		pipefd[2];
+	char	*delimiter;
+	pid_t	pid;
 
-    delimiter = heredoc_init_and_get_delimiter(node, shell);
-    if (!delimiter)
-        return (1); 
-
-    // DEBUG PRINT (keep this for testing)
-    ft_putstr_fd("DEBUG: handle_heredoc: Processing delimiter: [", STDERR_FILENO);
-    ft_putstr_fd((char *)delimiter, STDERR_FILENO); // Cast to char* if delimiter is const char*
-    ft_putstr_fd("]\n", STDERR_FILENO);
-
-    if (pipe(pipefd) == -1)
-    {
-        perror("minishell: handle_heredoc: pipe failed");
-        return (1);
-    }
-    pid = fork();
-    if (pid == -1)
-    {
-        close(pipefd[0]);
-        close(pipefd[1]);
-        perror("minishell: handle_heredoc: fork failed");
-        return (1);
-    }
-    if (pid == 0) 
-    {
-        execute_heredoc_child(pipefd[1], pipefd[0], delimiter, shell);
-    }
-    return (handle_heredoc_parent_logic(pid, pipefd));
+	delimiter = heredoc_init_and_get_delimiter(node, shell);
+	if (!delimiter)
+		return (1);
+	if (pipe(pipefd) == -1)
+	{
+		perror("konosubash: handle_heredoc: pipe failed");
+		return (1);
+	}
+	pid = fork();
+	if (pid == -1)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
+		perror("konosubash: handle_heredoc: fork failed");
+		return (1);
+	}
+	if (pid == 0)
+	{
+		execute_heredoc_child(pipefd[1], pipefd[0], delimiter, shell);
+	}
+	return (handle_heredoc_parent_logic(pid, pipefd));
 }
-
 
 int	handle_heredoc_eof(const char *delimiter)
 {
-	ft_putstr_fd("minishell: warning: heredoc EOF (wanted `", 2);
+	ft_putstr_fd("konosubash: warning: heredoc EOF (wanted `", 2);
 	ft_putstr_fd((char *)delimiter, 2);
 	ft_putstr_fd("')\n", 2);
 	return (EXIT_SUCCESS);

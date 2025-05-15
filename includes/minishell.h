@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/15 21:40:20 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/15 22:59:00 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define RESET				"\033[0;0m"
 # define MAX_REDIRECTIONS	1024
 # define GNL_CLEANUP		-42
+#define ERR_MAX_REDIR "minishell: too many redirections\n"
 /*
 ** Types
 */
@@ -111,6 +112,7 @@ typedef struct s_token
 	bool			join_next;
 }				t_token;
 
+
 typedef struct s_node_tree
 {
 	t_ranking			rank;
@@ -126,6 +128,15 @@ typedef struct s_node_tree
 	bool				literal;
 	bool				merge_next;
 }				t_node_tree;
+
+typedef struct s_complex_pattern_params
+{
+	t_node_tree	*out_r;
+	t_node_tree	*in_r1;
+	t_node_tree	*in_r2;
+	t_node_tree	*cmd_n;
+}	t_complex_pattern_params;
+
 
 typedef struct s_inpt_hndlr
 {
@@ -201,6 +212,13 @@ typedef struct s_heredoc_line_params
 	char		**env;
 	bool		expand;
 }				t_heredoc_line_params;
+
+typedef struct s_redir_collection_state
+{
+	t_node_tree	**redir_nodes;
+	int			*redir_count;
+	t_node_tree	**command_node_ptr;
+}	t_redir_collection_state;
 
 /*
 ** Parser functions
@@ -374,6 +392,33 @@ int  open_and_set_output_fd(t_node_tree *node, int *current_out_fd);
 int  apply_redirection_nodes(t_node_tree *redir_nodes[],
 	int redir_count, t_shell *shell);
 int  open_and_set_final_output_fd(t_node_tree *node, int *current_out_fd);
+void	initialize_collection_data(t_redir_collection_state *state,
+	t_node_tree *redir_nodes_array[]);
+int	populate_nodes_from_pattern(t_complex_pattern_params *params,
+		t_redir_collection_state *state);
+int	process_complex_pattern_type1(t_complex_pattern_params *params,
+			t_redir_collection_state *state);
+int	process_complex_pattern_type2(t_complex_pattern_params *params,
+				t_redir_collection_state *state);
+int	process_complex_pattern_type3(t_complex_pattern_params *params,
+					t_redir_collection_state *state);
+int	match_and_collect_complex_pattern(t_node_tree *current_node,
+						t_redir_collection_state *state);
+void	advance_current_for_linear_chain(t_node_tree **current_ptr);
+int	process_node_in_linear_chain(t_node_tree **current_ptr,
+							t_redir_collection_state *state);
+int	collect_linear_chain_nodes(t_node_tree *current_ast_node,
+								t_redir_collection_state *state);			
+int	collect_redir_and_command_nodes(
+									t_node_tree *redir_nodes_array[],
+									int *redir_count_val,
+									t_node_tree **command_node_val,
+									t_node_tree *current_ast_node);
+int	process_individual_redirections(t_node_tree *redir_nodes[],
+										int redir_count, t_shell *shell,
+										int *final_output);
+int	execute_redir_chain_core(t_shell *shell, t_node_tree *node);
+
 /* TODO: Address CONSECUTIVE_NEWLINES and SPACE_EMPTY_LINE errors if they */
 /* occur after this part of the file by removing extra blank lines and */
 /* whitespace from empty lines. */

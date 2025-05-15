@@ -41,6 +41,8 @@ SRCS = \
     $(EXEC_DIR)/executor_redirections.c \
     $(EXEC_DIR)/executor_redirections2.c \
     $(EXEC_DIR)/executor_redir_chain.c \
+    $(EXEC_DIR)/executor_redir_chain2.c \
+    $(EXEC_DIR)/executor_redir_chain3.c \
     $(EXEC_DIR)/executor_simple_cmd.c \
     $(EXEC_DIR)/executor_signals.c \
     $(EXEC_DIR)/executor_utils_builtins.c \
