@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/15 17:07:20 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/15 21:13:21 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,17 +142,22 @@ int	heredoc_child_reader(int pipe_write_fd, const char *delimiter,
 	line_params.env = env;
 	line_params.expand = true;
 	while (status == EXIT_SUCCESS)
-	{
-		ft_putstr_fd("> ", STDOUT_FILENO);
-		line = get_next_line(input_fd_for_heredoc);
-		if (line == NULL)
-			return (handle_heredoc_eof(delimiter));
-		status = process_one_heredoc_line(line, &line_params);
-		free(line);
-		if (status == HEREDOC_DELIM_FOUND)
-			return (EXIT_SUCCESS);
-	}
-
-	free(line);
-	return (EXIT_FAILURE);
+    {
+        ft_putstr_fd("> ", STDOUT_FILENO);
+        line = get_next_line(input_fd_for_heredoc);
+        if (line == NULL)
+        {
+            // get_next_line(GNL_CLEANUP); // We discussed adding this
+            return (handle_heredoc_eof(delimiter));
+        }
+        status = process_one_heredoc_line(line, &line_params);
+        free(line); // Free the current line from GNL
+        if (status == HEREDOC_DELIM_FOUND)
+        {
+            // get_next_line(GNL_CLEANUP); // We discussed adding this
+            return (EXIT_SUCCESS);
+        }
+    }
+    // get_next_line(GNL_CLEANUP); // We discussed adding this
+    return (EXIT_FAILURE); // 'line' from the last failing iteration was already freed
 }

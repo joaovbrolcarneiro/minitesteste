@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:05:15 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 20:17:15 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/15 21:55:39 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ t_token	*input_handler(t_shell *shell, char *input)
 	{
 		cu.temp = cu.token_list;
 		input_handler_part4(&cu);
-//		print_token_lst(cu.token_list);
+		print_token_lst(cu.token_list);
 		cu.tree = init_yggdrasil(cu.token_list);
-//		print_yggdrasil(cu.tree, 0, "root:");
+		print_yggdrasil(cu.tree, 0, "root:");
 		if (cu.tree)
 		{
 			shell->ast_root = cu.tree;

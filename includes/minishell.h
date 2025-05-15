@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 21:20:11 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/15 21:40:20 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,7 +370,10 @@ char		*heredoc_init_and_get_delimiter(t_node_tree *node, t_shell *shell);
 void		execute_heredoc_child(int pipe_write_fd, int pipe_read_fd,
 				const char *delimiter, t_shell *shell);
 int			append_str_to_exp_vars(t_exp_vars *v, char *str);
-
+int  open_and_set_output_fd(t_node_tree *node, int *current_out_fd);
+int  apply_redirection_nodes(t_node_tree *redir_nodes[],
+	int redir_count, t_shell *shell);
+int  open_and_set_final_output_fd(t_node_tree *node, int *current_out_fd);
 /* TODO: Address CONSECUTIVE_NEWLINES and SPACE_EMPTY_LINE errors if they */
 /* occur after this part of the file by removing extra blank lines and */
 /* whitespace from empty lines. */
