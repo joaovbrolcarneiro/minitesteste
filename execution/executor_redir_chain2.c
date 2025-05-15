@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:05:15 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/15 23:25:49 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:49:51 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	collect_linear_chain_nodes(t_node_tree *current_ast_node,
 }
 
 /* --- Static Main Collector Function --- */
-static int	collect_redir_and_command_nodes(
+int	collect_redir_and_command_nodes(
 	t_node_tree *redir_nodes_array[],
 	int *redir_count_val,
 	t_node_tree **command_node_val,

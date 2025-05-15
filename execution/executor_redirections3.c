@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/15 23:47:31 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:49:34 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	handle_heredoc_parent_logic(pid_t pid, int pipefd[2])
 	else
 		return (close(pipefd[0]), set_current_exit_status(1), 1);
 	if (dup2(pipefd[0], STDIN_FILENO) == -1)
-		return (1, close(pipefd[0]));
+		return (close(pipefd[0]), 1);
 	return (close(pipefd[0]), 0);
 }
 
