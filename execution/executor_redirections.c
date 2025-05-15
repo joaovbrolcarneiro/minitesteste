@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 21:05:10 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:03:51 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,27 @@ char	*heredoc_init_and_get_delimiter(t_node_tree *node, t_shell *shell)
 
 // Helper 2: Child process execution logic
 // Assuming handle_child_signals(), exit() are defined/available
-void	execute_heredoc_child(int pipe_write_fd, int pipe_read_fd,
-								const char *delimiter, t_shell *shell)
+void    execute_heredoc_child(int pipe_write_fd, int pipe_read_fd,
+	const char *delimiter, t_shell *shell)
 {
-	handle_child_signals();
-	close(pipe_read_fd);
-	exit(heredoc_child_reader(pipe_write_fd, delimiter,
-			shell->env, shell->saved_stdin));
+int exit_status_from_reader;
+
+// 1. Reset the child's own garbage collector's list *at the very start*.
+
+handle_child_signals();
+close(pipe_read_fd);
+
+// 2. Perform the heredoc reading.
+exit_status_from_reader = heredoc_child_reader(pipe_write_fd, delimiter,
+shell->env, shell->saved_stdin);
+
+// 3. Clean up Get_Next_Line's internal static (malloc'd) resources.
+get_next_line(GNL_CLEANUP);
+
+// 4. Clean up memory allocated by hb_malloc *within this child process*
+//    (e.g., by expand_variables AFTER the garbege(NULL) call).
+minigarbege_colector();
+
+// 5. Exit the child.
+exit(exit_status_from_reader);
 }
