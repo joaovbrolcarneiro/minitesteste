@@ -40,6 +40,8 @@ SRCS = \
     $(EXEC_DIR)/executor_redir_utils.c \
     $(EXEC_DIR)/executor_redirections.c \
     $(EXEC_DIR)/executor_redirections2.c \
+    $(EXEC_DIR)/executor_redirections3.c \
+    $(EXEC_DIR)/executor_redirections4.c \
     $(EXEC_DIR)/executor_redir_chain.c \
     $(EXEC_DIR)/executor_redir_chain2.c \
     $(EXEC_DIR)/executor_redir_chain3.c \
@@ -82,7 +84,6 @@ SRCS = \
     $(PARSER_TL)/init_node0.c \
     $(PARSER_TL)/init_node1.c \
     $(PARSER_TL)/who_is_node.c \
-    $(PARSER_TREE)/tree.c \
     $(PARSER_UTILS)/utils1.c \
     $(PARSER_UTILS)/utils3.c \
     $(PARSER_UTILS)/utils2.c \

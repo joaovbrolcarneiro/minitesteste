@@ -6,13 +6,12 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:05:15 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/15 22:54:57 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:28:46 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_part2.h"
-
 
 void	initialize_collection_data(t_redir_collection_state *state,
 		t_node_tree *redir_nodes_array[])
@@ -57,7 +56,8 @@ int	process_complex_pattern_type1(t_complex_pattern_params *params,
 		t_redir_collection_state *state)
 {
 	params->cmd_n = params->in_r1->left;
-	if (params->in_r1->right != NULL && (params->in_r1->right->type == AST_REDIR_IN
+	if (params->in_r1->right != NULL && (params->in_r1->right->type
+			== AST_REDIR_IN
 			|| params->in_r1->right->type == AST_HEREDOC))
 		params->in_r2 = params->in_r1->right;
 	return (populate_nodes_from_pattern(params, state));

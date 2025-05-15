@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/15 22:56:18 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:48:01 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	execute_redir_chain_core(t_shell *shell, t_node_tree *node)
 	return (set_current_exit_status(status), status);
 }
 
-
 /* Assuming apply_redirection_nodes uses handle_redirections correctly */
 int	process_individual_redirections(t_node_tree *redir_nodes[],
 											int redir_count, t_shell *shell,
@@ -56,7 +55,7 @@ int	process_individual_redirections(t_node_tree *redir_nodes[],
 	while (i >= 0)
 	{
 		if (redir_nodes[i] == NULL && (i--, 1))
-			continue;
+			continue ;
 		if (redir_nodes[i]->type == AST_HEREDOC)
 			status = handle_heredoc(redir_nodes[i], shell);
 		else if (redir_nodes[i]->type == AST_REDIR_IN)

@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:31:39 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/15 21:55:22 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:07:19 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	readline_loop(t_shell *shell)
 
 	while (1)
 	{
-		
 		setup_interactive_signals();
 		prompt = build_prompt_string();
 		if (!prompt)
@@ -89,10 +88,9 @@ void	readline_loop(t_shell *shell)
 		if (!input)
 			handle_eof(shell);
 		if (!*input)
-		{
 			free(input);
+		if (!*input)
 			continue ;
-		}
 		add_history(input);
 		input_handler(shell, input);
 		free(input);

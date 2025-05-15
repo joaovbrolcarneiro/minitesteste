@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 20:50:37 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:10:06 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 # define MINISHELL_PART2_H
 
 # include "minishell.h"
-# include <sys/stat.h> // Include necessary standard headers
+# include <sys/stat.h>
 
-// --- Defines ---
-// Note: Ensure defines are constants as required by Norminette.
 # define QUOTE_SET "!@#&£$% \f\n\r\t\v-+'"
 # define RST "\001\e[0m\002"
 # define ULI "\001\e[4m\002"
@@ -36,7 +34,6 @@
 # define YEN "\001¥\002"
 # define BWN "\001\e[38;2;105;50;0m\002"
 
-// --- TITLE Components (Replaces original TITLE define) ---
 # define TITLE_P1 BWN
 # define TITLE_P2 "``"
 # define TITLE_P3 PNK
@@ -83,15 +80,16 @@ typedef struct s_obj_ygg
 	t_token		*right_child_token;
 }	t_obj_ygg;
 
-typedef struct s_quote_params {
+typedef struct s_quote_params
+{
 	t_token	*token;
 	char	**env;
 	int		*is_unclosed_flag;
 	bool	is_literal_operator;
 }	t_quote_params;
+
 // --- Function Prototypes ---
 
-// General Utils
 int			ischarset(const char *set, char c);
 t_token		*get_prev_node(t_token *node, t_token *lst);
 size_t		ft_strsetlen(char *s, const char *set);
@@ -126,7 +124,7 @@ bool		is_eof(char *input);
 void		typealize_call_loop(t_token *token, char **env);
 void		merg_tok_excep_cll_revloop(t_token *token);
 char		**gather_arguments(t_token *cmd_token,
-				t_token *segment_end_token); // Line break for length
+				t_token *segment_end_token);
 t_token		*get_lastone_nodeof_rank(t_token *lst, t_ranking this_ranking);
 t_token		*untie_node(t_token *node, t_token *lst);
 t_token		*rm_node_lst(t_token *token, t_token *first);
@@ -137,7 +135,7 @@ t_token		*find_right_token(t_token *token, t_token *eof);
 t_token		*find_left_token(t_token *token, t_token *first);
 t_node_tree	*new_yggnode(t_token *token);
 t_node_tree	*mke_yggdrasil(t_token *t, t_token *f, t_token *e,
-				t_node_tree *y); // Line break for length
+				t_node_tree *y);
 bool		token_err(t_token *token_lst);
 t_node_tree	*init_yggdrasil(t_token *token_lst);
 void		print_yggdrasil(t_node_tree *yggnode, int num_tabs, char *leg);
@@ -158,19 +156,17 @@ bool		is_too_long_input_exption(char *input);
 void		parser_cmd_no_found(t_token *token, char **env);
 t_gthr_arg	gthr_arg_vrs_init(t_gthr_arg *cu);
 
-// Development / Debugging Utils
-
 char		*finalize_token_assignment(t_token *token, char *new_val,
-	char *orig_val, int *is_unclosed_flag);
+				char *orig_val, int *is_unclosed_flag);
 char		*determine_and_process_quotes(t_quote_params *params,
-	char *current_value);
+				char *current_value);
 char		*process_regular_quotes(t_quote_params *params,
-	char *current_value);
-char		*handle_dollar_double_quotes(t_token *token, char **env, \
-			char *original_value);
+				char *current_value);
+char		*handle_dollar_double_quotes(t_token *token, char **env,
+				char *original_value);
 char		*handle_dollar_single_quotes(t_token *token, char *original_value);
-char		*handle_double_quotes(t_token *token, char **env, \
-			char *original_value, bool is_operator_literal);
+char		*handle_double_quotes(t_token *token, char **env,
+				char *original_value, bool is_operator_literal);
 char		*handle_single_quotes(t_token *token, char *original_value);
 char		*print_type(t_token *lst);
 void		print_token_lst(t_token *lst);
@@ -178,25 +174,23 @@ t_obj_ygg	make_yggdrasil_init(void);
 bool		is_redirection(t_obj_ygg obj);
 void		handle_parser_error(t_token *t);
 bool		set_ygg_children(t_obj_ygg *obj, t_token *t, t_token *f,
-				t_token *e); // Broken line for length
+				t_token *e);
 bool		has_left(t_obj_ygg obj);
 bool		has_right(t_obj_ygg obj);
 bool		flt_nrm(t_token *target_node, t_token *first_in_segment,
-				t_flt_vrs *vrs); // Broken line for length
+				t_flt_vrs *vrs);
 void		flt_nrm2(t_flt_vrs *vrs);
 bool		gather_arg_helper(t_token *cmd_token, t_gthr_arg *cu);
 bool		gather_arg_helper2(t_token *cmd_token, t_gthr_arg *cu);
 int			process_current_token_for_args(t_gthr_arg *cu);
 bool		is_whitespace(char c);
 int			handle_dollar_brace_expansion(t_exp_vars *v);
-void		perform_quote_con_part2(t_token	*current, \
-	t_token	*node_to_remove, char	*joined_value, char	*temp_value_ptr);
-void	initialize_remaining_token_fields(t_token *token,
-		const char *input,
-		int start,
-		int token_len);
+void		perform_quote_con_part2(t_token	*current,
+				t_token	*node_to_remove, char *joined_value,
+				char *temp_value_ptr);
+void		initialize_remaining_token_fields(t_token *token,
+				const char *input,
+				int start,
+				int token_len);
 
-// Deprecated / Not to use?
-// void is_minishell_exit(char *input); // not to use
-
-#endif // MINISHELL_PART2_H
+#endif

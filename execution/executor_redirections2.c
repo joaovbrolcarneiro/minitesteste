@@ -5,15 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/15 21:13:21 by jbrol-ca         ###   ########.fr       */
+/*   Created: 2025/04/02 18:31:39 by hde-barr          #+#    #+#             */
+/*   Updated: 2025/05/15 23:18:25 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_part2.h"
 
-/* Handles input redirection (<) */
 int	handle_redir_in(t_node_tree *node)
 {
 	int	fd;
@@ -80,8 +79,9 @@ int	handle_append(t_node_tree *node)
 	return (0);
 }
 
-/*static int	process_heredoc_pipe(int pipefd[2], const char *delimiter, \
-								char **env)
+/*
+static int	process_heredoc_pipe(int pipefd[2], const char *delimiter,
+				char **env)
 {
 	int	read_status;
 
@@ -100,10 +100,11 @@ int	handle_append(t_node_tree *node)
 	}
 	close(pipefd[0]);
 	return (0);
-}*/
+}
+*/
 
 int	process_one_heredoc_line(char *line,
-									t_heredoc_line_params *params)
+		t_heredoc_line_params *params)
 {
 	char	*line_to_write;
 	int		write_status;
@@ -119,8 +120,8 @@ int	process_one_heredoc_line(char *line,
 	}
 	write_status = write(params->pipe_write_fd, line_to_write,
 			ft_strlen(line_to_write));
-	//if (line_to_write != line)
-	//	free(line_to_write);
+	if (line_to_write != line)
+		free(line_to_write);
 	if (write_status == -1)
 	{
 		perror("minishell: write heredoc pipe child");
@@ -130,7 +131,7 @@ int	process_one_heredoc_line(char *line,
 }
 
 int	heredoc_child_reader(int pipe_write_fd, const char *delimiter,
-								char **env, int input_fd_for_heredoc)
+		char **env, int input_fd_for_heredoc)
 {
 	char					*line;
 	int						status;
@@ -142,22 +143,15 @@ int	heredoc_child_reader(int pipe_write_fd, const char *delimiter,
 	line_params.env = env;
 	line_params.expand = true;
 	while (status == EXIT_SUCCESS)
-    {
-        ft_putstr_fd("> ", STDOUT_FILENO);
-        line = get_next_line(input_fd_for_heredoc);
-        if (line == NULL)
-        {
-            // get_next_line(GNL_CLEANUP); // We discussed adding this
-            return (handle_heredoc_eof(delimiter));
-        }
-        status = process_one_heredoc_line(line, &line_params);
-        free(line); // Free the current line from GNL
-        if (status == HEREDOC_DELIM_FOUND)
-        {
-            // get_next_line(GNL_CLEANUP); // We discussed adding this
-            return (EXIT_SUCCESS);
-        }
-    }
-    // get_next_line(GNL_CLEANUP); // We discussed adding this
-    return (EXIT_FAILURE); // 'line' from the last failing iteration was already freed
+	{
+		ft_putstr_fd("> ", STDOUT_FILENO);
+		line = get_next_line(input_fd_for_heredoc);
+		if (line == NULL)
+			return (handle_heredoc_eof(delimiter));
+		status = process_one_heredoc_line(line, &line_params);
+		free(line);
+		if (status == HEREDOC_DELIM_FOUND)
+			return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
 }
