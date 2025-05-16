@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/15 23:46:39 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:53:34 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,9 @@ void	prepare_child_fds_for_heredoc(t_shell *shell, int *bkp_in_ptr,
 	if (dup2(shell->saved_stdout, STDOUT_FILENO) == -1)
 		handle_heredoc_dup_error("minishell: heredoc_child dup2 saved_stdout",
 			*bkp_in_ptr, *bkp_out_ptr, pipe_wfd);
+}
+
+void	heredoc_sigint_empty_handler(int signum)
+{
+	(void)signum;
 }

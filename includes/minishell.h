@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/16 18:45:02 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:37:05 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include "../libft/get_next_line.h"
 
 # define HEREDOC_DELIM_FOUND 2
-
+# define HEREDOC_INTERRUPTED -42
 # define RED                        "\033[0;31m"
 # define REDK                       "\033[38;2;220;20;60m"
 # define PINK                       "\033[38;2;255;0;127m"
@@ -241,6 +241,7 @@ int			execute_redir_cmd_node(t_shell *shell, t_node_tree *redir_node);
 int			read_heredoc_input(int pipe_write_fd, const char *delimiter,
 				char **env);
 int			execute_redirection_chain(t_shell *shell, t_node_tree *node);
+void		heredoc_sigint_empty_handler(int signum);
 
 /*
 ** Builtin functions

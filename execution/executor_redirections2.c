@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:31:39 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/16 18:05:39 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:52:40 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,10 @@ int	process_one_heredoc_line(char *line,
 	return (EXIT_SUCCESS);
 }
 
-int	heredoc_child_reader(int pipe_write_fd, const char *delimiter,
-		char **env, int input_fd_for_heredoc)
+int	heredoc_child_reader(int pipe_write_fd,
+		const char *delimiter,
+		char **env,
+		int input_fd_for_heredoc)
 {
 	char					*line;
 	int						status;
@@ -143,7 +145,11 @@ int	heredoc_child_reader(int pipe_write_fd, const char *delimiter,
 	while (status == EXIT_SUCCESS)
 	{
 		ft_putstr_fd("> ", STDOUT_FILENO);
+		errno = 0;
 		line = get_next_line(input_fd_for_heredoc);
+		if (line == NULL)
+			if (errno == EINTR)
+				return (HEREDOC_INTERRUPTED);
 		if (line == NULL)
 			return (handle_heredoc_eof(delimiter));
 		status = process_one_heredoc_line(line, &line_params);
@@ -151,5 +157,5 @@ int	heredoc_child_reader(int pipe_write_fd, const char *delimiter,
 		if (status == HEREDOC_DELIM_FOUND)
 			return (EXIT_SUCCESS);
 	}
-	return (EXIT_FAILURE);
+	return (status);
 }

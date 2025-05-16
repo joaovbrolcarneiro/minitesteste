@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/16 16:36:48 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:38:22 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,25 @@ void	execute_heredoc_child(int pipe_write_fd, int pipe_read_fd,
 {
 	int	child_stdin_backup;
 	int	child_stdout_backup;
-	int	exit_status_code;
+	int	reader_status;
 
 	handle_child_signals();
+	signal(SIGINT, heredoc_sigint_empty_handler);
 	close(pipe_read_fd);
 	prepare_child_fds_for_heredoc(shell, &child_stdin_backup,
 		&child_stdout_backup, pipe_write_fd);
-	exit_status_code = heredoc_child_reader(pipe_write_fd, delimiter,
+	reader_status = heredoc_child_reader(pipe_write_fd, delimiter,
 			shell->env, STDIN_FILENO);
-	finalize_heredoc_child(child_stdin_backup, child_stdout_backup,
-		pipe_write_fd, exit_status_code);
+	if (reader_status == HEREDOC_INTERRUPTED)
+	{
+		finalize_heredoc_child(child_stdin_backup, child_stdout_backup,
+			pipe_write_fd, 130);
+	}
+	else
+	{
+		finalize_heredoc_child(child_stdin_backup, child_stdout_backup,
+			pipe_write_fd, reader_status);
+	}
 }
 
 int	open_and_set_final_output_fd(t_node_tree *node, int *current_out_fd)

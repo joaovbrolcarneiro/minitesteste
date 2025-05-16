@@ -1,334 +1,60 @@
-==16492== Memcheck, a memory error detector
-==16492== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==16492== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==16492== Command: ./minishell
-==16492== Parent PID: 16490
-==16492== 
-==16496== 
-==16496== HEAP SUMMARY:
-==16496==     in use at exit: 208,697 bytes in 226 blocks
-==16496==   total heap usage: 10,756 allocs, 10,530 frees, 1,613,766 bytes allocated
-==16496== 
-==16496== LEAK SUMMARY:
-==16496==    definitely lost: 0 bytes in 0 blocks
-==16496==    indirectly lost: 0 bytes in 0 blocks
-==16496==      possibly lost: 0 bytes in 0 blocks
-==16496==    still reachable: 0 bytes in 0 blocks
-==16496==         suppressed: 208,697 bytes in 226 blocks
-==16496== 
-==16496== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---16496-- 
---16496-- used_suppression:     63 leak readline readline.supp:2 suppressed: 204,638 bytes in 222 blocks
---16496-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,059 bytes in 4 blocks
-==16496== 
-==16496== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==16500== 
-==16500== Process terminating with default action of signal 2 (SIGINT)
-==16500==    at 0xF32A7E0: read (read.c:26)
-==16500==    by 0x40E557: ft_take_date (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40E660: get_next_line (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x402E7C: heredoc_child_reader (executor_redirections2.c:146)
-==16500==    by 0x4029BB: execute_heredoc_child (executor_redirections.c:57)
-==16500==    by 0x40324E: handle_heredoc (executor_redirections3.c:125)
-==16500==    by 0x40370B: process_individual_redirections (executor_redir_chain.c:60)
-==16500==    by 0x4035FD: apply_redirection_nodes (executor_redir_chain.c:86)
-==16500==    by 0x403569: execute_redir_chain_core (executor_redir_chain.c:34)
-==16500==    by 0x403874: execute_redirection_chain (executor_redir_chain.c:120)
-==16500==    by 0x402759: dispatch_ast_node (executor_redir_utils.c:70)
-==16500==    by 0x4026C1: execute_ast (executor_redir_utils.c:98)
-==16500== 
-==16500== HEAP SUMMARY:
-==16500==     in use at exit: 444,442 bytes in 20,730 blocks
-==16500==   total heap usage: 21,009 allocs, 279 frees, 2,994,324 bytes allocated
-==16500== 
-==16500== 2 bytes in 1 blocks are still reachable in loss record 1 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40E6FD: ft_calloc_gnl (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40EA73: ft_rebuffer (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40E6A2: get_next_line (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x402E7C: heredoc_child_reader (executor_redirections2.c:146)
-==16500==    by 0x4029BB: execute_heredoc_child (executor_redirections.c:57)
-==16500==    by 0x40324E: handle_heredoc (executor_redirections3.c:125)
-==16500==    by 0x40370B: process_individual_redirections (executor_redir_chain.c:60)
-==16500==    by 0x4035FD: apply_redirection_nodes (executor_redir_chain.c:86)
-==16500==    by 0x403569: execute_redir_chain_core (executor_redir_chain.c:34)
-==16500==    by 0x403874: execute_redirection_chain (executor_redir_chain.c:120)
-==16500==    by 0x402759: dispatch_ast_node (executor_redir_utils.c:70)
-==16500== 
-==16500== 8 bytes in 2 blocks are still reachable in loss record 4 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40CCC4: ft_strdup (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40C61E: try_strdup_filename (yggdrasil.c:50)
-==16500==    by 0x40C589: gather_filename (yggdrasil.c:75)
-==16500==    by 0x40B69C: mke_yggdrasil (yggdrasil_core.c:35)
-==16500==    by 0x40B3D4: init_yggdrasil (init_yggdrasil.c:92)
-==16500==    by 0x407FC1: input_handler (input_handler.c:81)
-==16500==    by 0x409242: handle_received_input (readline_loop.c:92)
-==16500==    by 0x4090F6: readline_loop (readline_loop.c:107)
-==16500==    by 0x4013D6: main (main.c:42)
-==16500== 
-==16500== 14 bytes in 4 blocks are still reachable in loss record 12 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40CE1E: ft_substr (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x409987: create_and_init_token (tokenlst_split_input.c:39)
-==16500==    by 0x409C7F: process_single_token_block (tokenlst_split_input.c:90)
-==16500==    by 0x409B4C: split_input (tokenlst_split_input.c:111)
-==16500==    by 0x407D8A: delegated_by_input_handler (handler_pipes.c:46)
-==16500==    by 0x407E2F: input_handler_part2 (input_handler.c:39)
-==16500==    by 0x407F40: input_handler (input_handler.c:68)
-==16500==    by 0x409242: handle_received_input (readline_loop.c:92)
-==16500==    by 0x4090F6: readline_loop (readline_loop.c:107)
-==16500==    by 0x4013D6: main (main.c:42)
-==16500== 
-==16500== 128 bytes in 1 blocks are still reachable in loss record 33 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x406EDA: exp_var_init (expander_variable_assignment.c:103)
-==16500==    by 0x406198: expand_variables (expander.c:70)
-==16500==    by 0x402D90: process_one_heredoc_line (executor_redirections2.c:117)
-==16500==    by 0x402EA9: heredoc_child_reader (executor_redirections2.c:149)
-==16500==    by 0x4029BB: execute_heredoc_child (executor_redirections.c:57)
-==16500==    by 0x40324E: handle_heredoc (executor_redirections3.c:125)
-==16500==    by 0x40370B: process_individual_redirections (executor_redir_chain.c:60)
-==16500==    by 0x4035FD: apply_redirection_nodes (executor_redir_chain.c:86)
-==16500==    by 0x403569: execute_redir_chain_core (executor_redir_chain.c:34)
-==16500==    by 0x403874: execute_redirection_chain (executor_redir_chain.c:120)
-==16500== 
-==16500== 128 bytes in 2 blocks are still reachable in loss record 34 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40B78F: new_yggnode (yggdrasil_core.c:52)
-==16500==    by 0x40B5E5: mke_yggdrasil (yggdrasil_core.c:24)
-==16500==    by 0x40B3D4: init_yggdrasil (init_yggdrasil.c:92)
-==16500==    by 0x407FC1: input_handler (input_handler.c:81)
-==16500==    by 0x409242: handle_received_input (readline_loop.c:92)
-==16500==    by 0x4090F6: readline_loop (readline_loop.c:107)
-==16500==    by 0x4013D6: main (main.c:42)
-==16500== 
-==16500== 176 bytes in 2 blocks are still reachable in loss record 38 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40D0ED: ft_split (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x409FA8: get_path_list (token_lst_helpers.c:26)
-==16500==    by 0x40957C: count_commands_in_path (tokenlst.c:45)
-==16500==    by 0x40A0DC: command_list_malloc (token_lst_helpers.c:36)
-==16500==    by 0x4098D4: init_command_list (tokenlst.c:125)
-==16500==    by 0x40A1E7: search_list (token_lst_helpers.c:82)
-==16500==    by 0x40ADDC: is_cmd_super (who_is_node.c:46)
-==16500==    by 0x409DD3: typealize (tokenlst_v2.c:34)
-==16500==    by 0x40BE0F: typealize_call_loop (yggdrasil_finders.c:96)
-==16500==    by 0x407DC0: delegated_by_input_handler (handler_pipes.c:50)
-==16500== 
-==16500== 176 bytes in 2 blocks are still reachable in loss record 39 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40D0ED: ft_split (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x409FA8: get_path_list (token_lst_helpers.c:26)
-==16500==    by 0x4096D0: populate_command_list (tokenlst.c:99)
-==16500==    by 0x4098FD: init_command_list (tokenlst.c:128)
-==16500==    by 0x40A1E7: search_list (token_lst_helpers.c:82)
-==16500==    by 0x40ADDC: is_cmd_super (who_is_node.c:46)
-==16500==    by 0x409DD3: typealize (tokenlst_v2.c:34)
-==16500==    by 0x40BE0F: typealize_call_loop (yggdrasil_finders.c:96)
-==16500==    by 0x407DC0: delegated_by_input_handler (handler_pipes.c:50)
-==16500==    by 0x407E2F: input_handler_part2 (input_handler.c:39)
-==16500== 
-==16500== 176 bytes in 2 blocks are still reachable in loss record 40 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40D0ED: ft_split (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x409FA8: get_path_list (token_lst_helpers.c:26)
-==16500==    by 0x40957C: count_commands_in_path (tokenlst.c:45)
-==16500==    by 0x40A0DC: command_list_malloc (token_lst_helpers.c:36)
-==16500==    by 0x4098D4: init_command_list (tokenlst.c:125)
-==16500==    by 0x40A1E7: search_list (token_lst_helpers.c:82)
-==16500==    by 0x40777F: parser_cmd_no_found (parser_cmd_no_found.c:28)
-==16500==    by 0x407ECC: input_handler_part3 (input_handler.c:52)
-==16500==    by 0x407F8F: input_handler (input_handler.c:73)
-==16500==    by 0x409242: handle_received_input (readline_loop.c:92)
-==16500== 
-==16500== 176 bytes in 2 blocks are still reachable in loss record 41 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40D0ED: ft_split (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x409FA8: get_path_list (token_lst_helpers.c:26)
-==16500==    by 0x4096D0: populate_command_list (tokenlst.c:99)
-==16500==    by 0x4098FD: init_command_list (tokenlst.c:128)
-==16500==    by 0x40A1E7: search_list (token_lst_helpers.c:82)
-==16500==    by 0x40777F: parser_cmd_no_found (parser_cmd_no_found.c:28)
-==16500==    by 0x407ECC: input_handler_part3 (input_handler.c:52)
-==16500==    by 0x407F8F: input_handler (input_handler.c:73)
-==16500==    by 0x409242: handle_received_input (readline_loop.c:92)
-==16500==    by 0x4090F6: readline_loop (readline_loop.c:107)
-==16500== 
-==16500== 236 bytes in 20 blocks are still reachable in loss record 44 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40D335: ft_takeword (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40D12F: ft_split (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x409FA8: get_path_list (token_lst_helpers.c:26)
-==16500==    by 0x40957C: count_commands_in_path (tokenlst.c:45)
-==16500==    by 0x40A0DC: command_list_malloc (token_lst_helpers.c:36)
-==16500==    by 0x4098D4: init_command_list (tokenlst.c:125)
-==16500==    by 0x40A1E7: search_list (token_lst_helpers.c:82)
-==16500==    by 0x40ADDC: is_cmd_super (who_is_node.c:46)
-==16500==    by 0x409DD3: typealize (tokenlst_v2.c:34)
-==16500==    by 0x40BE0F: typealize_call_loop (yggdrasil_finders.c:96)
-==16500== 
-==16500== 236 bytes in 20 blocks are still reachable in loss record 45 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40D335: ft_takeword (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40D12F: ft_split (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x409FA8: get_path_list (token_lst_helpers.c:26)
-==16500==    by 0x4096D0: populate_command_list (tokenlst.c:99)
-==16500==    by 0x4098FD: init_command_list (tokenlst.c:128)
-==16500==    by 0x40A1E7: search_list (token_lst_helpers.c:82)
-==16500==    by 0x40ADDC: is_cmd_super (who_is_node.c:46)
-==16500==    by 0x409DD3: typealize (tokenlst_v2.c:34)
-==16500==    by 0x40BE0F: typealize_call_loop (yggdrasil_finders.c:96)
-==16500==    by 0x407DC0: delegated_by_input_handler (handler_pipes.c:50)
-==16500== 
-==16500== 236 bytes in 20 blocks are still reachable in loss record 46 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40D335: ft_takeword (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40D12F: ft_split (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x409FA8: get_path_list (token_lst_helpers.c:26)
-==16500==    by 0x40957C: count_commands_in_path (tokenlst.c:45)
-==16500==    by 0x40A0DC: command_list_malloc (token_lst_helpers.c:36)
-==16500==    by 0x4098D4: init_command_list (tokenlst.c:125)
-==16500==    by 0x40A1E7: search_list (token_lst_helpers.c:82)
-==16500==    by 0x40777F: parser_cmd_no_found (parser_cmd_no_found.c:28)
-==16500==    by 0x407ECC: input_handler_part3 (input_handler.c:52)
-==16500==    by 0x407F8F: input_handler (input_handler.c:73)
-==16500== 
-==16500== 236 bytes in 20 blocks are still reachable in loss record 47 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40D335: ft_takeword (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40D12F: ft_split (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x409FA8: get_path_list (token_lst_helpers.c:26)
-==16500==    by 0x4096D0: populate_command_list (tokenlst.c:99)
-==16500==    by 0x4098FD: init_command_list (tokenlst.c:128)
-==16500==    by 0x40A1E7: search_list (token_lst_helpers.c:82)
-==16500==    by 0x40777F: parser_cmd_no_found (parser_cmd_no_found.c:28)
-==16500==    by 0x407ECC: input_handler_part3 (input_handler.c:52)
-==16500==    by 0x407F8F: input_handler (input_handler.c:73)
-==16500==    by 0x409242: handle_received_input (readline_loop.c:92)
-==16500== 
-==16500== 288 bytes in 4 blocks are still reachable in loss record 51 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40994B: create_and_init_token (tokenlst_split_input.c:35)
-==16500==    by 0x409C7F: process_single_token_block (tokenlst_split_input.c:90)
-==16500==    by 0x409B4C: split_input (tokenlst_split_input.c:111)
-==16500==    by 0x407D8A: delegated_by_input_handler (handler_pipes.c:46)
-==16500==    by 0x407E2F: input_handler_part2 (input_handler.c:39)
-==16500==    by 0x407F40: input_handler (input_handler.c:68)
-==16500==    by 0x409242: handle_received_input (readline_loop.c:92)
-==16500==    by 0x4090F6: readline_loop (readline_loop.c:107)
-==16500==    by 0x4013D6: main (main.c:42)
-==16500== 
-==16500== 456 bytes in 1 blocks are still reachable in loss record 52 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x405762: ft_strdup_array (executor_utils_shell.c:28)
-==16500==    by 0x405868: init_shell (executor_utils_shell.c:58)
-==16500==    by 0x4013CD: main (main.c:41)
-==16500== 
-==16500== 512 bytes in 4 blocks are still reachable in loss record 54 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x406EDA: exp_var_init (expander_variable_assignment.c:103)
-==16500==    by 0x406198: expand_variables (expander.c:70)
-==16500==    by 0x406DA6: expand_token_list_no_assignments (expander_variable_assignment.c:72)
-==16500==    by 0x407EBC: input_handler_part3 (input_handler.c:51)
-==16500==    by 0x407F8F: input_handler (input_handler.c:73)
-==16500==    by 0x409242: handle_received_input (readline_loop.c:92)
-==16500==    by 0x4090F6: readline_loop (readline_loop.c:107)
-==16500==    by 0x4013D6: main (main.c:42)
-==16500== 
-==16500== 1,025 bytes in 1 blocks are still reachable in loss record 68 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40E4B8: ft_take_date (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40E660: get_next_line (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x402E7C: heredoc_child_reader (executor_redirections2.c:146)
-==16500==    by 0x4029BB: execute_heredoc_child (executor_redirections.c:57)
-==16500==    by 0x40324E: handle_heredoc (executor_redirections3.c:125)
-==16500==    by 0x40370B: process_individual_redirections (executor_redir_chain.c:60)
-==16500==    by 0x4035FD: apply_redirection_nodes (executor_redir_chain.c:86)
-==16500==    by 0x403569: execute_redir_chain_core (executor_redir_chain.c:34)
-==16500==    by 0x403874: execute_redirection_chain (executor_redir_chain.c:120)
-==16500==    by 0x402759: dispatch_ast_node (executor_redir_utils.c:70)
-==16500==    by 0x4026C1: execute_ast (executor_redir_utils.c:98)
-==16500== 
-==16500== 2,010 bytes in 56 blocks are still reachable in loss record 71 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40CCC4: ft_strdup (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x4057A2: ft_strdup_array (executor_utils_shell.c:34)
-==16500==    by 0x405868: init_shell (executor_utils_shell.c:58)
-==16500==    by 0x4013CD: main (main.c:41)
-==16500== 
-==16500== 111,714 bytes in 10,156 blocks are still reachable in loss record 100 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40CCC4: ft_strdup (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40983B: populate_list_from_dir (tokenlst.c:76)
-==16500==    by 0x40975C: populate_command_list (tokenlst.c:109)
-==16500==    by 0x4098FD: init_command_list (tokenlst.c:128)
-==16500==    by 0x40A1E7: search_list (token_lst_helpers.c:82)
-==16500==    by 0x40ADDC: is_cmd_super (who_is_node.c:46)
-==16500==    by 0x409DD3: typealize (tokenlst_v2.c:34)
-==16500==    by 0x40BE0F: typealize_call_loop (yggdrasil_finders.c:96)
-==16500==    by 0x407DC0: delegated_by_input_handler (handler_pipes.c:50)
-==16500==    by 0x407E2F: input_handler_part2 (input_handler.c:39)
-==16500== 
-==16500== 111,714 bytes in 10,156 blocks are still reachable in loss record 101 of 101
-==16500==    at 0xF13F899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16500==    by 0x40EC14: hb_malloc (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40CCC4: ft_strdup (in /home/jbrol-ca/mininaoaguentomais/minishell)
-==16500==    by 0x40983B: populate_list_from_dir (tokenlst.c:76)
-==16500==    by 0x40975C: populate_command_list (tokenlst.c:109)
-==16500==    by 0x4098FD: init_command_list (tokenlst.c:128)
-==16500==    by 0x40A1E7: search_list (token_lst_helpers.c:82)
-==16500==    by 0x40777F: parser_cmd_no_found (parser_cmd_no_found.c:28)
-==16500==    by 0x407ECC: input_handler_part3 (input_handler.c:52)
-==16500==    by 0x407F8F: input_handler (input_handler.c:73)
-==16500==    by 0x409242: handle_received_input (readline_loop.c:92)
-==16500==    by 0x4090F6: readline_loop (readline_loop.c:107)
-==16500== 
-==16500== LEAK SUMMARY:
-==16500==    definitely lost: 0 bytes in 0 blocks
-==16500==    indirectly lost: 0 bytes in 0 blocks
-==16500==      possibly lost: 0 bytes in 0 blocks
-==16500==    still reachable: 229,647 bytes in 20,476 blocks
-==16500==         suppressed: 214,795 bytes in 254 blocks
-==16500== 
-==16500== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---16500-- 
---16500-- used_suppression:     77 leak readline readline.supp:2 suppressed: 210,693 bytes in 247 blocks
---16500-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,102 bytes in 7 blocks
-==16500== 
-==16500== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==16492== 
-==16492== HEAP SUMMARY:
-==16492==     in use at exit: 208,733 bytes in 228 blocks
-==16492==   total heap usage: 21,013 allocs, 20,785 frees, 3,001,808 bytes allocated
-==16492== 
-==16492== LEAK SUMMARY:
-==16492==    definitely lost: 0 bytes in 0 blocks
-==16492==    indirectly lost: 0 bytes in 0 blocks
-==16492==      possibly lost: 0 bytes in 0 blocks
-==16492==    still reachable: 0 bytes in 0 blocks
-==16492==         suppressed: 208,733 bytes in 228 blocks
-==16492== 
-==16492== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---16492-- 
---16492-- used_suppression:     62 leak readline readline.supp:2 suppressed: 204,631 bytes in 221 blocks
---16492-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,102 bytes in 7 blocks
-==16492== 
-==16492== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==19934== Memcheck, a memory error detector
+==19934== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==19934== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==19934== Command: ./minishell
+==19934== Parent PID: 19933
+==19934== 
+==19954== 
+==19954== HEAP SUMMARY:
+==19954==     in use at exit: 208,711 bytes in 226 blocks
+==19954==   total heap usage: 20,996 allocs, 20,770 frees, 2,990,451 bytes allocated
+==19954== 
+==19954== LEAK SUMMARY:
+==19954==    definitely lost: 0 bytes in 0 blocks
+==19954==    indirectly lost: 0 bytes in 0 blocks
+==19954==      possibly lost: 0 bytes in 0 blocks
+==19954==    still reachable: 0 bytes in 0 blocks
+==19954==         suppressed: 208,711 bytes in 226 blocks
+==19954== 
+==19954== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--19954-- 
+--19954-- used_suppression:     63 leak readline readline.supp:2 suppressed: 204,643 bytes in 222 blocks
+--19954-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,068 bytes in 4 blocks
+==19954== 
+==19954== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==19956== 
+==19956== HEAP SUMMARY:
+==19956==     in use at exit: 208,711 bytes in 226 blocks
+==19956==   total heap usage: 20,986 allocs, 20,760 frees, 2,988,129 bytes allocated
+==19956== 
+==19956== LEAK SUMMARY:
+==19956==    definitely lost: 0 bytes in 0 blocks
+==19956==    indirectly lost: 0 bytes in 0 blocks
+==19956==      possibly lost: 0 bytes in 0 blocks
+==19956==    still reachable: 0 bytes in 0 blocks
+==19956==         suppressed: 208,711 bytes in 226 blocks
+==19956== 
+==19956== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--19956-- 
+--19956-- used_suppression:     63 leak readline readline.supp:2 suppressed: 204,643 bytes in 222 blocks
+--19956-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,068 bytes in 4 blocks
+==19956== 
+==19956== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==19934== 
+==19934== HEAP SUMMARY:
+==19934==     in use at exit: 208,695 bytes in 225 blocks
+==19934==   total heap usage: 20,989 allocs, 20,764 frees, 2,991,934 bytes allocated
+==19934== 
+==19934== LEAK SUMMARY:
+==19934==    definitely lost: 0 bytes in 0 blocks
+==19934==    indirectly lost: 0 bytes in 0 blocks
+==19934==      possibly lost: 0 bytes in 0 blocks
+==19934==    still reachable: 0 bytes in 0 blocks
+==19934==         suppressed: 208,695 bytes in 225 blocks
+==19934== 
+==19934== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--19934-- 
+--19934-- used_suppression:     62 leak readline readline.supp:2 suppressed: 204,627 bytes in 221 blocks
+--19934-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,068 bytes in 4 blocks
+==19934== 
+==19934== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
