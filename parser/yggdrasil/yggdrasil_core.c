@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/16 17:22:43 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 18:00:21 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ t_node_tree	*new_yggnode(t_token *token)
 	new_node->literal = token->literal;
 	return (new_node);
 }
-
-
 
 /**
 * Sets the left and right children of a new AST node (obj->y) based on token t.

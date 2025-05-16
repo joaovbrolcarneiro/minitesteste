@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:19:01 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/16 16:54:25 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 18:03:14 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,41 +77,24 @@ char	*determine_and_process_quotes(t_quote_params *params,
 }
 
 char	*finalize_token_assignment(t_token *token, char *new_val,
-	char *orig_val, int *is_unclosed_flag)
+		char *orig_val, int *is_unclosed_flag)
 {
-if (*is_unclosed_flag || new_val == NULL)
-{
-	token->err = 1;
-	// Ensure the new empty string is also allocated via hb_malloc
-	// if token->value is consistently managed by the garbage collector.
-	// Replace ft_strdup with your hb_malloc-based equivalent.
-	// For example, assuming hb_strdup exists:
-	// token->value = hb_strdup("");
-	// If you don't have hb_strdup, and ft_strdup uses standard malloc,
-	// this could lead to inconsistencies if minigarbage_collector
-	// only frees hb_malloc'd memory. For now, using ft_strdup as per
-	// original, but highlight this as a potential area for review.
-	token->value = ft_strdup("");
-	if (!token->value)
+	if (*is_unclosed_flag || new_val == NULL)
 	{
-		perror("minishell: strdup failed in finalize_token_assignment");
-		return (NULL);
+		token->err = 1;
+		token->value = ft_strdup("");
+		if (!token->value)
+		{
+			perror("minishell: strdup failed in finalize_token_assignment");
+			return (NULL);
+		}
+		return (token->value);
+	}
+	if (new_val != orig_val)
+	{
+		token->value = new_val;
 	}
 	return (token->value);
-}
-// If new_val is different, update token->value.
-// The old orig_val (if it was heap allocated by hb_malloc and different
-// from new_val) will be handled by the garbage collector.
-// It is crucial that if new_val is a dynamic string replacing orig_val,
-// new_val must have been allocated using hb_malloc.
-if (new_val != orig_val)
-{
-	// DO NOT free(orig_val) here if it's managed by minigarbege_colector.
-	// The garbage collector is responsible for the old string.
-	token->value = new_val;
-}
-// If new_val is the same as orig_val, token->value is already correct.
-return (token->value);
 }
 
 char	*quote_handler(t_token *token, char **env, int *is_unclosed_flag)
