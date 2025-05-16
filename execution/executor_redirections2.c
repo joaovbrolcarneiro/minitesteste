@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:31:39 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/15 23:18:25 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 16:37:57 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ int	process_one_heredoc_line(char *line,
 	}
 	write_status = write(params->pipe_write_fd, line_to_write,
 			ft_strlen(line_to_write));
-	if (line_to_write != line)
-		free(line_to_write);
+	//if (line_to_write != line)
+	//	free(line_to_write);
 	if (write_status == -1)
 	{
 		perror("minishell: write heredoc pipe child");

@@ -1,60 +1,60 @@
-==77293== Memcheck, a memory error detector
-==77293== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==77293== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==77293== Command: ./minishell
-==77293== Parent PID: 77292
-==77293== 
-==77301== 
-==77301== HEAP SUMMARY:
-==77301==     in use at exit: 208,737 bytes in 226 blocks
-==77301==   total heap usage: 41,490 allocs, 41,264 frees, 5,740,770 bytes allocated
-==77301== 
-==77301== LEAK SUMMARY:
-==77301==    definitely lost: 0 bytes in 0 blocks
-==77301==    indirectly lost: 0 bytes in 0 blocks
-==77301==      possibly lost: 0 bytes in 0 blocks
-==77301==    still reachable: 0 bytes in 0 blocks
-==77301==         suppressed: 208,737 bytes in 226 blocks
-==77301== 
-==77301== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---77301-- 
---77301-- used_suppression:     63 leak readline readline.supp:2 suppressed: 204,660 bytes in 222 blocks
---77301-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,077 bytes in 4 blocks
-==77301== 
-==77301== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==77304== 
-==77304== HEAP SUMMARY:
-==77304==     in use at exit: 208,737 bytes in 226 blocks
-==77304==   total heap usage: 41,490 allocs, 41,264 frees, 5,740,772 bytes allocated
-==77304== 
-==77304== LEAK SUMMARY:
-==77304==    definitely lost: 0 bytes in 0 blocks
-==77304==    indirectly lost: 0 bytes in 0 blocks
-==77304==      possibly lost: 0 bytes in 0 blocks
-==77304==    still reachable: 0 bytes in 0 blocks
-==77304==         suppressed: 208,737 bytes in 226 blocks
-==77304== 
-==77304== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---77304-- 
---77304-- used_suppression:     63 leak readline readline.supp:2 suppressed: 204,660 bytes in 222 blocks
---77304-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,077 bytes in 4 blocks
-==77304== 
-==77304== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==77293== 
-==77293== HEAP SUMMARY:
-==77293==     in use at exit: 208,712 bytes in 225 blocks
-==77293==   total heap usage: 41,485 allocs, 41,260 frees, 5,743,410 bytes allocated
-==77293== 
-==77293== LEAK SUMMARY:
-==77293==    definitely lost: 0 bytes in 0 blocks
-==77293==    indirectly lost: 0 bytes in 0 blocks
-==77293==      possibly lost: 0 bytes in 0 blocks
-==77293==    still reachable: 0 bytes in 0 blocks
-==77293==         suppressed: 208,712 bytes in 225 blocks
-==77293== 
-==77293== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---77293-- 
---77293-- used_suppression:     62 leak readline readline.supp:2 suppressed: 204,635 bytes in 221 blocks
---77293-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,077 bytes in 4 blocks
-==77293== 
-==77293== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==8319== Memcheck, a memory error detector
+==8319== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==8319== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==8319== Command: ./minishell
+==8319== Parent PID: 8318
+==8319== 
+==8331== 
+==8331== HEAP SUMMARY:
+==8331==     in use at exit: 208,727 bytes in 226 blocks
+==8331==   total heap usage: 20,999 allocs, 20,773 frees, 2,990,480 bytes allocated
+==8331== 
+==8331== LEAK SUMMARY:
+==8331==    definitely lost: 0 bytes in 0 blocks
+==8331==    indirectly lost: 0 bytes in 0 blocks
+==8331==      possibly lost: 0 bytes in 0 blocks
+==8331==    still reachable: 0 bytes in 0 blocks
+==8331==         suppressed: 208,727 bytes in 226 blocks
+==8331== 
+==8331== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--8331-- 
+--8331-- used_suppression:     63 leak readline readline.supp:2 suppressed: 204,659 bytes in 222 blocks
+--8331-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,068 bytes in 4 blocks
+==8331== 
+==8331== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==8332== 
+==8332== HEAP SUMMARY:
+==8332==     in use at exit: 208,727 bytes in 226 blocks
+==8332==   total heap usage: 20,989 allocs, 20,763 frees, 2,988,158 bytes allocated
+==8332== 
+==8332== LEAK SUMMARY:
+==8332==    definitely lost: 0 bytes in 0 blocks
+==8332==    indirectly lost: 0 bytes in 0 blocks
+==8332==      possibly lost: 0 bytes in 0 blocks
+==8332==    still reachable: 0 bytes in 0 blocks
+==8332==         suppressed: 208,727 bytes in 226 blocks
+==8332== 
+==8332== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--8332-- 
+--8332-- used_suppression:     63 leak readline readline.supp:2 suppressed: 204,659 bytes in 222 blocks
+--8332-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,068 bytes in 4 blocks
+==8332== 
+==8332== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==8319== 
+==8319== HEAP SUMMARY:
+==8319==     in use at exit: 208,711 bytes in 225 blocks
+==8319==   total heap usage: 20,989 allocs, 20,764 frees, 2,991,965 bytes allocated
+==8319== 
+==8319== LEAK SUMMARY:
+==8319==    definitely lost: 0 bytes in 0 blocks
+==8319==    indirectly lost: 0 bytes in 0 blocks
+==8319==      possibly lost: 0 bytes in 0 blocks
+==8319==    still reachable: 0 bytes in 0 blocks
+==8319==         suppressed: 208,711 bytes in 225 blocks
+==8319== 
+==8319== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--8319-- 
+--8319-- used_suppression:     62 leak readline readline.supp:2 suppressed: 204,643 bytes in 221 blocks
+--8319-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,068 bytes in 4 blocks
+==8319== 
+==8319== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
