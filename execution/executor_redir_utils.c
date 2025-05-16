@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 18:55:54 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:55:34 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@ int	handle_word_token_execution(t_node_tree *node)
 		cmd_name = node->content;
 	else
 		cmd_name = "unknown";
-	ft_printf(RED "konosubash: %s: command not found\n" RESET, cmd_name);
+	ft_putstr_fd(RED, STDERR_FILENO);
+	ft_putstr_fd("konosubash: ", STDERR_FILENO);
+	ft_putstr_fd(cmd_name, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	ft_putstr_fd(RESET, STDERR_FILENO);
 	return (127);
 }
