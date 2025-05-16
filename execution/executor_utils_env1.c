@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 22:45:09 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:36:44 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,20 @@ char	*get_env_value(char **env, const char *name)
 }
 
 /* Helper for update_env: Updates existing variable */
-static int	update_existing_env(char ***env, char *new_var, const char *var)
+static int	update_existing_env(char ***env, char *new_var_equals_value,
+		const char *var_name_only)
 {
 	int		i;
 	size_t	var_len;
 
 	i = 0;
-	var_len = ft_strlen(var);
+	var_len = ft_strlen(var_name_only);
 	while ((*env)[i])
 	{
-		if (ft_strncmp((*env)[i], var, var_len) == 0 && \
-			(*env)[i][var_len] == '=')
+		if ((ft_strncmp((*env)[i], var_name_only, var_len) == 0
+			&& ((*env)[i][var_len] == '=' || (*env)[i][var_len] == '\0')))
 		{
-			(*env)[i] = new_var;
+			(*env)[i] = new_var_equals_value;
 			return (1);
 		}
 		i++;
@@ -53,7 +54,7 @@ static int	update_existing_env(char ***env, char *new_var, const char *var)
 }
 
 /* Helper for update_env: Adds a new variable */
-static int	add_new_env_var(char ***env, char *new_var)
+int	add_new_env_var(char ***env, char *new_var_entry)
 {
 	int		i;
 	char	**new_env;
@@ -64,7 +65,7 @@ static int	add_new_env_var(char ***env, char *new_var)
 	new_env = hb_malloc(sizeof(char *) * (i + 2));
 	if (!new_env)
 	{
-		perror("minishell: add_new_env_var hb_malloc");
+		perror("konosubash: add_new_env_var hb_malloc");
 		return (1);
 	}
 	i = 0;
@@ -73,7 +74,7 @@ static int	add_new_env_var(char ***env, char *new_var)
 		new_env[i] = (*env)[i];
 		i++;
 	}
-	new_env[i] = new_var;
+	new_env[i] = new_var_entry;
 	new_env[i + 1] = NULL;
 	*env = new_env;
 	return (0);
@@ -84,7 +85,7 @@ int	update_env(char ***env, char *var, char *value)
 {
 	char	*new_var;
 	size_t	len;
-	int		updated;
+	int		updated_or_added;
 
 	len = ft_strlen(var) + ft_strlen(value) + 2;
 	new_var = hb_malloc(len);
@@ -93,8 +94,8 @@ int	update_env(char ***env, char *var, char *value)
 	ft_strcpy(new_var, var);
 	ft_strcat(new_var, "=");
 	ft_strcat(new_var, value);
-	updated = update_existing_env(env, new_var, var);
-	if (!updated)
+	updated_or_added = update_existing_env(env, new_var, var);
+	if (!updated_or_added)
 	{
 		if (add_new_env_var(env, new_var) != 0)
 		{

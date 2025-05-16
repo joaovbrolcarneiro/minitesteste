@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/16 19:37:05 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:34:47 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,6 +273,8 @@ bool		is_valid_identifier(const char *identifier);
 int			update_env(char ***env, char *var, char *value);
 void		set_current_exit_status(int status);
 int			get_current_exit_status(void);
+int			ensure_exported_no_value(char ***env, char *var_name);
+int			add_new_env_var(char ***env, char *new_var_entry);
 
 /*
 ** Token manipulation functions

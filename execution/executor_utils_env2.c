@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 23:44:35 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:37:12 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,31 @@
 /* Helper: Validates and processes a single argument for export */
 static int	handle_single_export_arg(char *arg, char ***env)
 {
-	char	*equal;
+	char	*equal_sign;
 	char	*var_name;
-	int		update_status;
+	int		status;
 
-	equal = ft_strchr(arg, '=');
+	equal_sign = ft_strchr(arg, '=');
 	var_name = arg;
-	if (equal)
-		*equal = '\0';
+	if (equal_sign)
+		*equal_sign = '\0';
 	if (!is_valid_identifier(var_name))
 	{
-		if (equal)
-			*equal = '=';
+		if (equal_sign)
+			*equal_sign = '=';
 		ft_putstr_fd("konosubash: export: `", 2);
 		ft_putstr_fd(arg, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		return (1);
 	}
-	else if (equal)
+	if (equal_sign)
 	{
-		update_status = update_env(env, var_name, equal + 1);
-		*equal = '=';
-		if (update_status != 0)
-			return (1);
+		status = update_env(env, var_name, equal_sign + 1);
+		*equal_sign = '=';
 	}
-	return (0);
+	else
+		status = ensure_exported_no_value(env, var_name);
+	return (status);
 }
 
 /* Helper for ft_export: Processes arguments */
@@ -95,7 +95,7 @@ static int	print_sorted_env(char ***env)
 
 	sorted = sort_env(*env);
 	if (!sorted)
-		return (perror("minishell: export/sort_env"), 1);
+		return (perror("konosubash: export/sort_env"), 1);
 	i = 0;
 	while (sorted[i])
 	{

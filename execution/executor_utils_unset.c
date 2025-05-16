@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/05 23:45:30 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:33:05 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,32 @@ char	*ft_strcat(char *dest, const char *src)
 	}
 	*dest = '\0';
 	return (tmp);
+}
+
+int	ensure_exported_no_value(char ***env, char *var_name)
+{
+	int		i;
+	size_t	var_len;
+	char	*new_entry;
+
+	i = 0;
+	var_len = ft_strlen(var_name);
+	while ((*env)[i])
+	{
+		if (ft_strncmp((*env)[i], var_name, var_len) == 0
+			&& ((*env)[i][var_len] == '=' || (*env)[i][var_len] == '\0'))
+		{
+			return (0);
+		}
+		i++;
+	}
+	new_entry = ft_strdup(var_name);
+	if (!new_entry)
+	{
+		perror("minishell: ensure_exported_no_value: ft_strdup");
+		return (1);
+	}
+	if (add_new_env_var(env, new_entry) != 0)
+		return (1);
+	return (0);
 }
