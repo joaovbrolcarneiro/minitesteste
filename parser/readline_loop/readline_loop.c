@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:31:39 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/15 23:07:19 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 18:45:26 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,44 +56,59 @@ static char	*build_prompt_string(void)
 	return (prompt_buffer);
 }
 
-static void	handle_eof(t_shell *shell)
+static char	*display_prompt_and_get_input(void)
 {
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
-	cleanup_shell(shell);
-	exit(get_current_exit_status());
+	char	*input_str;
+	char	*prompt;
+
+	prompt = build_prompt_string();
+	if (!prompt)
+		prompt = "$ ";
+	ft_putstr_fd("💥", 1);
+	konopwd(true, "pwd");
+	input_str = readline(prompt);
+	if (prompt != NULL && strcmp(prompt, "$ ") != 0)
+	{
+		free(prompt);
+		prompt = NULL;
+	}
+	return (input_str);
 }
 
-static void	setup_interactive_signals(void)
+static int	handle_received_input(char *input_str, t_shell *shell)
 {
-	signal(SIGINT, handle_ctrl_c);
-	signal(SIGQUIT, SIG_IGN);
+	if (!input_str)
+	{
+		handle_eof(shell);
+		return (2);
+	}
+	if (input_str[0] == '\0')
+	{
+		free(input_str);
+		input_str = NULL;
+		return (1);
+	}
+	add_history(input_str);
+	input_handler(shell, input_str);
+	free(input_str);
+	input_str = NULL;
+	return (0);
 }
 
 void	readline_loop(t_shell *shell)
 {
-	char	*input;
-	char	*prompt;
+	char	*input_str;
+	int		input_status;
 
 	while (1)
 	{
 		setup_interactive_signals();
-		prompt = build_prompt_string();
-		if (!prompt)
-			prompt = "$ ";
-		ft_putstr_fd("💥", 1);
-		konopwd(true, "pwd");
-		input = readline(prompt);
-		if (prompt != NULL && strcmp(prompt, "$ ") != 0)
-			free(prompt);
-		if (!input)
-			handle_eof(shell);
-		if (!*input)
-			free(input);
-		if (!*input)
+		input_str = display_prompt_and_get_input();
+		input_status = handle_received_input(input_str, shell);
+		if (input_status == 1)
 			continue ;
-		add_history(input);
-		input_handler(shell, input);
-		free(input);
+		else if (input_status == 2)
+			break ;
 	}
 }
 

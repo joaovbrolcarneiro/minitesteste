@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:06:10 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/16 17:18:26 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 18:45:02 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,6 +329,8 @@ int			populate_command_list(char **list, char **env);
 char		**init_command_list(char **env);
 char		**gather_arg_helper3(t_gthr_arg *cu);
 bool		is_heredoc_delim(const char *line, const char *delimiter);
+void		handle_eof(t_shell *shell);
+void		setup_interactive_signals(void);
 
 /*
 ** Error Handling

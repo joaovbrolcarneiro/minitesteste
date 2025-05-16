@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:05:42 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/16 17:23:04 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 18:46:43 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,88 +48,15 @@ bool	is_redirection(t_obj_ygg obj)
 		|| obj.y->type == AST_HEREDOC);
 }
 
-/* A FUNCAO ABAIXO AGORA ESTA EM TOKENLST_SPLIT_INPUT
-t_token	*split_input(char *input, int i) /////////split_input ( mexi-joao)
+void	handle_eof(t_shell *shell)
 {
-	t_token	*lst;
-	t_token	*first;
-	char	start_char;
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	cleanup_shell(shell);
+	exit(get_current_exit_status());
+}
 
-	lst = malloc(sizeof(t_token));
-	if (!lst)
-		return (perror("malloc split_input"), NULL);
-	first = lst;
-	while (*input)
-	{
-		i = 1;
-		while (*input && *input == ' ')
-			input++;
-		if (!*input)
-		{
-			lst->next = NULL;
-			lst->value = NULL;
-			break ;
-		}
-		start_char = *input;
-		if (ischarset("\"'", start_char))
-		{
-			i = 1;
-			while (input[i] && input[i] != start_char)
-				i++;
-			if (input[i] == start_char)
-				i++;
-			else
-				i = 1;
-		}
-		else
-		{
-			i = ft_strsetlen(input, "\"' |<>");
-			if (i == 0 && ischarset("|<>", start_char))
-			{
-				i = 1;
-				if (ischarset("<>", start_char) && input[1] == start_char)
-					i = 2;
-			}
-			else if (i == 0 && *input != '\0')
-				i = 1;
-			else if (i == 0 && *input == '\0')
-				break ;
-		}
-		if (i == 0)
-			i = 1;
-		lst->merge_next = proximity_exception(input, i);
-		lst->value = ft_substr(input, 0, i);
-		if (!lst->value)
-		{
-			perror("ft_substr split_input");
-			break ;
-		}
-		input += i;
-		if (*input)
-		{
-			lst->next = malloc(sizeof(t_token));
-			if (!lst->next)
-			{
-				perror("malloc next split_input");
-				free(lst->value);
-				lst->value = NULL;
-				break ;
-			}
-			lst = lst->next;
-		}
-		else
-		{
-			lst->next = NULL;
-			break ;
-		}
-	}
-	if (lst && !*input)
-		lst->next = NULL;
-	if (!first || !first->value) 
-	{
-		if (first)
-			free(first);
-		return (NULL);
-	}
-	return (first);
-}*/
+void	setup_interactive_signals(void)
+{
+	signal(SIGINT, handle_ctrl_c);
+	signal(SIGQUIT, SIG_IGN);
+}
