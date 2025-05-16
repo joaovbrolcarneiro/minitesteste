@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:25:45 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/09 19:41:42 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:09:02 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,6 @@ void	handle_parser_error(t_token *t)
 {
 	st_prsr_err("syntax error near unexpected token", t->value);
 	set_current_exit_status(2);
+	if (t)
+		t->err = 1;
 }

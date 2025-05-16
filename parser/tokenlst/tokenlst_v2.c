@@ -6,7 +6,7 @@
 /*   By: jbrol-ca <jbrol-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:05:42 by hde-barr          #+#    #+#             */
-/*   Updated: 2025/05/04 15:47:13 by jbrol-ca         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:23:04 by jbrol-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ t_token	*typealize(t_token *token, char **env)
 	if (is_eof(token->value))
 		return (new_token_super(new_eof(token)));
 	return (token);
+}
+
+bool	is_redirection(t_obj_ygg obj)
+{
+	return (obj.y->type == AST_REDIR_IN
+		|| obj.y->type == AST_REDIR_OUT
+		|| obj.y->type == AST_APPEND
+		|| obj.y->type == AST_HEREDOC);
 }
 
 /* A FUNCAO ABAIXO AGORA ESTA EM TOKENLST_SPLIT_INPUT
